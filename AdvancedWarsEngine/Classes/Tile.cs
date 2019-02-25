@@ -9,6 +9,9 @@ namespace AdvancedWarsEngine.Classes
     class Tile
     {
         private bool selected;
-        private bool occupied;
+        private bool occupiedStructure;
+        private bool occupiedUnit;
+        private int width;
+        private ITerrainBehavior terrainBehavior;
     }
 }
