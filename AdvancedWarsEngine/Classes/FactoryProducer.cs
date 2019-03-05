@@ -6,23 +6,16 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class World
+    class FactoryProducer
     {
-        private Map map;
-
-        public World()
+        public FactoryProducer()
         {
             //DO SOMETHING
         }
 
-        public void CreateMap()
+        public AbstractFactory GetFactory(string factory)
         {
-            //DO SOMETHING
-        }
-
-        public Map GetMap()
-        {
-            return map;
+            return null;
         }
     }
 }

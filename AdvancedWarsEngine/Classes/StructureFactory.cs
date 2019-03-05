@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    static class StructureFactory
+    class StructureFactory
     {
-        public static Structure GetStructure()
+        public GameObject GetGameObject()
         {
             return null;
         }

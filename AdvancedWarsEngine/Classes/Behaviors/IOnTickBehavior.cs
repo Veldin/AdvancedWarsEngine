@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdvancedWarsEngine.Classes
+namespace AdvancedWarsEngine.Classes.Behaviors
 {
-    interface ITerrainBehavior
+    public interface IOnTickBehavior
     {
+        float OnTick();
     }
 }

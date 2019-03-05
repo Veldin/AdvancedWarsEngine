@@ -8,5 +8,17 @@ namespace AdvancedWarsEngine.Classes
 {
     class Map
     {
+        private Tile[][] tiles;
+        private string sprite;
+        
+        public Map()
+        {
+            //DO SOMETHING
+        }
+
+        public Tile GetTile(int x, int y)
+        {
+            return tiles[x][y];
+        }
     }
 }

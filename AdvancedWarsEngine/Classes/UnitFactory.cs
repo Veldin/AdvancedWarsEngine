@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    static class UnitFactory
+    class UnitFactory
     {
-        public static Unit GetUnit()
+        public GameObject GetGameObject()
         {
             return null;
         }

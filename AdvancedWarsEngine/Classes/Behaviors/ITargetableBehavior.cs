@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    abstract class Players
+    public interface ITargetableBehavior
     {
-        private bool isControllable;
+        bool IsTargetable();
     }
 }

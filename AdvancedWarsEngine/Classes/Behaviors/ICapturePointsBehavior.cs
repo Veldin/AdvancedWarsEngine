@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdvancedWarsEngine.Classes
+namespace AdvancedWarsEngine.Classes.Behaviors
 {
-    public interface ITargetableBehavior
+    public interface ICapturePointsBehavior
     {
+        float CapturePoints();
     }
 }

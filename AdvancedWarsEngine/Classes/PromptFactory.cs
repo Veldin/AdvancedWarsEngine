@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    static class PromptFactory
+    class PromptFactory
     {
-        public static Prompt GetPrompt()
+        public GameObject GetGameObject()
         {
             return null;
         }
