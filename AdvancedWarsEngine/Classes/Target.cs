@@ -8,9 +8,9 @@ namespace AdvancedWarsEngine.Classes
 {
     class Target
     {
-        private float fromTop           { get; set; }
-        private float fromLeft          { get; set; }
-        private GameObject gameObject   { get; }
+        private float fromTop;
+        private float fromLeft;
+        private GameObject gameObject;
 
         /******************************************************
          * This is the constructor for when the target are just
@@ -33,7 +33,8 @@ namespace AdvancedWarsEngine.Classes
 
         /******************************************************
          * This function returns the fromLeft from the selected
-         * gameObject. If gameObject is null it returns -1.
+         * gameObject. If gameObject is null it returns the fromTop
+         * from this class.
          * ***************************************************/
         public float GetFromLeft()
         {
@@ -45,15 +46,24 @@ namespace AdvancedWarsEngine.Classes
             }
             else
             {
-                // Returns -1 because the gameObject doesn't exist
-                return -1;
+                // Returns fromLeft because the gameObject doesn't exist
+                return fromLeft;
             }
         }
 
+        /******************************************************
+         * This function sets the fromLeft.
+         * ***************************************************/
+        public void setFromLeft(float value)
+        {
+            // Set the new value
+            fromLeft = value;
+        }
 
         /******************************************************
          * This function returns the fromTop from the selected
-         * gameObject. If gameObject is null it returns -1.
+         * gameObject. If gameObject is null it returns the fromTop
+         * from this class.
          * ***************************************************/
         public float GetFromTop()
         {
@@ -64,9 +74,18 @@ namespace AdvancedWarsEngine.Classes
                 return gameObject.GetFromTop();
             } else
             {
-                // Returns -1 because the gameObject doesn't exist
-                return -1;
+                // Returns fromTop because the gameObject doesn't exist
+                return fromTop;
             }
+        }
+
+        /******************************************************
+         * This function sets the fromLeft.
+         * ***************************************************/
+        public void setFromTop(float value)
+        {
+            // Set the new value
+            fromTop = value;
         }
     }
 }
