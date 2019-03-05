@@ -8,41 +8,65 @@ namespace AdvancedWarsEngine.Classes
 {
     class Target
     {
-        private float fromTop;
-        private float fromLeft;
-        private GameObject gameObject;
+        private float fromTop           { get; set; }
+        private float fromLeft          { get; set; }
+        private GameObject gameObject   { get; }
 
+        /******************************************************
+         * This is the constructor for when the target are just
+         * coordinates.
+         * ***************************************************/
         public Target(float fromTop, float fromLeft)
         {
             this.fromTop = fromTop;
             this.fromLeft = fromLeft;
         }
 
+        /******************************************************
+         * This is the constructor for when the target is a 
+         * gameObject.
+         * ***************************************************/
         public Target(GameObject gameObject)
         {
             this.gameObject = gameObject;
         }
 
+        /******************************************************
+         * This function returns the fromLeft from the selected
+         * gameObject. If gameObject is null it returns -1.
+         * ***************************************************/
         public float GetFromLeft()
         {
-            // van de gameobject
-            return 0;
+            // Check if gameObject exists
+            if (gameObject != null)
+            {
+                // returns the fromTop from the gameObject
+                return gameObject.GetFromLeft();
+            }
+            else
+            {
+                // Returns -1 because the gameObject doesn't exist
+                return -1;
+            }
         }
 
+
+        /******************************************************
+         * This function returns the fromTop from the selected
+         * gameObject. If gameObject is null it returns -1.
+         * ***************************************************/
         public float GetFromTop()
         {
-            // van de gameobject
-            return 0;
-        }
-
-        public void SetFromTop(float fromTop)
-        {
-            this.fromTop = fromTop;
-        }
-
-        public void SetFromLeft(float fromLeft)
-        {
-            this.fromLeft = fromLeft;
+            // Check if gameObject exists
+            if (gameObject != null)
+            {
+                // returns the fromTop from the gameObject
+                return gameObject.GetFromTop();
+            } else
+            {
+                // Returns -1 because the gameObject doesn't exist
+                return -1;
+            }
         }
     }
 }
