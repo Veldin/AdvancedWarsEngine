@@ -9,9 +9,9 @@ namespace AdvancedWarsEngine.Classes
     class Player
     {
         private bool isControllable;                    // Checks if this player can be controlled by an actual person
-        private bool isTurn;                            // Checks if it's this players its turn
+        protected bool isTurn;                            // Checks if it's this players its turn
         private List<GameObject> gameObjects;           // All the gameObject that are owned by this player
-        private Player nextPlayer;                      // This is the who gets the turn when this players turn ends
+        protected Player nextPlayer;                      // This is the who gets the turn when this players turn ends
 
         public Player(bool isControllable)
         {
@@ -19,16 +19,15 @@ namespace AdvancedWarsEngine.Classes
             this.isTurn         = false;
         }
         
-        public bool GetIsTurn()
+        public bool IsTurn
         {
-            // Returns the bool isTurn
-            return isTurn;
+            get { return isTurn; }
+            set { isTurn = value; }
         }
 
-        public void SetIsTurn(bool isTurn)
+        public bool GetIsControllable()
         {
-            // Set the bool isTurn
-            this.isTurn = isTurn;
+            return isControllable;
         }
 
         public void AddGameObject(GameObject gameObject)
@@ -49,16 +48,10 @@ namespace AdvancedWarsEngine.Classes
             gameObjects.Remove(gameObject);
         }
         
-        public Player GetNextPlayer()
+        public Player NextPlayer
         {
-            // Returns the nextPlayer
-            return nextPlayer;
-        }
-
-        public void SetNextPlayer(Player nextPlayer)
-        {
-            // Sets the nextPlayer
-            this.nextPlayer = nextPlayer;
+            get { return nextPlayer; }
+            set { nextPlayer = value; }
         }
     }
 }
