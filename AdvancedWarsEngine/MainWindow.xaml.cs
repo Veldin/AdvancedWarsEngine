@@ -1,5 +1,6 @@
 ﻿using AdvancedWarsEngine.Classes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -42,22 +43,35 @@ namespace AdvancedWarsEngine
         private float fps;  //The set FPS limit
         private float interval; //Interfal that gets calculated based on the fps
 
+        //The brush used to fill in the background
+        private SolidColorBrush backgroundBrush;
+        private int renderDistance;
+        
         //Holds string interpertation of all keys that are pressed right now
         private HashSet<String> pressedKeys;
 
+        private Cursor cursor;
+
         public MainWindow()
         {
-            InitializeComponent();
 
+            //Setting game dimensions
             width = 1280;
             height = 720;
+            renderDistance = 1200;
+
             pressedKeys = new HashSet<String>();
+
+            backgroundBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 24, 40, 80));
+
+            InitializeComponent();
 
             //Bind the keyup/down to the window's keyup/down
             GetWindow(this).KeyUp += KeyUp;
             GetWindow(this).KeyDown += KeyDown;
 
-            InitializeComponent();
+            this.Cursor = Cursors.None;
+            cursor = new Cursor(30, 30, 300, 300);
 
             fps = 999999999; //Desired max fps.
             interval = 1000 / fps;
@@ -90,7 +104,70 @@ namespace AdvancedWarsEngine
 
         private void Draw()
         {
-            // DO SOMETHING
+            //Create a new arraylist used to hold the gameobjects for this loop.
+            //The copy is made so it does the ontick methods on all the objects even the onces destroyed in the proces.
+            ArrayList loopList;
+            lock (gameObjects) //lock the gameobjects for duplication
+            {
+                try
+                {
+                    //Try to duplicate the arraylist.
+                    loopList = new ArrayList(gameObjects);
+                    //loopList.Add(cursor);
+                }
+                catch
+                {
+                    //if it failes for any reason skip this frame.
+                    return;
+                }
+            }
+
+                        //Run it in the UI thread
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
+                //TestCanvas.Children.Clear();    //Remove all recs from the canvas, start clean every loop
+
+                TestCanvas.Background = backgroundBrush;
+
+
+                foreach (GameObject gameObject in loopList)
+                {
+                    /* Old renderDistance code
+                    if (player.distanceBetween(gameObject) > renderDistance)
+                    {
+                        TestCanvas.Children.Remove(gameObject.rectangle);
+                    }
+                    else
+                    {
+                        if (!(gameObject is TextBox))
+                        {
+                            Rectangle rect = gameObject.rectangle;
+
+                            rect.Width = gameObject.Width + gameObject.RightDrawOffset + gameObject.LeftDrawOffset;
+                            rect.Height = gameObject.Height + gameObject.TopDrawOffset + gameObject.BottomDrawOffset;
+
+                            // Set up the position in the window, at mouse coordonate
+                            Canvas.SetLeft(rect, gameObject.FromLeft - gameObject.LeftDrawOffset - cameraLeftOffset);
+                            Canvas.SetTop(rect, gameObject.FromTop - gameObject.TopDrawOffset - cameraTopOffset);
+
+                            if (!TestCanvas.Children.Contains(rect))
+                                TestCanvas.Children.Add(rect);
+                        }
+
+
+                        if (gameObject is TextBox)
+                        {
+                            TextBox textObject = gameObject as TextBox;
+                            textObject.textblock.Margin = new Thickness(textObject.FromLeft, textObject.FromTop, textObject.Width, textObject.Height);
+
+                            if (!TestCanvas.Children.Contains(textObject.textblock))
+                                TestCanvas.Children.Add(textObject.textblock);
+                        }
+
+                    }
+                    */
+                }
+            });
         }
 
         private void Logic()

@@ -89,7 +89,7 @@ namespace AdvancedWarsEngine.Classes
             return true;
         }
 
-        public bool CollisionEffect(GameObject)
+        public bool CollisionEffect(GameObject gameObject)
         {
             return true;
         }
