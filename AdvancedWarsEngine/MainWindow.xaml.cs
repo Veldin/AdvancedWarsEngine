@@ -103,7 +103,7 @@ namespace AdvancedWarsEngine
         * Add the given key in the pressedKeys collection.
         * The argument is the given key represented as a string.
         */
-        public void KeyDown(object sender, KeyEventArgs args)
+        public new void KeyDown(object sender, KeyEventArgs args)
         {
             pressedKeys.Add(args.Key.ToString());
         }
@@ -114,7 +114,7 @@ namespace AdvancedWarsEngine
          * Remove the given key in the pressedKeys collection.
          * The argument is the given key represented as a string.
          */
-        public void KeyUp(object sender, KeyEventArgs args)
+        public new void KeyUp(object sender, KeyEventArgs args)
         {
             pressedKeys.Remove(args.Key.ToString());
         }

@@ -33,7 +33,7 @@ namespace AdvancedWarsEngine.Classes
 
         /******************************************************
          * This function returns the fromLeft from the selected
-         * gameObject. If gameObject is null it returns the fromTop
+         * gameObject. If gameObject is null it returns the fromLeft
          * from this class.
          * ***************************************************/
         public float GetFromLeft()
@@ -41,8 +41,8 @@ namespace AdvancedWarsEngine.Classes
             // Check if gameObject exists
             if (gameObject != null)
             {
-                // returns the fromTop from the gameObject
-                return gameObject.GetFromLeft();
+                // returns the fromLeft from the gameObject
+                return gameObject.FromLeft;
             }
             else
             {
@@ -52,12 +52,12 @@ namespace AdvancedWarsEngine.Classes
         }
 
         /******************************************************
-         * This function sets the fromLeft.
+         * This function adds a value to fromLeft.
          * ***************************************************/
-        public void setFromLeft(float value)
+        public void AddFromLeft(float fromLeft)
         {
-            // Set the new value
-            fromLeft = value;
+            // Add the new value
+            this.fromLeft += fromLeft;
         }
 
         /******************************************************
@@ -71,7 +71,7 @@ namespace AdvancedWarsEngine.Classes
             if (gameObject != null)
             {
                 // returns the fromTop from the gameObject
-                return gameObject.GetFromTop();
+                return gameObject.FromTop;
             } else
             {
                 // Returns fromTop because the gameObject doesn't exist
@@ -80,12 +80,12 @@ namespace AdvancedWarsEngine.Classes
         }
 
         /******************************************************
-         * This function sets the fromLeft.
+         * This function adds a value to fromLeft.
          * ***************************************************/
-        public void setFromTop(float value)
+        public void AddFromTop(float fromTop)
         {
-            // Set the new value
-            fromTop = value;
+            // Add the new value
+            this.fromTop = fromTop;
         }
     }
 }

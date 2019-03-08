@@ -13,21 +13,36 @@ namespace AdvancedWarsEngine.Classes
         private float health;
         private float movement;
         private float defence;
-        private ITargetableBehavior targetableBehavior;
-        private IAttackBehavior attackBehavior;
-        private IHealthBehavior healthBehavior;
-        private IMovementBehavior movementBehavior;
-        private IDefenceBehavior defenceBehavior;
+        private float range;
+        protected ITargetableBehavior targetableBehavior;
+        protected IAttackBehavior attackBehavior;
+        protected IHealthBehavior healthBehavior;
+        protected IMovementBehavior movementBehavior;
+        protected IDefenceBehavior defenceBehavior;
 
-        public Unit(float width, float height, float fromTop, float fromLeft)
+        public Unit(float width, float height, float fromTop, float fromLeft, bool isTargetable, float attack, float health, float movement, float defence, float range)
             : base(width, height, fromTop, fromLeft)
         {
-
+            this.isTargetable = isTargetable;
+            this.attack = attack;
+            this.health = health;
+            this.movement = movement;
+            this.defence = defence;
+            this.range = range;
         }
 
-        public void Attack(GameObject iets)
+        public void Attack(GameObject gameObject)
         {
-            //DO SOMETHING
+            if (CalculateDistance(this, gameObject) < range)
+            {
+                //DO SOMETHING
+                Unit unit = gameObject as Unit;
+                unit.AddHealth(attack);
+            }
+            else
+            {
+                Prompt prompt = new Prompt(50, 20, 615, 350, "", 130, "Out of range!");
+            }
         }
 
         public void Move()
@@ -45,9 +60,9 @@ namespace AdvancedWarsEngine.Classes
             return health;
         }
 
-        public void SetHealth(float value)
+        public float AddHealth(float value)
         {
-            health += value;
+            return health += value;
         }
 
         public float GetDefence()
@@ -57,57 +72,78 @@ namespace AdvancedWarsEngine.Classes
 
         public void AutoMove()
         {
-            //DO SOMETHING
+            if (!owner.GetIsControllable())
+            {
+                //DO SOMETHING
+            }
         }
 
-        public ITargetableBehavior GetTargetableBehavior()
+        public ITargetableBehavior TargetableBehavior
         {
-            return targetableBehavior;
+            get { return targetableBehavior; }
+            set { targetableBehavior = value; }
         }
 
-        public void SetTargetableBehavior(ITargetableBehavior targetableBehavior)
+        public IAttackBehavior AttackBehavior
         {
-            this.targetableBehavior = targetableBehavior;
+            get { return attackBehavior; }
+            set { attackBehavior = value; }
         }
 
-        public IAttackBehavior GetAttackBehavior()
+        public IHealthBehavior HealthBehavior
         {
-            return attackBehavior;
+            get { return healthBehavior; }
+            set { healthBehavior = value; }
         }
 
-        public void SetAttackBehavior(IAttackBehavior attackBehavior)
+        public IMovementBehavior MovementBehavior
         {
-            this.attackBehavior = attackBehavior;
+            get { return movementBehavior; }
+            set { movementBehavior = value;}
         }
 
-        public IHealthBehavior GetHealthBehavior()
+        public IDefenceBehavior DefenceBehavior
         {
-            return healthBehavior;
+            get { return defenceBehavior; }
+            set { defenceBehavior = value; }
         }
 
-        public void SetHealthBehavior(IHealthBehavior healthBehavior)
-        {
-            this.healthBehavior = healthBehavior;
+        private bool getThenSetTarget(List<GameObject> gameObjects)
+        { 
+            return false;
         }
 
-        public IMovementBehavior GetMovementBehavior()
+        public override bool OnTick(List<GameObject> gameObjects, float delta)
         {
-            return movementBehavior;
+            throw new NotImplementedException();
         }
 
-        public void SetMovementBehavior(IMovementBehavior movementBehavior)
+        public override bool CollisionEffect(GameObject gameObject)
         {
-            this.movementBehavior = movementBehavior;
-        }
+            //Check collision from the left or right.
+            if ((gameObject.FromLeft + gameObject.Width) > (FromLeft + Width))
+            {
+                AddFromLeft(-1);
+            }
+            else if ((gameObject.FromLeft + gameObject.Width) < (FromLeft + Width))
+            {
+                AddFromLeft(1);
+            }
 
-        public IDefenceBehavior GetDefenceBehavior()
-        {
-            return defenceBehavior;
-        }
+            //Check collision from top or bottom.
+            if ((gameObject.FromTop + gameObject.Height) > (FromTop + Height))
+            {
+                AddFromTop(-1);
+            }
+            else if ((gameObject.FromTop + gameObject.Height) < (FromTop + Height))
+            {
+                AddFromTop(1);
+            }
 
-        public void SetDefenceBehavior(IDefenceBehavior defenceBehavior)
-        {
-            this.defenceBehavior = defenceBehavior;
+            //If a player is coliding with an object their CollisionEffect is triggered instantly and not after this resolves.
+            //This is so the collision of the enemy still goes even though they are not colliding anymore.
+            gameObject.CollisionEffect(this);
+            return true;
         }
     }
 }
