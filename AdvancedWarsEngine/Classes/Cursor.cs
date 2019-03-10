@@ -17,5 +17,9 @@ namespace AdvancedWarsEngine
 
         }
 
+        public override bool OnTick(List<GameObject> gameObjects, float delta)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
