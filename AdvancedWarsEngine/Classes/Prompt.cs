@@ -26,25 +26,14 @@ namespace AdvancedWarsEngine.Classes
             set { text = value; }
         }
 
-        public override bool CollisionEffect(GameObject gameObject)
-        {
-            return true;
-        }
-
         public override bool OnTick(List<GameObject> gameObjects, float delta)
         {
             currentDuration -= delta;
-
-            float percentage = ((currentDuration - maxDuration) / maxDuration) * 200;
 
             if (currentDuration < 0)
             {
                 gameObjects.Remove(this);
             }
-
-            AddFromLeft(delta / 1000);
-
-            AddFromLeft(percentage);
 
             return true;
         }

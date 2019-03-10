@@ -36,18 +36,29 @@ namespace AdvancedWarsEngine.Classes
             if (CalculateDistance(this, gameObject) < range)
             {
                 //DO SOMETHING
-                Unit unit = gameObject as Unit;
-                unit.AddHealth(attack);
+                if (gameObject is Unit)
+                {
+                    Unit unit = gameObject as Unit;
+                    unit.AddHealth(attack * -1);
+                }
+                else if (gameObject is Structure)
+                {
+                    Structure structure = gameObject as Structure;
+                    structure.AddCapturePoints(attack * -1);
+                }
             }
             else
             {
-                Prompt prompt = new Prompt(50, 20, 615, 350, "", 130, "Out of range!");
+                Prompt prompt = new Prompt(50, 20, 615, 350, 130, "Out of range!");
             }
         }
 
         public void Move()
         {
-            //DO SOMETHING
+            if (isAllowedToAct)
+            {
+                
+            }
         }
 
         public float GetAttack()
@@ -72,7 +83,7 @@ namespace AdvancedWarsEngine.Classes
 
         public void AutoMove()
         {
-            if (!owner.GetIsControllable())
+            if (!owner.IsControllable)
             {
                 //DO SOMETHING
             }
@@ -115,34 +126,6 @@ namespace AdvancedWarsEngine.Classes
 
         public override bool OnTick(List<GameObject> gameObjects, float delta)
         {
-            throw new NotImplementedException();
-        }
-
-        public override bool CollisionEffect(GameObject gameObject)
-        {
-            //Check collision from the left or right.
-            if ((gameObject.FromLeft + gameObject.Width) > (FromLeft + Width))
-            {
-                AddFromLeft(-1);
-            }
-            else if ((gameObject.FromLeft + gameObject.Width) < (FromLeft + Width))
-            {
-                AddFromLeft(1);
-            }
-
-            //Check collision from top or bottom.
-            if ((gameObject.FromTop + gameObject.Height) > (FromTop + Height))
-            {
-                AddFromTop(-1);
-            }
-            else if ((gameObject.FromTop + gameObject.Height) < (FromTop + Height))
-            {
-                AddFromTop(1);
-            }
-
-            //If a player is coliding with an object their CollisionEffect is triggered instantly and not after this resolves.
-            //This is so the collision of the enemy still goes even though they are not colliding anymore.
-            gameObject.CollisionEffect(this);
             return true;
         }
     }

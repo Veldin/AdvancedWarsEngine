@@ -8,7 +8,7 @@ namespace AdvancedWarsEngine.Classes
 {
     abstract class GameObject
     {
-        private bool isAllowedToAct;
+        protected bool isAllowedToAct;
         protected float width;
         protected float height;
         protected float fromTop;
@@ -26,11 +26,11 @@ namespace AdvancedWarsEngine.Classes
             this.fromTop = fromTop;
         }
 
-        public void SetIsAllowedToAct(bool isAllowedToAct)
+        public bool IsAllowedToAct
         {
-            this.isAllowedToAct = isAllowedToAct;
+            get { return isAllowedToAct; }
+            set { isAllowedToAct = value; }
         }
-
 
         public void AddTarget(Target target)
         {
@@ -109,11 +109,11 @@ namespace AdvancedWarsEngine.Classes
             return this.fromLeft += fromLeft;
         }
 
-        public double CalculateDistance(GameObject gameObject1, GameObject gameobject2)
+        public double CalculateDistance(GameObject gameObject1, GameObject gameObject2)
         {
             // Get the horizontal and vertical distance between the two gameobjects
-            float horizontalDistance = gameobject2.FromLeft - gameObject1.FromLeft;
-            float verticalDistance = gameobject2.FromTop - gameObject1.FromTop;
+            float horizontalDistance = (gameObject2.FromLeft + gameObject2.Width / 2) - (gameObject1.FromLeft + gameObject1.Width / 2);
+            float verticalDistance = (gameObject2.FromTop + gameObject2.Height / 2) - (gameObject1.FromTop + gameObject2.Height / 2);
 
             // Using pythagoras theorem to calculate the distance
             float diagonalDistance = (horizontalDistance * horizontalDistance) + (verticalDistance * verticalDistance);
@@ -139,11 +139,6 @@ namespace AdvancedWarsEngine.Classes
                 return false;
             }
 
-
-        public bool CollisionEffect(GameObject gameObject)
-        {
-            return true;
-
             if (fromLeft < gameObject.fromLeft + gameObject.width && fromLeft + width > gameObject.fromLeft)
             {
                 if (fromTop < gameObject.fromTop + gameObject.height && fromTop + height > gameObject.fromTop)
@@ -159,6 +154,14 @@ namespace AdvancedWarsEngine.Classes
          * Effect that happens when this GameObject collides with the given object.
          * The argument is the given gameObject
         */
-        public abstract bool CollisionEffect(GameObject gameObject);
+        public bool CollisionEffect(GameObject gameObject)
+        {
+            //Check if you are comparing to youself.
+            if (this == gameObject)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
