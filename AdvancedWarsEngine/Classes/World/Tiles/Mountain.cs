@@ -6,23 +6,11 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class World
+    class Mountain : Tile
     {
-        private Map map;
-
-        public World()
+        public Mountain(int size) : base(size)
         {
             //DO SOMETHING
-        }
-
-        public void CreateMap()
-        {
-            //DO SOMETHING
-        }
-
-        public Map GetMap()
-        {
-            return map;
         }
     }
 }

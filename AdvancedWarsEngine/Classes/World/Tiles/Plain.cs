@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    static class MapFactory
+    class Plain : Tile
     {
-        public static Map GetMap()
+        public Plain(int size) : base(size)
         {
-            return null;
+            //DO SOMETHING
         }
     }
 }
