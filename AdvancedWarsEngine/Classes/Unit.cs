@@ -124,9 +124,5 @@ namespace AdvancedWarsEngine.Classes
             return false;
         }
 
-        public override bool OnTick(List<GameObject> gameObjects, float delta)
-        {
-            return true;
-        }
     }
 }

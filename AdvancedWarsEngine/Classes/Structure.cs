@@ -28,9 +28,5 @@ namespace AdvancedWarsEngine.Classes
             capturePoints += value;
         }
 
-        public override bool OnTick(List<GameObject> gameObjects, float delta)
-        {
-            return true;
-        }
     }
 }

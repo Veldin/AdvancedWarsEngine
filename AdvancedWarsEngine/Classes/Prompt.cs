@@ -26,16 +26,6 @@ namespace AdvancedWarsEngine.Classes
             set { text = value; }
         }
 
-        public override bool OnTick(List<GameObject> gameObjects, float delta)
-        {
-            currentDuration -= delta;
 
-            if (currentDuration < 0)
-            {
-                gameObjects.Remove(this);
-            }
-
-            return true;
-        }
     }
 }
