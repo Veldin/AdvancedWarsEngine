@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace AdvancedWarsEngine.Classes
 {
     static class Textures
     {
-        private static Dictionary<string, Canvas> textures;
+        public static Dictionary<string, BitmapImage> textures = new Dictionary<string, BitmapImage>();
 
-        private static async Task LoadTextureAsync(/*CanvasControl sender,*/ string location)
-        {/*
+        /*private static async Task LoadTextureAsync(CanvasControl sender, string location)
+        {
             // Define the new texture
             CanvasBitmap sprite;
 
@@ -30,7 +31,7 @@ namespace AdvancedWarsEngine.Classes
                 Debug.WriteLine(location);
                 Debug.WriteLine(e.StackTrace);
             }
-        */}
+        }*/
 
 
         /**********************************************************************
@@ -38,8 +39,8 @@ namespace AdvancedWarsEngine.Classes
          * it calls the setTextureAsync to set the texture. Afterwards it still
          * returns the new set texture, unless the texture could not be found.
          * ********************************************************************/
-        public static void GetTexture(/*CanvasControl sender,*/ string location)
-        {/*
+        /*public static void GetTexture(CanvasControl sender, string location)
+        {
             // Check if the dictionary has the key already
             if (!textures.Keys.Contains(location))
             {
@@ -65,8 +66,8 @@ namespace AdvancedWarsEngine.Classes
 
             // Return the requested texture
             return textures[location];
-        */
-        }
+        
+        }*/
     }
 }
 
