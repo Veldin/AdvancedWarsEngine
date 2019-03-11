@@ -8,7 +8,7 @@ namespace AdvancedWarsEngine.Classes
 {
     class Plain : Tile
     {
-        public Plain(int size) : base(size)
+        public Plain() : base()
         {
             //DO SOMETHING
         }

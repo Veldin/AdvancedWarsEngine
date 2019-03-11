@@ -14,9 +14,9 @@ namespace AdvancedWarsEngine.Classes
             {
                 //TODO: add more tile types
                 case "Mountain":
-                    return new Mountain(40);
+                    return new Mountain();
                 default: //plain
-                    return new Plain(40);
+                    return new Plain();
             }
         }
     }

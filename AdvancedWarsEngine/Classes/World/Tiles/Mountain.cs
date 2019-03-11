@@ -8,7 +8,7 @@ namespace AdvancedWarsEngine.Classes
 {
     class Mountain : Tile
     {
-        public Mountain(int size) : base(size)
+        public Mountain() : base()
         {
             //DO SOMETHING
         }
