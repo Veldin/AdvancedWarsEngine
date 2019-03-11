@@ -8,6 +8,6 @@ namespace AdvancedWarsEngine.Classes.Behaviors
 {
     public interface ICapturePointsBehavior
     {
-        float CapturePoints();
+        void CapturePoints(Structure structure);
     }
 }

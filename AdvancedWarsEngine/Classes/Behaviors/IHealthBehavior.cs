@@ -1,7 +1,7 @@
 ﻿namespace AdvancedWarsEngine.Classes
 {
-    public interface IHealthBehavior
+    interface IHealthBehavior
     {
-        float Health();
+        void Health(Unit unit);
     }
 }

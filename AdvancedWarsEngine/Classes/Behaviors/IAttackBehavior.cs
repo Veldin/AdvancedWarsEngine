@@ -1,7 +1,7 @@
 ﻿namespace AdvancedWarsEngine.Classes
 {
-    public interface IAttackBehavior
+    interface IAttackBehavior
     {
-        float Attack();
+        void Attack(Unit unit, GameObject gameObject);
     }
 }

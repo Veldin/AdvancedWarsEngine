@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    public interface ITargetableBehavior
+    interface ITargetableBehavior
     {
-        bool IsTargetable();
+        void IsTargetable(Unit unit);
     }
 }

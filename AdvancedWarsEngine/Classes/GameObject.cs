@@ -17,12 +17,13 @@ namespace AdvancedWarsEngine.Classes
         protected BitmapImage sprite;
         protected IOnTickBehavior onTickBehavior;
         
-        public GameObject(float width, float height, float fromTop, float fromLeft)
+        public GameObject(float width, float height, float fromTop, float fromLeft, BitmapImage sprite)
         {
             this.width = width;
             this.height = height;
             this.fromLeft = fromLeft;
             this.fromTop = fromTop;
+            this.sprite = sprite;
         }
 
         public bool IsAllowedToAct

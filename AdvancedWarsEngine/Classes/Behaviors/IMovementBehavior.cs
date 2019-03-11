@@ -1,7 +1,7 @@
 ﻿namespace AdvancedWarsEngine.Classes
 {
-    public interface IMovementBehavior
+    interface IMovementBehavior
     {
-        float Movement();
+        void Movement(Unit unit);
     }
 }
