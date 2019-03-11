@@ -83,10 +83,7 @@ namespace AdvancedWarsEngine.Classes
 
         public void AutoMove()
         {
-            if (!owner.IsControllable)
-            {
                 //DO SOMETHING
-            }
         }
 
         public ITargetableBehavior TargetableBehavior
