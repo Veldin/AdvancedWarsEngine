@@ -8,6 +8,6 @@ namespace AdvancedWarsEngine.Classes.Behaviors
 {
     public interface IOnTickBehavior
     {
-        float OnTick();
+        bool OnTick();
     }
 }
