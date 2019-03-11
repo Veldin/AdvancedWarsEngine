@@ -37,10 +37,10 @@ namespace AdvancedWarsEngine.Classes
             set { size = value; }
         }
 
-        public Tile(int size)
+        public Tile()
         {
             this.selected = false;
-            this.size = size;
+            this.size = 32;
         }
 
         public bool toggleSelection()
