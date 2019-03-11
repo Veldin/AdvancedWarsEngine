@@ -88,8 +88,8 @@
     <Compile Include="Classes\World\Tile.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\UnitFactory.cs" />
-    <Compile Include="Classes\World\Tile\Mountain.cs" />
-    <Compile Include="Classes\World\Tile\Plain.cs" />
+    <Compile Include="Classes\World\Tiles\Mountain.cs" />
+    <Compile Include="Classes\World\Tiles\Plain.cs" />
     <Compile Include="Classes\World\World.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
