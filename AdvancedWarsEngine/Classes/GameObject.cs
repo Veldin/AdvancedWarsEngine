@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -16,6 +19,17 @@ namespace AdvancedWarsEngine.Classes
         private List<Target> targets;
         protected BitmapImage sprite;
         protected IOnTickBehavior onTickBehavior;
+
+        public Rectangle rectangle;
+        public string assemblyName;
+
+        public Random random;
+        public Boolean destroyed;
+
+        //The sprite location and the CanvasBitmap are stored seperatly
+        //This is so the location gets changed more times in a frame the canvasBitmap doesn't have to get loaded more then once a frame.
+        //protected CanvasBitmap sprite;
+        protected String location;
         
         public GameObject(float width, float height, float fromTop, float fromLeft, BitmapImage sprite)
         {
@@ -24,6 +38,17 @@ namespace AdvancedWarsEngine.Classes
             this.fromLeft = fromLeft;
             this.fromTop = fromTop;
             this.sprite = sprite;
+
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                rectangle = new Rectangle();
+            }));
+
+            assemblyName = "AdvancedWarsEngine";
+
+            setActiveBitmap("Sprites/BG/Backgrounds_-_Normal.png");
+            location = "Sprites/BG/Backgrounds_-_Normal.png";
+            setActiveBitmap(location);
         }
 
         public bool IsAllowedToAct
@@ -114,6 +139,40 @@ namespace AdvancedWarsEngine.Classes
             double distance = Math.Sqrt(diagonalDistance);
 
             return distance;
+        }
+
+        public BitmapImage getActiveBitmap(String assemblyName, Boolean reload = false)
+        {
+            if (!Textures.textures.ContainsKey(location))
+            {
+                BitmapImage newBitmap = new BitmapImage(new Uri("pack://application:,,,/" + assemblyName + ";component/" + location, UriKind.Absolute));
+                Textures.textures.Add(location, newBitmap);
+
+                return newBitmap;
+            }
+            else
+            {
+                return Textures.textures[location];
+            }
+        }
+
+        public Boolean setActiveBitmap(string set)
+        {
+            if (location != set)
+            {
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    location = set;
+                    //if (rectangle is null) { rectangle = new Rectangle(); }
+                    rectangle.Fill = new ImageBrush
+                    {
+                        ImageSource = getActiveBitmap(assemblyName)
+                    };
+                });
+                return true;
+            }
+
+            return false;
         }
 
         //Any object can edit the gameObjects of the game while the logic is running.

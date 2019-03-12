@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Shapes;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -10,6 +12,7 @@ namespace AdvancedWarsEngine.Classes
     {
         private Tile[,] tiles;
         private string sprite;
+        public Rectangle rectangle;
 
         public Tile[,] Tiles
         {
@@ -28,6 +31,11 @@ namespace AdvancedWarsEngine.Classes
             this.tiles = tiles;
             this.sprite = sprite;
             //DO SOMETHING
+
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                rectangle = new Rectangle();
+            }));
         }
 
         public Tile GetTile(int x, int y)

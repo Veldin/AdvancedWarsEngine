@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -17,6 +18,7 @@ namespace AdvancedWarsEngine.Classes
 
         public World()
         {
+            
             //DO SOMETHING
             CreateMap();
         }
