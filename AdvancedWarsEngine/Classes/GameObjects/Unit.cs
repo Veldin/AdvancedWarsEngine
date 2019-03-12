@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -20,8 +21,8 @@ namespace AdvancedWarsEngine.Classes
         protected IMovementBehavior movementBehavior;
         protected IDefenceBehavior defenceBehavior;
 
-        public Unit(float width, float height, float fromTop, float fromLeft, bool isTargetable, float attack, float health, float movement, float defence, float range)
-            : base(width, height, fromTop, fromLeft)
+        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, bool isTargetable, float attack, float health, float movement, float defence, float range)
+            : base(width, height, fromTop, fromLeft, sprite)
         {
             this.isTargetable = isTargetable;
             this.attack = attack;
@@ -33,32 +34,27 @@ namespace AdvancedWarsEngine.Classes
 
         public void Attack(GameObject gameObject)
         {
-            if (CalculateDistance(this, gameObject) < range)
-            {
-                //DO SOMETHING
-                if (gameObject is Unit)
-                {
-                    Unit unit = gameObject as Unit;
-                    unit.AddHealth(attack * -1);
-                }
-                else if (gameObject is Structure)
-                {
-                    Structure structure = gameObject as Structure;
-                    structure.AddCapturePoints(attack * -1);
-                }
-            }
-            else
-            {
-                Prompt prompt = new Prompt(50, 20, 615, 350, 130, "Out of range!");
-            }
+            attackBehavior.Attack(this, gameObject);
         }
 
         public void Move()
         {
-            if (isAllowedToAct)
-            {
-                
-            }
+            movementBehavior.Movement(this);
+        }
+
+        public void Defence()
+        {
+            defenceBehavior.Defence(this);
+        }
+
+        public void Health()
+        {
+            healthBehavior.Health(this);
+        }
+
+        public void Target()
+        {
+            targetableBehavior.IsTargetable(this);
         }
 
         public float GetAttack()
@@ -83,10 +79,7 @@ namespace AdvancedWarsEngine.Classes
 
         public void AutoMove()
         {
-            if (!owner.IsControllable)
-            {
                 //DO SOMETHING
-            }
         }
 
         public ITargetableBehavior TargetableBehavior
@@ -118,11 +111,5 @@ namespace AdvancedWarsEngine.Classes
             get { return defenceBehavior; }
             set { defenceBehavior = value; }
         }
-
-        private bool getThenSetTarget(List<GameObject> gameObjects)
-        { 
-            return false;
-        }
-
     }
 }

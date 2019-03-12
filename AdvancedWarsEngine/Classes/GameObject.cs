@@ -15,15 +15,15 @@ namespace AdvancedWarsEngine.Classes
         protected float fromLeft;
         private List<Target> targets;
         protected BitmapImage sprite;
-        protected Player owner;
         protected IOnTickBehavior onTickBehavior;
         
-        public GameObject(float width, float height, float fromTop, float fromLeft)
+        public GameObject(float width, float height, float fromTop, float fromLeft, BitmapImage sprite)
         {
             this.width = width;
             this.height = height;
             this.fromLeft = fromLeft;
             this.fromTop = fromTop;
+            this.sprite = sprite;
         }
 
         public bool IsAllowedToAct
@@ -77,12 +77,6 @@ namespace AdvancedWarsEngine.Classes
             set { sprite = value; }
         }
 
-        public Player Owner
-        {
-            get { return owner; }
-            set { owner = value; }
-        }
-
         public IOnTickBehavior OnTickBehavior
         {
             get { return onTickBehavior; }
@@ -126,7 +120,7 @@ namespace AdvancedWarsEngine.Classes
         //And Also get the delta for timed events.
         public bool OnTick(List<GameObject> gameObjects, float delta)
         {
-            return onTickBehavior.OnTick();
+            return onTickBehavior.OnTick(this, gameObjects, delta);
         }
 
         /* IsColliding */

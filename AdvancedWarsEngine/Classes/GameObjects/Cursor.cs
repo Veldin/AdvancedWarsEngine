@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace AdvancedWarsEngine
 {
     class Cursor : GameObject
     {
 
-        public Cursor(float width, float height, float fromLeft, float fromTop)
-        : base(width, height, fromLeft, fromTop)
+        public Cursor(float width, float height, float fromLeft, float fromTop, BitmapImage sprite)
+        : base(width, height, fromLeft, fromTop, sprite)
         {
             //setActiveBitmap("Assets/Cursor1.gif");
 

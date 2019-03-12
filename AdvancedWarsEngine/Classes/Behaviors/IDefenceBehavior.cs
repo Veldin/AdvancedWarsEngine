@@ -1,7 +1,8 @@
 ﻿namespace AdvancedWarsEngine.Classes
 {
-    public interface IDefenceBehavior
+    interface IDefenceBehavior
     {
-        float Defence();
+        void Defence(Tile tile);
+        void Defence(Unit unit);
     }
 }

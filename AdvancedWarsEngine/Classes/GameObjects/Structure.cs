@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AdvancedWarsEngine.Classes.Behaviors;
 using System.Windows.Media.Imaging;
 
 namespace AdvancedWarsEngine.Classes
@@ -10,9 +11,10 @@ namespace AdvancedWarsEngine.Classes
     class Structure : GameObject
     {
         protected float capturePoints;
+        private ICapturePointsBehavior capturePointsBehavior;
 
-        public Structure(float width, float height, float fromTop, float fromLeft)
-            : base(width, height, fromTop, fromLeft)
+        public Structure(float width, float height, float fromTop, float fromLeft, BitmapImage sprite)
+            : base(width, height, fromTop, fromLeft, sprite)
         {
             // DO SOMETHING
         }
@@ -28,5 +30,9 @@ namespace AdvancedWarsEngine.Classes
             capturePoints += value;
         }
 
+        public void Capture()
+        {
+            capturePointsBehavior.CapturePoints(this);
+        }
     }
 }

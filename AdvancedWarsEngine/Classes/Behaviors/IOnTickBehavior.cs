@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes.Behaviors
 {
-    public interface IOnTickBehavior
+    interface IOnTickBehavior
     {
-        bool OnTick();
+        bool OnTick(GameObject gameobject, List<GameObject> gameObjects, float delta);
     }
 }

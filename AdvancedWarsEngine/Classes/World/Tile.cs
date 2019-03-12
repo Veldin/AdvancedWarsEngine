@@ -12,6 +12,13 @@ namespace AdvancedWarsEngine.Classes
         private Structure occupiedStructure;
         private Unit occupiedUnit;
         private int size;
+        private IDefenceBehavior defenceBehavior;
+
+        public Tile()
+        {
+            selected = false;
+            size = 32;
+        }
 
         public bool Selected
         {
@@ -37,15 +44,14 @@ namespace AdvancedWarsEngine.Classes
             set { size = value; }
         }
 
-        public Tile()
-        {
-            this.selected = false;
-            this.size = 32;
-        }
-
         public bool toggleSelection()
         {
             return true;
+        }
+
+        public void Defence()
+        {
+            defenceBehavior.Defence(this);
         }
     }
 }

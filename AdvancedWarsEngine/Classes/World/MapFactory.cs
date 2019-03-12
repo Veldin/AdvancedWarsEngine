@@ -40,7 +40,6 @@ namespace AdvancedWarsEngine.Classes
                     }
                     break;
             }
-
             return new Map(tiles, sprite);
         }
     }
