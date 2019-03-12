@@ -10,14 +10,14 @@ namespace AdvancedWarsEngine.Classes
     {
         public static Map GetMap(string level)
         {
-            Tile[,] tiles = new Tile[25,25];
-            string sprite = "MAP_SPRITE"; //rename to whatever it is called later
+            Tile[,] tiles = new Tile[10,10];
+            string sprite;
 
             switch (level)
             {
                 //TODO: add more maps
                 case "mountainLevel":
-                    sprite = "MOUNTAIN_LEVEL_SPRITE";
+                    sprite = "/Sprites/Maps/Map1.png";
 
                     tiles[0, 0] = TileFactory.GetTile("Mountain");
                     tiles[0, 1] = TileFactory.GetTile("Mountain");

@@ -223,7 +223,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Sprites\Maps\Map1.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Sprites\BG\Backgrounds_-_Normal.png" />
     <Resource Include="Sprites\BG\Water.png" />
