@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Windows.Media.Imaging;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -15,10 +16,10 @@ namespace AdvancedWarsEngine.Classes
             switch (value)
             {
                 case "":
-                    GameObject prompt = new Prompt(width, height, fromTop, fromLeft);
+                    BitmapImage sprite = new BitmapImage();
+                    GameObject prompt = new Prompt(width, height, fromTop, fromLeft, sprite);
                     return prompt;
             }
-
 
             // Give feedback and return null
             Debug.WriteLine("No prompt is created because there is no prompt with that name.");
