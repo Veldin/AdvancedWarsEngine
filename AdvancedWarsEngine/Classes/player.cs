@@ -8,10 +8,10 @@ namespace AdvancedWarsEngine.Classes
 {
     class Player
     {
-        protected bool isControllable;                    // Checks if this player can be controlled by an actual person
-        protected bool isTurn;                            // Checks if it's this players its turn
-        private List<GameObject> gameObjects;           // All the gameObject that are owned by this player
-        protected Player nextPlayer;                      // This is the who gets the turn when this players turn ends
+        protected bool isControllable;                      // Checks if this player can be controlled by an actual person
+        protected bool isTurn;                              // Checks if it's this players its turn
+        private List<GameObject> gameObjects;               // All the gameObject that are owned by this player
+        protected Player nextPlayer;                        // This is the who gets the turn when this players turn ends
 
         public Player(bool isControllable)
         {
