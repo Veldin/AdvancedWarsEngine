@@ -23,7 +23,7 @@ namespace AdvancedWarsEngine.Classes
 
         public void CreateMap()
         {
-            map = MapFactory.GetMap("Plains");
+            map = MapFactory.GetMap("mountainLevel");
         }
     }
 }
