@@ -8,9 +8,9 @@ namespace AdvancedWarsEngine.Classes
 {
     class AA_InfantryHealthBehavior : IHealthBehavior
     {
-        public void health(Unit unit)
+        public void Health(Unit unit)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

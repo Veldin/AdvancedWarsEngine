@@ -9,11 +9,11 @@ namespace AdvancedWarsEngine.Classes
 {
     class Unit : GameObject
     {
-        //private bool isTargetable;
-        //private float attack;
-        //private float health;
-        //private float movement;
-        //private float defence;
+        private bool isTargetable;
+        private float attack;
+        private float health;
+        private float movement;
+        private float defence;
         private float range;
         protected ITargetableBehavior targetableBehavior;
         protected IAttackBehavior attackBehavior;
