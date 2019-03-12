@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes.Behaviors
 {
-    public interface ICapturePointsBehavior
+    interface ICapturePointsBehavior
     {
         void CapturePoints(Structure structure);
     }

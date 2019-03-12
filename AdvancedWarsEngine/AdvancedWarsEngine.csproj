@@ -71,7 +71,7 @@
     <Compile Include="Classes\Behaviors\IDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IHealthBehavior.cs" />
     <Compile Include="Classes\Behaviors\IMovementBehavior.cs" />
-    <Compile Include="Classes\Cursor.cs" />
+    <Compile Include="Classes\GameObjects\Cursor.cs" />
     <Compile Include="Classes\FactoryProducer.cs" />
     <Compile Include="Classes\Textures.cs" />
     <Compile Include="Classes\GameObject.cs" />

@@ -3,19 +3,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AdvancedWarsEngine
 {
@@ -38,6 +32,7 @@ namespace AdvancedWarsEngine
         private World world;
         private Player player;
         private List<GameObject> gameObjects;
+        private BitmapImage sprite;
 
         //The max fps we want to run at
         private float fps;  //The set FPS limit
@@ -48,7 +43,7 @@ namespace AdvancedWarsEngine
         private int renderDistance;
         
         //Holds string interpertation of all keys that are pressed right now
-        private HashSet<String> pressedKeys;
+        private HashSet<string> pressedKeys;
 
         private Cursor cursor;
 
@@ -60,7 +55,7 @@ namespace AdvancedWarsEngine
             height = 720;
             renderDistance = 1200;
 
-            pressedKeys = new HashSet<String>();
+            pressedKeys = new HashSet<string>();
 
             backgroundBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 24, 40, 80));
 
@@ -70,8 +65,8 @@ namespace AdvancedWarsEngine
             GetWindow(this).KeyUp += KeyUp;
             GetWindow(this).KeyDown += KeyDown;
 
-            this.Cursor = Cursors.None;
-            cursor = new Cursor(30, 30, 300, 300);
+            Cursor = Cursors.None;
+            cursor = new Cursor(30, 30, 300, 300, sprite);
 
             fps = 999999999; //Desired max fps.
             interval = 1000 / fps;
