@@ -9,11 +9,11 @@ namespace AdvancedWarsEngine.Classes
 {
     class Unit : GameObject
     {
-        private bool isTargetable;
-        private float attack;
-        private float health;
-        private float movement;
-        private float defence;
+        //private bool isTargetable;
+        //private float attack;
+        //private float health;
+        //private float movement;
+        //private float defence;
         private float range;
         protected ITargetableBehavior targetableBehavior;
         protected IAttackBehavior attackBehavior;
@@ -21,14 +21,14 @@ namespace AdvancedWarsEngine.Classes
         protected IMovementBehavior movementBehavior;
         protected IDefenceBehavior defenceBehavior;
 
-        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, bool isTargetable, float attack, float health, float movement, float defence, float range)
+        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, ITargetableBehavior isTargetable, IAttackBehavior attack, IHealthBehavior health, IMovementBehavior movement, IDefenceBehavior defence, float range = 0)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            this.isTargetable = isTargetable;
+            /*this.isTargetable = isTargetable;
             this.attack = attack;
             this.health = health;
             this.movement = movement;
-            this.defence = defence;
+            this.defence = defence;*/
             this.range = range;
         }
 
