@@ -1,10 +1,8 @@
 ﻿namespace AdvancedWarsEngine.Classes
 {
-    abstract class AbstractFactory
+    interface IAbstractFactory
     {
-        public GameObject GetGameObject()
-        {
-            return null;
-        }
+        GameObject GetGameObject(string value, float width, float height, float fromTop, float fromLeft);
+
     }
 }
