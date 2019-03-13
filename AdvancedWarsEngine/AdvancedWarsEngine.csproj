@@ -279,6 +279,21 @@
     <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AV_Vehicle.png" />
     <Resource Include="Sprites\Yellow_Comet.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Sprites\Arrows\ArrowBottomToLeft.gif" />
+    <Resource Include="Sprites\Arrows\ArrowBottomToRight.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadBottom.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadLeft.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadRight.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadTop.gif" />
+    <Resource Include="Sprites\Arrows\ArrowLeftToRight.gif" />
+    <Resource Include="Sprites\Arrows\ArrowLeftToTop.gif" />
+    <Resource Include="Sprites\Arrows\ArrowTopToBottom.gif" />
+    <Resource Include="Sprites\Arrows\ArrowTopToRight.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Cursors\defaultCursor.gif" />
+    <Resource Include="Sprites\Cursors\windowsCursor.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
