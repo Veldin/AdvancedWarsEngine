@@ -8,6 +8,6 @@ namespace AdvancedWarsEngine.Classes
 {
     interface ITargetableBehavior
     {
-        void IsTargetable(Unit unit);
+        void IsTargetable(Unit unit, Tile tile);
     }
 }

@@ -17,18 +17,11 @@ namespace AdvancedWarsEngine.Classes
         private float range;
         protected ITargetableBehavior targetableBehavior;
         protected IAttackBehavior attackBehavior;
-        protected IHealthBehavior healthBehavior;
-        protected IMovementBehavior movementBehavior;
         protected IDefenceBehavior defenceBehavior;
 
-        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, ITargetableBehavior isTargetable, IAttackBehavior attack, IHealthBehavior health, IMovementBehavior movement, IDefenceBehavior defence, float range = 0)
+        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, ITargetableBehavior isTargetable, IAttackBehavior attack, IDefenceBehavior defence, float range = 0)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            /*this.isTargetable = isTargetable;
-            this.attack = attack;
-            this.health = health;
-            this.movement = movement;
-            this.defence = defence;*/
             this.range = range;
         }
 
@@ -39,7 +32,6 @@ namespace AdvancedWarsEngine.Classes
 
         public void Move()
         {
-            movementBehavior.Movement(this);
         }
 
         public void Defence()
@@ -49,12 +41,11 @@ namespace AdvancedWarsEngine.Classes
 
         public void Health()
         {
-            healthBehavior.Health(this);
         }
 
-        public void Target()
+        public void Target(Tile tile)
         {
-            targetableBehavior.IsTargetable(this);
+            targetableBehavior.IsTargetable(this, tile);
         }
 
         public float GetAttack()
