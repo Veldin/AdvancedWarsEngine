@@ -59,7 +59,7 @@ namespace AdvancedWarsEngine.Classes
 
         public void Target(Tile tile)
         {
-            rangeBehavior.Range(this, tile);
+            //rangeBehavior.Range(this, float fromLeft, float fromTop, tile, float targetFromLeft, float targetFromTop);
         }
 
         public void AutoMove()

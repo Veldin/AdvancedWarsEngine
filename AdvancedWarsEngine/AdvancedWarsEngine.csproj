@@ -64,9 +64,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Behaviors\AttackBehaviors\AA_InfantryAttackBehavior.cs" />
-    <Compile Include="Classes\Behaviors\DefenceBehaviors\AA_InfantryDefenceBehavior.cs" />
+    <Compile Include="Classes\Behaviors\DefenceBehaviors\InfantryDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />
-    <Compile Include="Classes\Behaviors\RangeBehaviors\InfantryRangeBehavior.cs" />
+    <Compile Include="Classes\Behaviors\RangeBehaviors\LowRangeBehavior.cs" />
     <Compile Include="Classes\Enums\EUnitType.cs" />
     <Compile Include="Classes\IAbstractFactory.cs" />
     <Compile Include="Classes\Behaviors\IOnTickBehavior.cs" />

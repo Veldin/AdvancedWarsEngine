@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Windows.Media.Imaging;
+using AdvancedWarsEngine.Classes.Enums;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -12,6 +13,12 @@ namespace AdvancedWarsEngine.Classes
     {
         /**********************************************************************
          * This class has one function which returns a Unit as GameObject.
+         * ARGUMENTS:
+         * value: The Unit preset
+         * width: The width of the Unit
+         * height: The height of the Unit
+         * fromTop: The y position of the Unit
+         * fromLeft: The x position of the Unit
          * ********************************************************************/
         public GameObject GetGameObject(string value, float width, float height, float fromTop, float fromLeft)
         {
@@ -26,92 +33,92 @@ namespace AdvancedWarsEngine.Classes
             {
                 case "AA_Infantry":     // Anti-Air Infantry
                     // Create the behaviors for this unit
-                    rangeBehavior   = new InfantryRangeBehavior();
+                    rangeBehavior   = new LowRangeBehavior();
                     attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new AA_InfantryDefenceBehavior();
+                    defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AA_Infantry", rangeBehavior, attackBehavior, defenceBehavior);
+                    unit = new Unit(width, height, fromTop, fromLeft, "AA_Infantry", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Infantry);
                     break;
 
                 case "AV_Infantry":     // Anti-Vehicle Infantry
                     // Create the behaviors for this unit
-                    rangeBehavior   = new InfantryRangeBehavior();
+                    rangeBehavior   = new LowRangeBehavior();
                     attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new AA_InfantryDefenceBehavior();
+                    defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AV_Infantry", rangeBehavior, attackBehavior, defenceBehavior);
+                    unit = new Unit(width, height, fromTop, fromLeft, "AV_Infantry", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Infantry);
                     break;
 
                     case "AI_Infantry":     // Anti-Infantry Infantry
                     // Create the behaviors for this unit
-                    rangeBehavior   = new InfantryRangeBehavior();
+                    rangeBehavior   = new LowRangeBehavior();
                     attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new AA_InfantryDefenceBehavior();
+                    defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AI_Infantry", rangeBehavior, attackBehavior, defenceBehavior);
+                    unit = new Unit(width, height, fromTop, fromLeft, "AI_Infantry", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Infantry);
                     break;
 
                 case "AI_Vehicle":          // Anti_Infantry Vehicle
                     // Create the behaviors for this unit
-                    rangeBehavior   = new InfantryRangeBehavior();
+                    rangeBehavior   = new LowRangeBehavior();
                     attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new AA_InfantryDefenceBehavior();
+                    defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "IV_Vehicle", rangeBehavior, attackBehavior, defenceBehavior);
+                    unit = new Unit(width, height, fromTop, fromLeft, "IV_Vehicle", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
                     break;
 
                 case "AV_Vehicle":          // Anti-Vehicle Vehicle
                     // Create the behaviors for this unit
-                    rangeBehavior   = new InfantryRangeBehavior();
+                    rangeBehavior   = new LowRangeBehavior();
                     attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new AA_InfantryDefenceBehavior();
+                    defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AV_Vehicle", rangeBehavior, attackBehavior, defenceBehavior);
+                    unit = new Unit(width, height, fromTop, fromLeft, "AV_Vehicle", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
                     break;
 
                 case "AA_Vehicle":          // Anti-Air Vehicle
                     // Create the behaviors for this unit
-                    rangeBehavior   = new InfantryRangeBehavior();
+                    rangeBehavior   = new LowRangeBehavior();
                     attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new AA_InfantryDefenceBehavior();
+                    defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AA_Vehicle", rangeBehavior, attackBehavior, defenceBehavior);
+                    unit = new Unit(width, height, fromTop, fromLeft, "AA_Vehicle", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
                     break;
 
                 case "AI_Air":              // Anti_Infantry Air
                     // Create the behaviors for this unit
-                    rangeBehavior   = new InfantryRangeBehavior();
+                    rangeBehavior   = new LowRangeBehavior();
                     attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new AA_InfantryDefenceBehavior();
+                    defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AI_Air", rangeBehavior, attackBehavior, defenceBehavior);
+                    unit = new Unit(width, height, fromTop, fromLeft, "AI_Air", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);
                     break;
 
                 case "AV_Air":              // Anti-Vehicle Air
                     // Create the behaviors for this unit
-                    rangeBehavior   = new InfantryRangeBehavior();
+                    rangeBehavior   = new LowRangeBehavior();
                     attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new AA_InfantryDefenceBehavior();
+                    defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AV_Air", rangeBehavior, attackBehavior, defenceBehavior);
+                    unit = new Unit(width, height, fromTop, fromLeft, "AV_Air", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);
                     break;
 
                 case "AA_Air":              // Anti-Air Air
                     // Create the behaviors for this unit
-                    rangeBehavior   = new InfantryRangeBehavior();
+                    rangeBehavior   = new LowRangeBehavior();
                     attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new AA_InfantryDefenceBehavior();
+                    defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AA_Air", rangeBehavior, attackBehavior, defenceBehavior);
+                    unit = new Unit(width, height, fromTop, fromLeft, "AA_Air", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);
                     break;
             }
 

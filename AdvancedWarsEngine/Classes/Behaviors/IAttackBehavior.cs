@@ -2,6 +2,10 @@
 {
     interface IAttackBehavior
     {
-        void Attack(Unit unit, GameObject gameObject);
+        /****************************************************
+         * Unit         = The unit that attacks
+         * gameObject   = The gameObject that gets attacked
+         * **************************************************/
+        float Attack(Unit unit, GameObject gameObject);
     }
 }

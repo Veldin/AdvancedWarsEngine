@@ -2,6 +2,10 @@
 {
     interface IDefenceBehavior
     {
-        void Defence(Unit unit, Tile tile);
+        /****************************************************
+         * Unit     = The Unit that defends
+         * Tile     = The Tile were the Unit stands on
+         * **************************************************/
+        float Defence(Unit unit, Tile tile);
     }
 }

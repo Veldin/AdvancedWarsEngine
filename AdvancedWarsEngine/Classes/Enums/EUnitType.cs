@@ -6,8 +6,5 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes.Enums
 {
-    class EUnitType
-    {
-        public enum type { Infantry, Vehicle, Air};
-    }
+    public enum EUnitType { Infantry, Vehicle, Air};
 }
