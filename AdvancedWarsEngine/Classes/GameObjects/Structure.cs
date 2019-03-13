@@ -12,7 +12,7 @@ namespace AdvancedWarsEngine.Classes
     {
         protected float capturePoints;
 
-        public Structure(float width, float height, float fromTop, float fromLeft, BitmapImage sprite)
+        public Structure(float width, float height, float fromTop, float fromLeft, string sprite)
             : base(width, height, fromTop, fromLeft, sprite)
         {
             capturePoints = 100;

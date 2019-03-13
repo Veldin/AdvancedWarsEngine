@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using AdvancedWarsEngine.Classes.Enums;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -14,14 +15,16 @@ namespace AdvancedWarsEngine.Classes
         protected IRangeBehavior rangeBehavior;
         protected IAttackBehavior attackBehavior;
         protected IDefenceBehavior defenceBehavior;
+        private EUnitType unitType;
 
-        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, IRangeBehavior rangeBehavior, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior)
+        public Unit(float width, float height, float fromTop, float fromLeft, string sprite, IRangeBehavior rangeBehavior, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior, EUnitType unitType)
             : base(width, height, fromTop, fromLeft, sprite)
         {
             health = 100;
             this.rangeBehavior = rangeBehavior;
             this.attackBehavior = attackBehavior;
             this.defenceBehavior = defenceBehavior;
+            this.unitType = unitType;
         }
 
         public void Attack(GameObject gameObject)
@@ -42,6 +45,11 @@ namespace AdvancedWarsEngine.Classes
         public float Health
         {
             get { return health; }
+        }
+
+        public EUnitType UnitType
+        {
+            get { return unitType; }
         }
 
         public float AddHealth(float value)

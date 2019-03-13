@@ -16,7 +16,7 @@ namespace AdvancedWarsEngine.Classes
         protected float fromTop;
         protected float fromLeft;
         private List<Target> targets;
-        protected BitmapImage sprite;
+        protected string sprite;
         protected IOnTickBehavior onTickBehavior;
 
         public Rectangle rectangle;
@@ -30,7 +30,7 @@ namespace AdvancedWarsEngine.Classes
         //protected CanvasBitmap sprite;
         protected string location;
         
-        public GameObject(float width, float height, float fromTop, float fromLeft, BitmapImage sprite)
+        public GameObject(float width, float height, float fromTop, float fromLeft, string sprite)
         {
             this.width = width;
             this.height = height;
@@ -95,7 +95,7 @@ namespace AdvancedWarsEngine.Classes
             set { fromLeft = value; }
         }
 
-        public BitmapImage Sprite
+        public string Sprite
         {
             get { return sprite; }
             set { sprite = value; }
