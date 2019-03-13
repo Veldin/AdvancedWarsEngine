@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AA_InfantryTargetableBehavior : ITargetableBehavior
+    class InfantryRangeBehavior : IRangeBehavior
     {
-        public void IsTargetable(Unit unit, Tile tile)
+        public void Range(Unit unit, Tile tile)
         {
 
         }

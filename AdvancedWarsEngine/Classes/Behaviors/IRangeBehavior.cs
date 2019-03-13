@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AA_InfantryHealthBehavior : IHealthBehavior
+    interface IRangeBehavior
     {
-        public void Health(Unit unit)
-        {
-            throw new NotImplementedException();
-        }
+        void Range(Unit unit, Tile tile);
     }
 }

@@ -65,16 +65,12 @@
     </Compile>
     <Compile Include="Classes\Behaviors\AttackBehaviors\AA_InfantryAttackBehavior.cs" />
     <Compile Include="Classes\Behaviors\DefenceBehaviors\AA_InfantryDefenceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\HealthBehaviors\AA_InfantryHealthBehavior.cs" />
-    <Compile Include="Classes\Behaviors\MovementBehaviors\AA_InfantryMovementBehavior.cs" />
-    <Compile Include="Classes\Behaviors\TargetableBehaviors\AA_InfantryTargetableBehavior.cs" />
+    <Compile Include="Classes\Behaviors\RangeBehaviors\InfantryRangeBehavior.cs" />
     <Compile Include="Classes\IAbstractFactory.cs" />
     <Compile Include="Classes\Behaviors\IOnTickBehavior.cs" />
     <Compile Include="Classes\Camera.cs" />
     <Compile Include="Classes\Behaviors\IAttackBehavior.cs" />
     <Compile Include="Classes\Behaviors\IDefenceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\IHealthBehavior.cs" />
-    <Compile Include="Classes\Behaviors\IMovementBehavior.cs" />
     <Compile Include="Classes\GameObjects\Cursor.cs" />
     <Compile Include="Classes\FactoryProducer.cs" />
     <Compile Include="Classes\Textures.cs" />
@@ -282,5 +278,6 @@
     <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AV_Vehicle.png" />
     <Resource Include="Sprites\Yellow_Comet.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
