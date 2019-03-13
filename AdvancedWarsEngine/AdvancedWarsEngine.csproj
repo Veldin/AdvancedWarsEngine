@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="Classes\Behaviors\AttackBehaviors\AA_InfantryAttackBehavior.cs" />
     <Compile Include="Classes\Behaviors\DefenceBehaviors\AA_InfantryDefenceBehavior.cs" />
+    <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />
     <Compile Include="Classes\Behaviors\RangeBehaviors\InfantryRangeBehavior.cs" />
     <Compile Include="Classes\IAbstractFactory.cs" />
     <Compile Include="Classes\Behaviors\IOnTickBehavior.cs" />
@@ -75,7 +76,6 @@
     <Compile Include="Classes\FactoryProducer.cs" />
     <Compile Include="Classes\Textures.cs" />
     <Compile Include="Classes\GameObject.cs" />
-    <Compile Include="Classes\Behaviors\ITargetableBehavior.cs" />
     <Compile Include="Classes\World\Map.cs" />
     <Compile Include="Classes\World\MapFactory.cs" />
     <Compile Include="Classes\Player.cs" />

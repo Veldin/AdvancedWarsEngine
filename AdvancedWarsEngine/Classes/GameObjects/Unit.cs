@@ -11,16 +11,17 @@ namespace AdvancedWarsEngine.Classes
     {
         protected float health;
         private float movement;
-        private float range;
-        protected ITargetableBehavior targetableBehavior;
+        protected IRangeBehavior rangeBehavior;
         protected IAttackBehavior attackBehavior;
         protected IDefenceBehavior defenceBehavior;
 
-        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, ITargetableBehavior isTargetable, IAttackBehavior attack, IDefenceBehavior defence, float range)
+        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, IRangeBehavior rangeBehavior, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            this.range = range;
             health = 100;
+            this.rangeBehavior = rangeBehavior;
+            this.attackBehavior = attackBehavior;
+            this.defenceBehavior = defenceBehavior;
         }
 
         public void Attack(GameObject gameObject)
@@ -50,7 +51,7 @@ namespace AdvancedWarsEngine.Classes
 
         public void Target(Tile tile)
         {
-            targetableBehavior.IsTargetable(this, tile);
+            rangeBehavior.Range(this, tile);
         }
 
         public void AutoMove()
@@ -58,22 +59,19 @@ namespace AdvancedWarsEngine.Classes
                 //DO SOMETHING
         }
 
-        public ITargetableBehavior TargetableBehavior
+        public IRangeBehavior RangeBehavior
         {
-            get { return targetableBehavior; }
-            set { targetableBehavior = value; }
+            get { return rangeBehavior; }
         }
 
         public IAttackBehavior AttackBehavior
         {
             get { return attackBehavior; }
-            set { attackBehavior = value; }
         }
 
         public IDefenceBehavior DefenceBehavior
         {
             get { return defenceBehavior; }
-            set { defenceBehavior = value; }
         }
     }
 }
