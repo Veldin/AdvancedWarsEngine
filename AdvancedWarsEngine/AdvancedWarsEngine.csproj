@@ -63,10 +63,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\Behaviors\AttackBehaviors\AV_VehicleAttackBehavior.cs" />
+    <Compile Include="Classes\Behaviors\AttackBehaviors\AI_VehicleAttackBehavior.cs" />
     <Compile Include="Classes\Behaviors\AttackBehaviors\AA_InfantryAttackBehavior.cs" />
+    <Compile Include="Classes\Behaviors\AttackBehaviors\AV_AirAttackBehavior.cs" />
+    <Compile Include="Classes\Behaviors\AttackBehaviors\AI_AirAttackBehavior.cs" />
+    <Compile Include="Classes\Behaviors\AttackBehaviors\AA_AirAttackBehavior.cs" />
+    <Compile Include="Classes\Behaviors\AttackBehaviors\AI_InfantryAttackBehavior.cs" />
+    <Compile Include="Classes\Behaviors\AttackBehaviors\AV_InfantryAttackBehavior.cs" />
+    <Compile Include="Classes\Behaviors\AttackBehaviors\AA_VehicleAttackBehavior.cs" />
+    <Compile Include="Classes\Behaviors\DefenceBehaviors\AirDefenceBehavior.cs" />
+    <Compile Include="Classes\Behaviors\DefenceBehaviors\VehicleDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\DefenceBehaviors\InfantryDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\RangeBehaviors\LowRangeBehavior.cs" />
-    <Compile Include="Classes\Behaviors\DefenceBehaviors\AA_InfantryDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\AirportProduceBehavior.cs" />
