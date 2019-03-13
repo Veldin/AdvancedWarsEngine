@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class Plain : Tile
+    class Road : Tile
     {
-        public Plain() : base()
+        public Road() : base()
         {
         }
     }

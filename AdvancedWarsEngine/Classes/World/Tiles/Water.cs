@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class FactoryProduceBehavior : IProduceBehavior
+    class Water : Tile
     {
-        public string Produce()
+        public Water() : base()
         {
-            return null;
         }
     }
 }

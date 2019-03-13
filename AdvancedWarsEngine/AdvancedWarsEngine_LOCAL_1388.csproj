@@ -64,19 +64,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Behaviors\AttackBehaviors\AA_InfantryAttackBehavior.cs" />
-<<<<<<< HEAD
     <Compile Include="Classes\Behaviors\DefenceBehaviors\InfantryDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />
     <Compile Include="Classes\Behaviors\RangeBehaviors\LowRangeBehavior.cs" />
-=======
-    <Compile Include="Classes\Behaviors\DefenceBehaviors\AA_InfantryDefenceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\IProduceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />
-    <Compile Include="Classes\Behaviors\ProduceBehaviors\AirportProduceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\ProduceBehaviors\BarracksProduceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\ProduceBehaviors\WorkshopProduceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\RangeBehaviors\InfantryRangeBehavior.cs" />
->>>>>>> fb126b29d87b876c04011a066d2f070e44424b56
     <Compile Include="Classes\Enums\EUnitType.cs" />
     <Compile Include="Classes\IAbstractFactory.cs" />
     <Compile Include="Classes\Behaviors\IOnTickBehavior.cs" />
@@ -99,10 +89,6 @@
     <Compile Include="Classes\World\Tile.cs" />
     <Compile Include="Classes\GameObjects\Unit.cs" />
     <Compile Include="Classes\Factories\UnitFactory.cs" />
-    <Compile Include="Classes\World\Tiles\Road.cs" />
-    <Compile Include="Classes\World\Tiles\Urban.cs" />
-    <Compile Include="Classes\World\Tiles\Forest.cs" />
-    <Compile Include="Classes\World\Tiles\Water.cs" />
     <Compile Include="Classes\World\Tiles\Mountain.cs" />
     <Compile Include="Classes\World\Tiles\Plain.cs" />
     <Compile Include="Classes\World\World.cs" />
@@ -293,31 +279,6 @@
     <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AV_Vehicle.png" />
     <Resource Include="Sprites\Yellow_Comet.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Sprites\Arrows\ArrowBottomToLeft.gif" />
-    <Resource Include="Sprites\Arrows\ArrowBottomToRight.gif" />
-    <Resource Include="Sprites\Arrows\ArrowHeadBottom.gif" />
-    <Resource Include="Sprites\Arrows\ArrowHeadLeft.gif" />
-    <Resource Include="Sprites\Arrows\ArrowHeadRight.gif" />
-    <Resource Include="Sprites\Arrows\ArrowHeadTop.gif" />
-    <Resource Include="Sprites\Arrows\ArrowLeftToRight.gif" />
-    <Resource Include="Sprites\Arrows\ArrowLeftToTop.gif" />
-    <Resource Include="Sprites\Arrows\ArrowTopToBottom.gif" />
-    <Resource Include="Sprites\Arrows\ArrowTopToRight.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Sprites\Cursors\defaultCursor.gif" />
-    <Resource Include="Sprites\Cursors\windowsCursor.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Sprites\TileSelectors\TileSelectorBlack.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorBlue.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorGreen.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorOrange.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorPink.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorRed.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorWhite.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorYellow.gif" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

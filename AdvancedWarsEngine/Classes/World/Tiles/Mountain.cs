@@ -10,7 +10,6 @@ namespace AdvancedWarsEngine.Classes
     {
         public Mountain() : base()
         {
-            //DO SOMETHING
         }
     }
 }

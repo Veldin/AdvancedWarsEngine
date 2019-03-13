@@ -64,11 +64,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Behaviors\AttackBehaviors\AA_InfantryAttackBehavior.cs" />
-<<<<<<< HEAD
-    <Compile Include="Classes\Behaviors\DefenceBehaviors\InfantryDefenceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />
-    <Compile Include="Classes\Behaviors\RangeBehaviors\LowRangeBehavior.cs" />
-=======
     <Compile Include="Classes\Behaviors\DefenceBehaviors\AA_InfantryDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />
@@ -76,7 +71,6 @@
     <Compile Include="Classes\Behaviors\ProduceBehaviors\BarracksProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\WorkshopProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\RangeBehaviors\InfantryRangeBehavior.cs" />
->>>>>>> fb126b29d87b876c04011a066d2f070e44424b56
     <Compile Include="Classes\Enums\EUnitType.cs" />
     <Compile Include="Classes\IAbstractFactory.cs" />
     <Compile Include="Classes\Behaviors\IOnTickBehavior.cs" />

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class BarracksProduceBehavior : IProduceBehavior
+    class WorkshopProduceBehavior : IProduceBehavior
     {
         public string Produce()
         {
-            string[] units = { "AI_Infantry", "AV_Infantry", "AA_Infantry" };
+            string[] units = { "AI_Vehicle", "AV_Vehicle", "AA_Vehicle" };
 
             Random rand = new Random();
             int random = rand.Next(0, 2);
