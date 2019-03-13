@@ -44,7 +44,7 @@ namespace AdvancedWarsEngine.Classes
                 case "AV_Infantry":     // Anti-Vehicle Infantry
                     // Create the behaviors for this unit
                     rangeBehavior   = new LowRangeBehavior();
-                    attackBehavior  = new AA_InfantryAttackBehavior();
+                    attackBehavior  = new AV_InfantryAttackBehavior();
                     defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
@@ -54,7 +54,7 @@ namespace AdvancedWarsEngine.Classes
                     case "AI_Infantry":     // Anti-Infantry Infantry
                     // Create the behaviors for this unit
                     rangeBehavior   = new LowRangeBehavior();
-                    attackBehavior  = new AA_InfantryAttackBehavior();
+                    attackBehavior  = new AI_InfantryAttackBehavior();
                     defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
@@ -64,8 +64,8 @@ namespace AdvancedWarsEngine.Classes
                 case "AI_Vehicle":          // Anti_Infantry Vehicle
                     // Create the behaviors for this unit
                     rangeBehavior   = new LowRangeBehavior();
-                    attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new InfantryDefenceBehavior();
+                    attackBehavior  = new AI_VehicleAttackBehavior();
+                    defenceBehavior = new VehicleDefenceBehavior();
 
                     // Create the Unit with the created behaviors
                     unit = new Unit(width, height, fromTop, fromLeft, "IV_Vehicle", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
@@ -74,8 +74,8 @@ namespace AdvancedWarsEngine.Classes
                 case "AV_Vehicle":          // Anti-Vehicle Vehicle
                     // Create the behaviors for this unit
                     rangeBehavior   = new LowRangeBehavior();
-                    attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new InfantryDefenceBehavior();
+                    attackBehavior  = new AV_VehicleAttackBehavior();
+                    defenceBehavior = new VehicleDefenceBehavior();
 
                     // Create the Unit with the created behaviors
                     unit = new Unit(width, height, fromTop, fromLeft, "AV_Vehicle", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
@@ -84,8 +84,8 @@ namespace AdvancedWarsEngine.Classes
                 case "AA_Vehicle":          // Anti-Air Vehicle
                     // Create the behaviors for this unit
                     rangeBehavior   = new LowRangeBehavior();
-                    attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new InfantryDefenceBehavior();
+                    attackBehavior  = new AA_VehicleAttackBehavior();
+                    defenceBehavior = new VehicleDefenceBehavior();
 
                     // Create the Unit with the created behaviors
                     unit = new Unit(width, height, fromTop, fromLeft, "AA_Vehicle", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
@@ -94,8 +94,8 @@ namespace AdvancedWarsEngine.Classes
                 case "AI_Air":              // Anti_Infantry Air
                     // Create the behaviors for this unit
                     rangeBehavior   = new LowRangeBehavior();
-                    attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new InfantryDefenceBehavior();
+                    attackBehavior  = new AI_AirAttackBehavior();
+                    defenceBehavior = new AirDefenceBehavior();
 
                     // Create the Unit with the created behaviors
                     unit = new Unit(width, height, fromTop, fromLeft, "AI_Air", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);
@@ -104,8 +104,8 @@ namespace AdvancedWarsEngine.Classes
                 case "AV_Air":              // Anti-Vehicle Air
                     // Create the behaviors for this unit
                     rangeBehavior   = new LowRangeBehavior();
-                    attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new InfantryDefenceBehavior();
+                    attackBehavior  = new AV_AirAttackBehavior();
+                    defenceBehavior = new AirDefenceBehavior();
 
                     // Create the Unit with the created behaviors
                     unit = new Unit(width, height, fromTop, fromLeft, "AV_Air", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);
@@ -114,8 +114,8 @@ namespace AdvancedWarsEngine.Classes
                 case "AA_Air":              // Anti-Air Air
                     // Create the behaviors for this unit
                     rangeBehavior   = new LowRangeBehavior();
-                    attackBehavior  = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new InfantryDefenceBehavior();
+                    attackBehavior  = new AA_AirAttackBehavior();
+                    defenceBehavior = new AirDefenceBehavior();
 
                     // Create the Unit with the created behaviors
                     unit = new Unit(width, height, fromTop, fromLeft, "AA_Air", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);

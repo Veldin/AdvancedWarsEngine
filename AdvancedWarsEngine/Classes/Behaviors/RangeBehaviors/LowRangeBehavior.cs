@@ -50,6 +50,10 @@ namespace AdvancedWarsEngine.Classes
                     if (unit.UnitType == EUnitType.Vehicle) { return false; }
                     if (unit.UnitType == EUnitType.Infantry) { return false; }
                     break;
+                case "Urban":
+                    break;
+                case "Road":
+                    break;
             }
 
             // Return true
@@ -57,13 +61,3 @@ namespace AdvancedWarsEngine.Classes
         }
     }
 }
-
-/*
- * 
- * forest
- * road
- * urban
- * plain
- * mountain
- * water
- */

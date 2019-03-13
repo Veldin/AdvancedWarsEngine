@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class InfantryDefenceBehavior : IDefenceBehavior
+    class AirDefenceBehavior : IDefenceBehavior
     {
         public float Defence (GameObject unit, Tile tile)
         {
             // Setting some local variables
-            float baseValue     = 10;                       // The baseValue
+            float baseValue     = 5;                        // The baseValue
             float defenceValue  = baseValue;                // The total defence value which will be returned
 
             // Multiply the defenceValue based on the type of tile it's standing on
@@ -21,13 +21,13 @@ namespace AdvancedWarsEngine.Classes
                         defenceValue += baseValue * 0.2f;
                         break;
                     case "Forest":
-                        defenceValue += baseValue * 0.5f;
                         break;
                     case "Plain":
                         break;
                     case "Urban":
                         break;
-                    case "Water":                           // Infantry cannot stand on Water
+                    case "Water":
+                        break;
                     case "Road":
                         break;
                 }
