@@ -2,7 +2,6 @@
 {
     interface IDefenceBehavior
     {
-        void Defence(Tile tile);
-        void Defence(Unit unit);
+        void Defence(Unit unit, Tile tile);
     }
 }

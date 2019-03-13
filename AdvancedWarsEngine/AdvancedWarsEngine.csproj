@@ -69,7 +69,6 @@
     <Compile Include="Classes\Behaviors\MovementBehaviors\AA_InfantryMovementBehavior.cs" />
     <Compile Include="Classes\Behaviors\TargetableBehaviors\AA_InfantryTargetableBehavior.cs" />
     <Compile Include="Classes\IAbstractFactory.cs" />
-    <Compile Include="Classes\Behaviors\ICapturePointsBehavior.cs" />
     <Compile Include="Classes\Behaviors\IOnTickBehavior.cs" />
     <Compile Include="Classes\Camera.cs" />
     <Compile Include="Classes\Behaviors\IAttackBehavior.cs" />

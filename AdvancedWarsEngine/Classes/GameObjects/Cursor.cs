@@ -10,13 +10,10 @@ namespace AdvancedWarsEngine
 {
     class Cursor : GameObject
     {
-
         public Cursor(float width, float height, float fromLeft, float fromTop, BitmapImage sprite)
         : base(width, height, fromLeft, fromTop, sprite)
         {
             //setActiveBitmap("Assets/Cursor1.gif");
-
         }
-
     }
 }

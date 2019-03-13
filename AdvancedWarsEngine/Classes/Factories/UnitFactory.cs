@@ -32,12 +32,12 @@ namespace AdvancedWarsEngine.Classes
                     ITargetableBehavior targetableBehavior  = new AA_InfantryTargetableBehavior();
                     IAttackBehavior     attackBehavior      = new AA_InfantryAttackBehavior();
                     IDefenceBehavior    defenceBehavior     = new AA_InfantryDefenceBehavior();
-                    IHealthBehavior     healthBehavior      = new AA_InfantryHealthBehavior();
-                    IMovementBehavior   movementBehavior    = new AA_InfantryMovementBehavior();
                     // IRangeBehavior   rangebehavior       = new behavior
 
+                    float range = 3;
+
                     // Create the Unit with the created behaviors
-                    GameObject infantry = new Unit(width, height, fromTop, fromLeft, sprite, targetableBehavior, attackBehavior, healthBehavior, movementBehavior, defenceBehavior);
+                    GameObject infantry = new Unit(width, height, fromTop, fromLeft, sprite, targetableBehavior, attackBehavior, defenceBehavior, range);
 
                     // Return the Unit
                     return infantry;

@@ -11,28 +11,21 @@ namespace AdvancedWarsEngine.Classes
     class Structure : GameObject
     {
         protected float capturePoints;
-        private ICapturePointsBehavior capturePointsBehavior;
 
         public Structure(float width, float height, float fromTop, float fromLeft, BitmapImage sprite)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            // DO SOMETHING
+            capturePoints = 100;
         }
 
         public float CapturePoints
         {
             get { return capturePoints; }
-            set { capturePoints = value; }
         }
 
         public void AddCapturePoints(float value)
         {
             capturePoints += value;
-        }
-
-        public void Capture()
-        {
-            capturePointsBehavior.CapturePoints(this);
         }
     }
 }

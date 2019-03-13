@@ -9,20 +9,18 @@ namespace AdvancedWarsEngine.Classes
 {
     class Unit : GameObject
     {
-        private bool isTargetable;
-        private float attack;
-        private float health;
+        protected float health;
         private float movement;
-        private float defence;
         private float range;
         protected ITargetableBehavior targetableBehavior;
         protected IAttackBehavior attackBehavior;
         protected IDefenceBehavior defenceBehavior;
 
-        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, ITargetableBehavior isTargetable, IAttackBehavior attack, IDefenceBehavior defence, float range = 0)
+        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, ITargetableBehavior isTargetable, IAttackBehavior attack, IDefenceBehavior defence, float range)
             : base(width, height, fromTop, fromLeft, sprite)
         {
             this.range = range;
+            health = 100;
         }
 
         public void Attack(GameObject gameObject)
@@ -32,30 +30,17 @@ namespace AdvancedWarsEngine.Classes
 
         public void Move()
         {
+            // DO SOMETHING
         }
 
-        public void Defence()
+        public void Defence(Tile tile)
         {
-            defenceBehavior.Defence(this);
+            defenceBehavior.Defence(this, tile);
         }
 
-        public void Health()
+        public float Health
         {
-        }
-
-        public void Target(Tile tile)
-        {
-            targetableBehavior.IsTargetable(this, tile);
-        }
-
-        public float GetAttack()
-        {
-            return attack;
-        }
-
-        public float GetHealth()
-        {
-            return health;
+            get { return health; }
         }
 
         public float AddHealth(float value)
@@ -63,9 +48,9 @@ namespace AdvancedWarsEngine.Classes
             return health += value;
         }
 
-        public float GetDefence()
+        public void Target(Tile tile)
         {
-            return defence;
+            targetableBehavior.IsTargetable(this, tile);
         }
 
         public void AutoMove()
@@ -83,18 +68,6 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return attackBehavior; }
             set { attackBehavior = value; }
-        }
-
-        public IHealthBehavior HealthBehavior
-        {
-            get { return healthBehavior; }
-            set { healthBehavior = value; }
-        }
-
-        public IMovementBehavior MovementBehavior
-        {
-            get { return movementBehavior; }
-            set { movementBehavior = value;}
         }
 
         public IDefenceBehavior DefenceBehavior

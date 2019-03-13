@@ -8,11 +8,10 @@ namespace AdvancedWarsEngine.Classes
 {
     abstract class Tile
     {
-        private bool selected;
-        private Structure occupiedStructure;
-        private Unit occupiedUnit;
-        private int size;
-        private IDefenceBehavior defenceBehavior;
+        protected bool selected;
+        protected Structure occupiedStructure;
+        protected Unit occupiedUnit;
+        protected int size;
 
         public Tile()
         {
@@ -47,11 +46,6 @@ namespace AdvancedWarsEngine.Classes
         public bool toggleSelection()
         {
             return true;
-        }
-
-        public void Defence()
-        {
-            defenceBehavior.Defence(this);
         }
     }
 }

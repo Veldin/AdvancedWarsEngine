@@ -8,12 +8,7 @@ namespace AdvancedWarsEngine.Classes
 {
     class AA_InfantryDefenceBehavior : IDefenceBehavior
     {
-        public void Defence(Unit unit)
-        {
-
-        }
-
-        public void Defence(Tile tile)
+        public void Defence(Unit unit, Tile tile)
         {
 
         }
