@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AA_InfantryTargetableBehavior : ITargetableBehavior
+    class BarracksProduceBehavior : IProduceBehavior
     {
-        public void IsTargetable(Unit unit)
+        public string Produce()
         {
-
+            return null;
         }
     }
 }

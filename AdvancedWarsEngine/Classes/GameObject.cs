@@ -1,7 +1,6 @@
 ﻿using AdvancedWarsEngine.Classes.Behaviors;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -17,21 +16,21 @@ namespace AdvancedWarsEngine.Classes
         protected float fromTop;
         protected float fromLeft;
         private List<Target> targets;
-        protected BitmapImage sprite;
+        protected string sprite;
         protected IOnTickBehavior onTickBehavior;
 
         public Rectangle rectangle;
         public string assemblyName;
 
         public Random random;
-        public Boolean destroyed;
+        public bool destroyed;
 
         //The sprite location and the CanvasBitmap are stored seperatly
         //This is so the location gets changed more times in a frame the canvasBitmap doesn't have to get loaded more then once a frame.
         //protected CanvasBitmap sprite;
-        protected String location;
+        protected string location;
         
-        public GameObject(float width, float height, float fromTop, float fromLeft, BitmapImage sprite)
+        public GameObject(float width, float height, float fromTop, float fromLeft, string sprite)
         {
             this.width = width;
             this.height = height;
@@ -96,7 +95,7 @@ namespace AdvancedWarsEngine.Classes
             set { fromLeft = value; }
         }
 
-        public BitmapImage Sprite
+        public string Sprite
         {
             get { return sprite; }
             set { sprite = value; }
@@ -141,7 +140,7 @@ namespace AdvancedWarsEngine.Classes
             return distance;
         }
 
-        public BitmapImage getActiveBitmap(String assemblyName, Boolean reload = false)
+        public BitmapImage getActiveBitmap(string assemblyName, bool reload = false)
         {
             if (!Textures.textures.ContainsKey(location))
             {
@@ -156,11 +155,11 @@ namespace AdvancedWarsEngine.Classes
             }
         }
 
-        public Boolean setActiveBitmap(string set)
+        public bool setActiveBitmap(string set)
         {
             if (location != set)
             {
-                Application.Current.Dispatcher.Invoke((Action)delegate
+                Application.Current.Dispatcher.Invoke(delegate
                 {
                     location = set;
                     //if (rectangle is null) { rectangle = new Rectangle(); }

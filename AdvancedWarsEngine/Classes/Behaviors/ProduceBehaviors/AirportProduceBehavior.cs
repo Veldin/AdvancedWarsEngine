@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AA_InfantryHealthBehavior : IHealthBehavior
+    class AirportProduceBehavior : IProduceBehavior
     {
-        public void Health(Unit unit)
+        public string Produce()
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }

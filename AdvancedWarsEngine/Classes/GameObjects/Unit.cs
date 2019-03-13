@@ -4,32 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using AdvancedWarsEngine.Classes.Enums;
 
 namespace AdvancedWarsEngine.Classes
 {
     class Unit : GameObject
     {
-        private bool isTargetable;
-        private float attack;
-        private float health;
+        protected float health;
         private float movement;
-        private float defence;
-        private float range;
-        protected ITargetableBehavior targetableBehavior;
+        protected IRangeBehavior rangeBehavior;
         protected IAttackBehavior attackBehavior;
-        protected IHealthBehavior healthBehavior;
-        protected IMovementBehavior movementBehavior;
         protected IDefenceBehavior defenceBehavior;
+        private EUnitType unitType;
 
-        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, ITargetableBehavior isTargetable, IAttackBehavior attack, IHealthBehavior health, IMovementBehavior movement, IDefenceBehavior defence, float range = 0)
+        public Unit(float width, float height, float fromTop, float fromLeft, string sprite, IRangeBehavior rangeBehavior, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior, EUnitType unitType)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            /*this.isTargetable = isTargetable;
-            this.attack = attack;
-            this.health = health;
-            this.movement = movement;
-            this.defence = defence;*/
-            this.range = range;
+            health = 100;
+            this.rangeBehavior = rangeBehavior;
+            this.attackBehavior = attackBehavior;
+            this.defenceBehavior = defenceBehavior;
+            this.unitType = unitType;
         }
 
         public void Attack(GameObject gameObject)
@@ -39,32 +34,22 @@ namespace AdvancedWarsEngine.Classes
 
         public void Move()
         {
-            movementBehavior.Movement(this);
+            // DO SOMETHING
         }
 
-        public void Defence()
+        public void Defence(Tile tile)
         {
-            defenceBehavior.Defence(this);
+            defenceBehavior.Defence(this, tile);
         }
 
-        public void Health()
+        public float Health
         {
-            healthBehavior.Health(this);
+            get { return health; }
         }
 
-        public void Target()
+        public EUnitType UnitType
         {
-            targetableBehavior.IsTargetable(this);
-        }
-
-        public float GetAttack()
-        {
-            return attack;
-        }
-
-        public float GetHealth()
-        {
-            return health;
+            get { return unitType; }
         }
 
         public float AddHealth(float value)
@@ -72,9 +57,9 @@ namespace AdvancedWarsEngine.Classes
             return health += value;
         }
 
-        public float GetDefence()
+        public void Target(Tile tile)
         {
-            return defence;
+            rangeBehavior.Range(this, tile);
         }
 
         public void AutoMove()
@@ -82,34 +67,19 @@ namespace AdvancedWarsEngine.Classes
                 //DO SOMETHING
         }
 
-        public ITargetableBehavior TargetableBehavior
+        public IRangeBehavior RangeBehavior
         {
-            get { return targetableBehavior; }
-            set { targetableBehavior = value; }
+            get { return rangeBehavior; }
         }
 
         public IAttackBehavior AttackBehavior
         {
             get { return attackBehavior; }
-            set { attackBehavior = value; }
-        }
-
-        public IHealthBehavior HealthBehavior
-        {
-            get { return healthBehavior; }
-            set { healthBehavior = value; }
-        }
-
-        public IMovementBehavior MovementBehavior
-        {
-            get { return movementBehavior; }
-            set { movementBehavior = value;}
         }
 
         public IDefenceBehavior DefenceBehavior
         {
             get { return defenceBehavior; }
-            set { defenceBehavior = value; }
         }
     }
 }

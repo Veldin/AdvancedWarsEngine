@@ -10,8 +10,8 @@ namespace AdvancedWarsEngine.Classes
 {
     class Map
     {
-        private Tile[,] tiles;
-        private string sprite;
+        protected Tile[,] tiles;
+        protected string sprite;
         public Rectangle rectangle;
 
         public Tile[,] Tiles
@@ -40,7 +40,7 @@ namespace AdvancedWarsEngine.Classes
 
         public Tile GetTile(int x, int y)
         {
-            throw new NotImplementedException();
+            return tiles[x, y];
         }
     }
 }

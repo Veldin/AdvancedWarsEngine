@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AA_InfantryDefenceBehavior : IDefenceBehavior
+    interface IRangeBehavior
     {
-        public void Defence(Unit unit, Tile tile)
-        {
-
-        }
+        void Range(Unit unit, Tile tile);
     }
 }

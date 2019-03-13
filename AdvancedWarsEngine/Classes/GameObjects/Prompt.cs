@@ -13,7 +13,7 @@ namespace AdvancedWarsEngine.Classes
         private float maxDuration;
         private float currentDuration;
 
-        public Prompt(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, float duration = 130, string text = "Undefined")
+        public Prompt(float width, float height, float fromTop, float fromLeft, string sprite, float duration = 130, string text = "Undefined")
             : base(width, height, fromTop, fromLeft, sprite)
         {
             this.text = text;

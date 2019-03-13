@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AA_InfantryMovementBehavior : IMovementBehavior
+    class FactoryProduceBehavior : IProduceBehavior
     {
-        public void Movement(Unit unit)
+        public string Produce()
         {
-
+            return null;
         }
     }
 }
