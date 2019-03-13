@@ -93,6 +93,10 @@
     <Compile Include="Classes\World\Tile.cs" />
     <Compile Include="Classes\GameObjects\Unit.cs" />
     <Compile Include="Classes\Factories\UnitFactory.cs" />
+    <Compile Include="Classes\World\Tiles\Road.cs" />
+    <Compile Include="Classes\World\Tiles\Urban.cs" />
+    <Compile Include="Classes\World\Tiles\Forest.cs" />
+    <Compile Include="Classes\World\Tiles\Water.cs" />
     <Compile Include="Classes\World\Tiles\Mountain.cs" />
     <Compile Include="Classes\World\Tiles\Plain.cs" />
     <Compile Include="Classes\World\World.cs" />
@@ -300,14 +304,14 @@
     <Resource Include="Sprites\Cursors\windowsCursor.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Sprites\Crosshairs\TileSelectorBlack.gif" />
-    <Resource Include="Sprites\Crosshairs\TileSelectorBlue.gif" />
-    <Resource Include="Sprites\Crosshairs\TileSelectorGreen.gif" />
-    <Resource Include="Sprites\Crosshairs\TileSelectorOrange.gif" />
-    <Resource Include="Sprites\Crosshairs\TileSelectorPink.gif" />
-    <Resource Include="Sprites\Crosshairs\TileSelectorRed.gif" />
-    <Resource Include="Sprites\Crosshairs\TileSelectorWhite.gif" />
-    <Resource Include="Sprites\Crosshairs\TileSelectorYellow.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorBlack.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorBlue.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorGreen.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorOrange.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorPink.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorRed.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorWhite.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorYellow.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
