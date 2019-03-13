@@ -295,5 +295,15 @@
     <Resource Include="Sprites\Cursors\defaultCursor.gif" />
     <Resource Include="Sprites\Cursors\windowsCursor.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Crosshairs\TileSelectorBlack.gif" />
+    <Resource Include="Sprites\Crosshairs\TileSelectorBlue.gif" />
+    <Resource Include="Sprites\Crosshairs\TileSelectorGreen.gif" />
+    <Resource Include="Sprites\Crosshairs\TileSelectorOrange.gif" />
+    <Resource Include="Sprites\Crosshairs\TileSelectorPink.gif" />
+    <Resource Include="Sprites\Crosshairs\TileSelectorRed.gif" />
+    <Resource Include="Sprites\Crosshairs\TileSelectorWhite.gif" />
+    <Resource Include="Sprites\Crosshairs\TileSelectorYellow.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
