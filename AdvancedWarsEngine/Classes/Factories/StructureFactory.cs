@@ -40,7 +40,7 @@ namespace AdvancedWarsEngine.Classes
 
                 case "Factory":
                     // Create the behaviors
-                    produceBehavior = new FactoryProduceBehavior();
+                    produceBehavior = new WorkshopProduceBehavior();
 
                     // Create the Structure with the created behaviors
                     structure = new Structure(width, height, fromTop, fromLeft, "Factory", produceBehavior);

@@ -32,7 +32,7 @@ namespace AdvancedWarsEngine
         private World world;
         private Player player;
         private List<GameObject> gameObjects;
-        private BitmapImage sprite;
+        private string sprite;
 
         //The max fps we want to run at
         private float fps;  //The set FPS limit
