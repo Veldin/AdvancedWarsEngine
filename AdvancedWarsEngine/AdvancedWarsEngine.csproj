@@ -89,6 +89,10 @@
     <Compile Include="Classes\World\Tile.cs" />
     <Compile Include="Classes\GameObjects\Unit.cs" />
     <Compile Include="Classes\Factories\UnitFactory.cs" />
+    <Compile Include="Classes\World\Tiles\Road.cs" />
+    <Compile Include="Classes\World\Tiles\Urban.cs" />
+    <Compile Include="Classes\World\Tiles\Forest.cs" />
+    <Compile Include="Classes\World\Tiles\Water.cs" />
     <Compile Include="Classes\World\Tiles\Mountain.cs" />
     <Compile Include="Classes\World\Tiles\Plain.cs" />
     <Compile Include="Classes\World\World.cs" />
