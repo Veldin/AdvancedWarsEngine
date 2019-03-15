@@ -12,7 +12,6 @@ namespace AdvancedWarsEngine.Classes
         {
             switch (tileName)
             {
-                //TODO: add more tile types
                 case "Forest":
                     return new Forest();
                 case "Mountain":
