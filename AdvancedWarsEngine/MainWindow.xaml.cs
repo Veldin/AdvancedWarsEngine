@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace AdvancedWarsEngine
@@ -175,12 +174,19 @@ namespace AdvancedWarsEngine
             }
 
             //Set the new curser location
-            Application.Current.Dispatcher.Invoke((Action)delegate
+            try
             {
-                Point p = Mouse.GetPosition(TestCanvas);
-                cursor.FromLeft = (float)p.X;
-                cursor.FromTop = (float)p.Y;
-            });
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    Point p = Mouse.GetPosition(TestCanvas);
+                    cursor.FromLeft = (float)p.X;
+                    cursor.FromTop = (float)p.Y;
+                });
+            }
+            catch
+            {
+
+            }
 
             //Destory old objects
             foreach (GameObject gameObject in loopList)
