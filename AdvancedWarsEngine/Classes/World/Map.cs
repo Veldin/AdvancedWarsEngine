@@ -13,6 +13,9 @@ namespace AdvancedWarsEngine.Classes
     class Map
     {
         protected Tile[,] tiles;
+
+        protected Tile selectedTile;
+
         protected string sprite;
         public Rectangle rectangle;
         private int size;
@@ -35,6 +38,12 @@ namespace AdvancedWarsEngine.Classes
             set { size = value; }
         }
 
+        public Tile SelectedTile
+        {
+            get { return selectedTile; }
+            set { selectedTile = value; }
+        }
+
         public Map(Tile[,] tiles, string sprite)
         {
             this.tiles = tiles;
@@ -54,6 +63,12 @@ namespace AdvancedWarsEngine.Classes
             }));
 
 
+        }
+
+        public Tile SelectTile(int x, int y)
+        {
+            selectedTile = GetTile (x, y);
+            return selectedTile;
         }
 
         public Tile GetTile(int x, int y)
