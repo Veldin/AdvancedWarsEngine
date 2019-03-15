@@ -82,7 +82,7 @@ namespace AdvancedWarsEngine
             gameObjects.Add(crosshair);
 
             //Create the default cursor to use
-            cursor = new Cursor(13, 12, 300, 300, "Sprites/Cursors/defaultCursor.gif");
+            cursor = new Cursor(12, 12, 300, 300, "Sprites/Cursors/defaultCursor.gif");
             gameObjects.Add(cursor);
 
             GameObject testUnit = new Unit(14,14, -1,-1);

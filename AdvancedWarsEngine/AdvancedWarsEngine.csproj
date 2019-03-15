@@ -340,7 +340,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Red_AI_Vehicle.ico" />
-    <Resource Include="Sprites\Cursors\defaultCursor.gif" />
     <Resource Include="Sprites\Cursors\windowsCursor.gif" />
   </ItemGroup>
   <ItemGroup>
@@ -360,6 +359,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Sprites\Units\Icons\Vehicle\Green_AV_Vehicle2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Cursors\defaultCursor.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
