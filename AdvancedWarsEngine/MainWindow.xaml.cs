@@ -122,28 +122,35 @@ namespace AdvancedWarsEngine
             }
 
             //Run it in the UI thread
-            Application.Current.Dispatcher.Invoke((Action)delegate
+            try
             {
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
                 //TestCanvas.Children.Clear();    //Remove all recs from the canvas, start clean every loop
 
                 TestCanvas.Background = backgroundBrush;
 
 
-                foreach (GameObject gameObject in loopList)
-                {
-                    Rectangle rect = gameObject.rectangle;
+                    foreach (GameObject gameObject in loopList)
+                    {
+                        Rectangle rect = gameObject.rectangle;
 
-                    rect.Width = gameObject.Width;
-                    rect.Height = gameObject.Height;
+                        rect.Width = gameObject.Width;
+                        rect.Height = gameObject.Height;
 
                     // Set up the position in the window, at mouse coordonate
                     Canvas.SetLeft(rect, gameObject.FromLeft - camera.GetFromLeft());
-                    Canvas.SetTop(rect, gameObject.FromTop - camera.GetFromTop());
+                        Canvas.SetTop(rect, gameObject.FromTop - camera.GetFromTop());
 
-                    if (!TestCanvas.Children.Contains(rect))
-                        TestCanvas.Children.Add(rect);
-                }
-            });
+                        if (!TestCanvas.Children.Contains(rect))
+                            TestCanvas.Children.Add(rect);
+                    }
+                });
+            }
+            catch
+            {
+
+            }
         }
 
         private void Logic(long delta)
