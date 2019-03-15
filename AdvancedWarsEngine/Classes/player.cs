@@ -13,10 +13,17 @@ namespace AdvancedWarsEngine.Classes
         private List<GameObject> gameObjects;               // All the gameObject that are owned by this player
         protected Player nextPlayer;                        // This is the who gets the turn when this players turn ends
 
+        //Holds the selected unit.
+        private Unit selectedUnit;                          //Holds the currently selected unit
+        private Structure structure;                        //Holds the currently selected structure
+
+
         public Player(bool isControllable)
         {
             this.isControllable = isControllable;
             this.isTurn         = false;
+
+            gameObjects = new List<GameObject>();
         }
         
         public bool IsTurn

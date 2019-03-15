@@ -17,7 +17,7 @@ namespace AdvancedWarsEngine.Classes
         public Tile()
         {
             selected = false;
-            size = 32;
+            size = 16;
         }
 
         public bool Selected

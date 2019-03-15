@@ -46,9 +46,10 @@ namespace AdvancedWarsEngine
         //Holds string interpertation of all keys that are pressed right now
         private HashSet<string> pressedKeys;
 
-       
-        private Cursor cursor;
-        private Prompt crosshair;
+        private Cursor cursor;                  //Holds information about the cursor
+        private Prompt crosshair;               //Holds information of the crosshair
+        private Prompt selectedTileIndicator;   //Holds information about the selected crosshair
+
 
         public MainWindow()
         {
@@ -71,6 +72,14 @@ namespace AdvancedWarsEngine
             GetWindow(this).MouseDown += MouseDown;
             GetWindow(this).MouseUp += MouseDown;
 
+            //Make a new player and set the variable to that player
+            player = new Player(true);      //First player is controlable
+            Player ai = new Player(false);  //Second player is not controllable
+
+            //the players are each others next players so the player loop is created
+            player.NextPlayer = ai;
+            ai.NextPlayer = player;
+
             camera = new Camera();
 
             gameObjects = new List<GameObject>();
@@ -78,16 +87,21 @@ namespace AdvancedWarsEngine
             Cursor = Cursors.None; //Hide the default Cursor
 
             //Create the default crosshair to use
-            crosshair = new Prompt(30, 30, 300, 300, "Sprites/TileSelectors/TileSelectorWhite.gif");
+            crosshair = new Prompt(16, 16, 300, 300, "Sprites/TileSelectors/TileSelectorWhite.gif");
             gameObjects.Add(crosshair);
 
             //Create the default cursor to use
-            cursor = new Cursor(30, 30, 300, 300, "Sprites/Cursors/defaultCursor.gif");
+            cursor = new Cursor(25, 24, 300, 300, "Sprites/Cursors/defaultCursor.gif");
             gameObjects.Add(cursor);
 
-            GameObject testUnit = new Unit(30,30, -1,-1);
+            //Create the default cursor to use
+            selectedTileIndicator = new Prompt(16, 16, 300, 300, "Sprites/TileSelectors/TileSelectorGreen.gif");
+            gameObjects.Add(selectedTileIndicator);
 
+            GameObject testUnit = new Unit(16,16, -1,-1);
             gameObjects.Add(testUnit);
+
+            player.AddGameObject(testUnit);
 
             world = new World();
 
@@ -145,48 +159,42 @@ namespace AdvancedWarsEngine
             }
 
             //Run it in the UI thread
-            try
+            Application.Current.Dispatcher.Invoke((Action)delegate
             {
-                Application.Current.Dispatcher.Invoke((Action)delegate
+                //TestCanvas.Children.Clear();    //Remove all recs from the canvas, start clean every loop
+
+                TestCanvas.Background = backgroundBrush;
+
+                //Set the background
+                Rectangle BgRect = world.Map.rectangle;
+
+                Canvas.SetLeft(BgRect, 0 + camera.GetLeftOffSet());
+                Canvas.SetTop(BgRect, 0 + camera.GetTopOffSet());
+
+                if (!TestCanvas.Children.Contains(BgRect))
                 {
-                    //TestCanvas.Children.Clear();    //Remove all recs from the canvas, start clean every loop
+                    TestCanvas.Children.Add(BgRect);
+                }
 
-                    TestCanvas.Background = backgroundBrush;
+                //Draw the gameobjects in the loop list
+                foreach (GameObject gameObject in loopList)
+                {
+                    Rectangle rect = gameObject.rectangle;
 
-                    //Set the background
-                    Rectangle BgRect = world.Map.rectangle;
-                    Canvas.SetLeft(BgRect, 0 + camera.GetLeftOffSet());
-                    Canvas.SetTop(BgRect, 0 + camera.GetTopOffSet());
+                    rect.Width = gameObject.Width;
+                    rect.Height = gameObject.Height;
 
 
-                    if (!TestCanvas.Children.Contains(BgRect))
+                    Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                    if (!TestCanvas.Children.Contains(rect))
                     {
-                        TestCanvas.Children.Add(BgRect);
+                        TestCanvas.Children.Add(rect);
                     }
+                }
+            });
 
-                    //Draw the gameobjects in the loop list
-                    foreach (GameObject gameObject in loopList)
-                    {
-                        Rectangle rect = gameObject.rectangle;
-
-                        rect.Width = gameObject.Width;
-                        rect.Height = gameObject.Height;
-
-
-                        Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                        Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
-
-                        if (!TestCanvas.Children.Contains(rect))
-                        {
-                            TestCanvas.Children.Add(rect);
-                        }
-                    }
-                });
-            }
-            catch
-            {
-
-            }
         }
 
         private void Logic(long delta)
@@ -282,10 +290,16 @@ namespace AdvancedWarsEngine
 
             if (IsKeyPressed("LeftMouseButton"))
             {
-                //world.Map.DeselectAll();
-                world.Map.GetTile(selectedFromTop, selectedFromLeft).Selected = true;
+                world.Map.DeselectAll();
+                world.Map.SelectTile(selectedFromTop, selectedFromLeft).Selected = true;
 
+                
+                selectedTileIndicator.FromLeft = selectedFromLeft * world.Map.Size;
+                selectedTileIndicator.FromTop = selectedFromTop * world.Map.Size;
+                //Debug.WriteLine(world.Map.GetTile(selectedFromTop, selectedFromLeft).OccupiedUnit.Location);
             }
+
+
 
             //Destory old objects
             foreach (GameObject gameObject in loopList)
