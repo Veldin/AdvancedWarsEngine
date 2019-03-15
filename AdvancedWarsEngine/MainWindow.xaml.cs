@@ -78,20 +78,20 @@ namespace AdvancedWarsEngine
             Cursor = Cursors.None; //Hide the default Cursor
 
             //Create the default crosshair to use
-            crosshair = new Prompt(30, 30, 300, 300, "Sprites/TileSelectors/TileSelectorWhite.gif");
+            crosshair = new Prompt(16, 16, 300, 300, "Sprites/TileSelectors/TileSelectorWhite.gif");
             gameObjects.Add(crosshair);
 
             //Create the default cursor to use
-            cursor = new Cursor(30, 30, 300, 300, "Sprites/Cursors/defaultCursor.gif");
+            cursor = new Cursor(13, 12, 300, 300, "Sprites/Cursors/defaultCursor.gif");
             gameObjects.Add(cursor);
 
-            GameObject testUnit = new Unit(30,30, -1,-1);
+            GameObject testUnit = new Unit(14,14, -1,-1);
 
             gameObjects.Add(testUnit);
 
             world = new World();
 
-            Tile TestTile = world.Map.GetTile(0, 0);
+            Tile TestTile = world.Map.GetTile(6, 16);
 
             Unit testUnitt = testUnit as Unit;
             TestTile.OccupiedUnit = testUnitt;
