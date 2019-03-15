@@ -25,12 +25,12 @@ namespace AdvancedWarsEngine.Classes
 
         public float GetLeftOffSet()
         {
-            return fromLeft + (360 / 2);
+            return fromLeft + (180 / 2);
         }
 
         public float GetTopOffSet()
         {
-            return fromTop + (225 / 2);
+            return fromTop + ((float)112.5 / 2);
         }
 
         public float GetFromTop()

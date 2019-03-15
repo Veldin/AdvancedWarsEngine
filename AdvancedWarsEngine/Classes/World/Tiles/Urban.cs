@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    interface ITargetableBehavior
+    class Urban : Tile
     {
-        void IsTargetable(Unit unit, Tile tile);
+        public Urban() : base()
+        {
+        }
     }
 }

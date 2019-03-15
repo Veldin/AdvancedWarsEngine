@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AA_InfantryHealthBehavior : IHealthBehavior
+    class Water : Tile
     {
-        public void Health(Unit unit)
+        public Water() : base()
         {
-            throw new NotImplementedException();
         }
     }
 }

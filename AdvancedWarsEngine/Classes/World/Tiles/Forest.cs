@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AA_InfantryMovementBehavior : IMovementBehavior
+    class Forest : Tile
     {
-        public void Movement(Unit unit)
+        public Forest() : base()
         {
-
         }
     }
 }

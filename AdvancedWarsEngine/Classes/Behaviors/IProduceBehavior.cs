@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdvancedWarsEngine.Classes.Behaviors
+namespace AdvancedWarsEngine.Classes
 {
-    interface ICapturePointsBehavior
+    interface IProduceBehavior
     {
-        void CapturePoints(Structure structure);
+        string Produce();
     }
 }

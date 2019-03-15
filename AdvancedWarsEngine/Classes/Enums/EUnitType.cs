@@ -4,12 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdvancedWarsEngine.Classes
+namespace AdvancedWarsEngine.Classes.Enums
 {
-    class Plain : Tile
-    {
-        public Plain() : base()
-        {
-        }
-    }
+    public enum EUnitType { Infantry, Vehicle, Air};
 }

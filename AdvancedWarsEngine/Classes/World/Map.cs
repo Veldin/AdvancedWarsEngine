@@ -12,8 +12,8 @@ namespace AdvancedWarsEngine.Classes
 {
     class Map
     {
-        private Tile[,] tiles;
-        private string sprite;
+        protected Tile[,] tiles;
+        protected string sprite;
         public Rectangle rectangle;
         private int size;
 
@@ -82,9 +82,18 @@ namespace AdvancedWarsEngine.Classes
                 return GetTile(x, tiles.GetLength(1)-1);
             }
 
-            return tiles[x,y];
+            return tiles[x, y];
         }
 
-        
+        public void DeselectAll()
+        {
+            for (int fromLeft = 0; fromLeft < tiles.GetLength(0); fromLeft += 1)
+            {
+                for (int fromTop = 0; fromTop < tiles.GetLength(1); fromTop += 1)
+                {
+                    tiles[fromLeft, fromTop].Selected = false;
+                }
+            }
+        }
     }
 }

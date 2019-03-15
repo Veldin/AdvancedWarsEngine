@@ -14,21 +14,6 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,7 +24,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,10 +34,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Red_AI_Vehicle.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -83,24 +63,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\Behaviors\AttackBehaviors\AV_VehicleAttackBehavior.cs" />
-    <Compile Include="Classes\Behaviors\AttackBehaviors\AI_VehicleAttackBehavior.cs" />
     <Compile Include="Classes\Behaviors\AttackBehaviors\AA_InfantryAttackBehavior.cs" />
-    <Compile Include="Classes\Behaviors\AttackBehaviors\AV_AirAttackBehavior.cs" />
-    <Compile Include="Classes\Behaviors\AttackBehaviors\AI_AirAttackBehavior.cs" />
-    <Compile Include="Classes\Behaviors\AttackBehaviors\AA_AirAttackBehavior.cs" />
-    <Compile Include="Classes\Behaviors\AttackBehaviors\AI_InfantryAttackBehavior.cs" />
-    <Compile Include="Classes\Behaviors\AttackBehaviors\AV_InfantryAttackBehavior.cs" />
-    <Compile Include="Classes\Behaviors\AttackBehaviors\AA_VehicleAttackBehavior.cs" />
-    <Compile Include="Classes\Behaviors\DefenceBehaviors\AirDefenceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\DefenceBehaviors\VehicleDefenceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\DefenceBehaviors\InfantryDefenceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\RangeBehaviors\LowRangeBehavior.cs" />
+    <Compile Include="Classes\Behaviors\DefenceBehaviors\AA_InfantryDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\AirportProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\BarracksProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\WorkshopProduceBehavior.cs" />
+    <Compile Include="Classes\Behaviors\RangeBehaviors\InfantryRangeBehavior.cs" />
     <Compile Include="Classes\Enums\EUnitType.cs" />
     <Compile Include="Classes\IAbstractFactory.cs" />
     <Compile Include="Classes\Behaviors\IOnTickBehavior.cs" />
@@ -318,8 +288,6 @@
     <Resource Include="Sprites\Yellow_Comet.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Sprites\DefaultCursor.gif" />
-    <Resource Include="Sprites\WindowsCursor.gif" />
     <Resource Include="Sprites\Arrows\ArrowBottomToLeft.gif" />
     <Resource Include="Sprites\Arrows\ArrowBottomToRight.gif" />
     <Resource Include="Sprites\Arrows\ArrowHeadBottom.gif" />
@@ -332,6 +300,10 @@
     <Resource Include="Sprites\Arrows\ArrowTopToRight.gif" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Sprites\Cursors\defaultCursor.gif" />
+    <Resource Include="Sprites\Cursors\windowsCursor.gif" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Sprites\TileSelectors\TileSelectorBlack.gif" />
     <Resource Include="Sprites\TileSelectors\TileSelectorBlue.gif" />
     <Resource Include="Sprites\TileSelectors\TileSelectorGreen.gif" />
@@ -340,23 +312,6 @@
     <Resource Include="Sprites\TileSelectors\TileSelectorRed.gif" />
     <Resource Include="Sprites\TileSelectors\TileSelectorWhite.gif" />
     <Resource Include="Sprites\TileSelectors\TileSelectorYellow.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Red_AI_Vehicle.ico" />
-    <Resource Include="Sprites\Cursors\defaultCursor.gif" />
-    <Resource Include="Sprites\Cursors\windowsCursor.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

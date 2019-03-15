@@ -16,6 +16,7 @@ namespace AdvancedWarsEngine.Classes
         protected float fromTop;
         protected float fromLeft;
         private List<Target> targets;
+
         protected IOnTickBehavior onTickBehavior;
 
         public Rectangle rectangle;
@@ -28,9 +29,8 @@ namespace AdvancedWarsEngine.Classes
         //This is so the location gets changed more times in a frame the canvasBitmap doesn't have to get loaded more then once a frame.
         //protected CanvasBitmap sprite;
         protected string location;
-        
 
-        public GameObject(float width, float height, float fromTop, float fromLeft, string sprite)
+        public GameObject(float width, float height, float fromTop, float fromLeft, string location)
         {
             this.width = width;
             this.height = height;
@@ -44,9 +44,9 @@ namespace AdvancedWarsEngine.Classes
 
             assemblyName = "AdvancedWarsEngine";
 
-            setActiveBitmap("Sprites/BG/Backgrounds_-_Normal.png");
-            location = "Sprites/BG/Backgrounds_-_Normal.png";
-            setActiveBitmap(sprite);
+            
+            setActiveBitmap(location);
+            this.location = location;
         }
 
         public bool IsAllowedToAct
@@ -92,6 +92,12 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return fromLeft; }
             set { fromLeft = value; }
+        }
+
+        public string Location
+        {
+            get { return location; }
+            set { location = value; }
         }
 
         public IOnTickBehavior OnTickBehavior

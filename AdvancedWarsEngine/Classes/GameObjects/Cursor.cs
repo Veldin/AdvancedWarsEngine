@@ -15,10 +15,7 @@ namespace AdvancedWarsEngine
         : base(width, height, fromLeft, fromTop, sprite)
         {
             //setActiveBitmap("Assets/Cursor1.gif");
-
         }
-
-
 
     }
 }

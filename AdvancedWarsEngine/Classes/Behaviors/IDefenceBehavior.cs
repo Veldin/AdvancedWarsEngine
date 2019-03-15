@@ -2,7 +2,10 @@
 {
     interface IDefenceBehavior
     {
-        void Defence(Tile tile);
-        void Defence(Unit unit);
+        /****************************************************
+         * Unit     = The Unit that defends
+         * Tile     = The Tile were the Unit stands on
+         * **************************************************/
+        float Defence(GameObject unit, Tile tile);
     }
 }

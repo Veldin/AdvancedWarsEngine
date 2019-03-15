@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace AdvancedWarsEngine
@@ -34,7 +33,7 @@ namespace AdvancedWarsEngine
 
         private List<GameObject> gameObjects;
 
-        private BitmapImage sprite;
+        private string sprite;
 
         //The max fps we want to run at
         private float fps;  //The set FPS limit
@@ -79,15 +78,14 @@ namespace AdvancedWarsEngine
             Cursor = Cursors.None; //Hide the default Cursor
 
             //Create the default crosshair to use
-            crosshair = new Prompt(30, 30, 300, 300, "Sprites/Crosshair.gif");
+            crosshair = new Prompt(30, 30, 300, 300, "Sprites/TileSelectors/TileSelectorWhite.gif");
             gameObjects.Add(crosshair);
 
             //Create the default cursor to use
-            cursor = new Cursor(30, 30, 300, 300, "Sprites/DefaultCursor.gif");
+            cursor = new Cursor(30, 30, 300, 300, "Sprites/Cursors/defaultCursor.gif");
             gameObjects.Add(cursor);
 
-            GameObject testUnit = new Unit(10,10,10,10);
-
+            GameObject testUnit = new Unit(30,30, -1,-1);
 
             gameObjects.Add(testUnit);
 
@@ -147,64 +145,48 @@ namespace AdvancedWarsEngine
             }
 
             //Run it in the UI thread
-            Application.Current.Dispatcher.Invoke((Action)delegate
+            try
             {
-                //TestCanvas.Children.Clear();    //Remove all recs from the canvas, start clean every loop
-
-                TestCanvas.Background = backgroundBrush;
-
-                //Set the background
-                Rectangle BgRect = world.Map.rectangle;
-                Canvas.SetLeft(BgRect, 0 + camera.GetLeftOffSet());
-                Canvas.SetTop(BgRect, 0 + camera.GetTopOffSet());
-
-                if (!TestCanvas.Children.Contains(BgRect))
+                Application.Current.Dispatcher.Invoke((Action)delegate
                 {
-                    TestCanvas.Children.Add(BgRect);
-                }  
+                    //TestCanvas.Children.Clear();    //Remove all recs from the canvas, start clean every loop
 
-                //Draw the gameobjects in the loop list
-                foreach (GameObject gameObject in loopList)
-                {
-                    Rectangle rect = gameObject.rectangle;
+                    TestCanvas.Background = backgroundBrush;
 
-                    rect.Width = gameObject.Width;
-                    rect.Height = gameObject.Height;
+                    //Set the background
+                    Rectangle BgRect = world.Map.rectangle;
+                    Canvas.SetLeft(BgRect, 0 + camera.GetLeftOffSet());
+                    Canvas.SetTop(BgRect, 0 + camera.GetTopOffSet());
 
-                    // Set up the position in the window, at mouse coordonate
-                    Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
 
-                    if (!TestCanvas.Children.Contains(rect))
+                    if (!TestCanvas.Children.Contains(BgRect))
                     {
-                        TestCanvas.Children.Add(rect);
-                    }   
-                }
-
-                //Draw all tiles
-                /*
-                for (int fromLeft = 0; fromLeft < world.Map.Tiles.GetLength(0); fromLeft += 1)
-                {
-                    for (int fromTop = 0; fromTop < world.Map.Tiles.GetLength(1); fromTop += 1)
-                    {
-                        Rectangle rectangle = new Rectangle();
-                        world.Map.Tiles[fromLeft, fromTop].Selected = false;
-
-                         
-                        BitmapImage newBitmap = new BitmapImage(new Uri("pack://application:,,,/AdvancedWarsEngine;component/" + "Sprites/Orange_Star.png", UriKind.Absolute));
-                
-                        rectangle = new Rectangle();
-                        rectangle.Fill = new ImageBrush{ImageSource = newBitmap};
-
-                        rectangle.Width = world.Map.Size;
-                        rectangle.Height = world.Map.Size;
-
-                        Canvas.SetLeft(rectangle, (fromLeft * world.Map.Size) + camera.GetLeftOffSet());
-                        Canvas.SetTop(rectangle, (fromTop * world.Map.Size) + camera.GetTopOffSet());
-
+                        TestCanvas.Children.Add(BgRect);
                     }
-                }*/
-            });
+
+                    //Draw the gameobjects in the loop list
+                    foreach (GameObject gameObject in loopList)
+                    {
+                        Rectangle rect = gameObject.rectangle;
+
+                        rect.Width = gameObject.Width;
+                        rect.Height = gameObject.Height;
+
+
+                        Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                        Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                        if (!TestCanvas.Children.Contains(rect))
+                        {
+                            TestCanvas.Children.Add(rect);
+                        }
+                    }
+                });
+            }
+            catch
+            {
+
+            }
         }
 
         private void Logic(long delta)
@@ -233,12 +215,19 @@ namespace AdvancedWarsEngine
             }
 
             //Set the new curser location
-            Application.Current.Dispatcher.Invoke((Action)delegate
+            try
             {
-                Point p = Mouse.GetPosition(TestCanvas);
-                cursor.FromLeft = (float)p.X - camera.GetLeftOffSet();
-                cursor.FromTop = (float)p.Y - camera.GetTopOffSet();
-            });
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    Point p = Mouse.GetPosition(TestCanvas);
+                    cursor.FromLeft = (float)p.X - camera.GetLeftOffSet();
+                    cursor.FromTop = (float)p.Y - camera.GetTopOffSet();
+                });
+            }
+            catch
+            {
+
+            }
 
             //Key input
             if (IsKeyPressed("W"))
@@ -265,6 +254,27 @@ namespace AdvancedWarsEngine
             //Get the tile at the location and put the crosshair on that location
             int selectedFromTop = (int)(cursor.FromTop / world.Map.Size);
             int selectedFromLeft = (int)(cursor.FromLeft / world.Map.Size);
+
+            if (selectedFromTop < 0)
+            {
+                selectedFromTop = 0;
+            }
+
+            if (selectedFromTop >= world.Map.Tiles.GetLength(1)-1)
+            {
+                selectedFromTop = world.Map.Tiles.GetLength(1) -1;
+            }
+
+            if (selectedFromLeft < 0)
+            {
+                selectedFromLeft = 0;
+            }
+
+            if (selectedFromLeft >= world.Map.Tiles.GetLength(0)-1)
+            {
+                selectedFromLeft = world.Map.Tiles.GetLength(0) -1;
+            }
+
             world.Map.GetTile(selectedFromTop, selectedFromLeft);
             crosshair.FromTop = world.Map.Size * selectedFromTop;
             crosshair.FromLeft = world.Map.Size * selectedFromLeft;
@@ -274,6 +284,7 @@ namespace AdvancedWarsEngine
             {
                 //world.Map.DeselectAll();
                 world.Map.GetTile(selectedFromTop, selectedFromLeft).Selected = true;
+
             }
 
             //Destory old objects

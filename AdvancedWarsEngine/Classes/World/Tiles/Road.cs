@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AA_InfantryDefenceBehavior : IDefenceBehavior
+    class Road : Tile
     {
-        public void Defence(Unit unit)
+        public Road() : base()
         {
-
         }
 
-        public void Defence(Tile tile)
+        public void IsTargetable(Unit unit, Tile tile)
         {
-
+            throw new NotImplementedException();
         }
     }
 }
