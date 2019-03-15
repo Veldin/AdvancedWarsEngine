@@ -58,8 +58,8 @@ namespace AdvancedWarsEngine.Classes
                 rectangle = new Rectangle();
                 rectangle.Fill = new ImageBrush{ImageSource = newBitmap};
 
-                rectangle.Width = tiles.GetLength(0) * size;
-                rectangle.Height = tiles.GetLength(1) * size;
+                rectangle.Width = tiles.GetLength(1) * size;
+                rectangle.Height = tiles.GetLength(0) * size;
             }));
 
 
