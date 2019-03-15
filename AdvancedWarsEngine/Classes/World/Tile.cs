@@ -10,7 +10,7 @@ namespace AdvancedWarsEngine.Classes
     {
         private bool selected;
         private Structure occupiedStructure;
-        private Unit occupiedUnit;
+        protected Unit occupiedUnit;
         private int size;
         private IDefenceBehavior defenceBehavior;
 

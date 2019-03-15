@@ -16,8 +16,7 @@ namespace AdvancedWarsEngine.Classes
             switch (value)
             {
                 case "":
-                    BitmapImage sprite = new BitmapImage();
-                    GameObject prompt = new Prompt(width, height, fromTop, fromLeft, sprite);
+                    GameObject prompt = new Prompt(width, height, fromTop, fromLeft, "sprite");
                     return prompt;
             }
 

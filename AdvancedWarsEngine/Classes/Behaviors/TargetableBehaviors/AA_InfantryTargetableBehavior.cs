@@ -12,5 +12,10 @@ namespace AdvancedWarsEngine.Classes
         {
 
         }
+
+        public void IsTargetable(Unit unit, Tile tile)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

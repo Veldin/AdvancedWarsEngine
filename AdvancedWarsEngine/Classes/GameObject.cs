@@ -16,7 +16,6 @@ namespace AdvancedWarsEngine.Classes
         protected float fromTop;
         protected float fromLeft;
         private List<Target> targets;
-        protected BitmapImage sprite;
         protected IOnTickBehavior onTickBehavior;
 
         public Rectangle rectangle;
@@ -30,13 +29,13 @@ namespace AdvancedWarsEngine.Classes
         //protected CanvasBitmap sprite;
         protected string location;
         
-        public GameObject(float width, float height, float fromTop, float fromLeft, BitmapImage sprite)
+
+        public GameObject(float width, float height, float fromTop, float fromLeft, string sprite)
         {
             this.width = width;
             this.height = height;
             this.fromLeft = fromLeft;
             this.fromTop = fromTop;
-            this.sprite = sprite;
 
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
@@ -47,7 +46,7 @@ namespace AdvancedWarsEngine.Classes
 
             setActiveBitmap("Sprites/BG/Backgrounds_-_Normal.png");
             location = "Sprites/BG/Backgrounds_-_Normal.png";
-            setActiveBitmap(location);
+            setActiveBitmap(sprite);
         }
 
         public bool IsAllowedToAct
@@ -93,12 +92,6 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return fromLeft; }
             set { fromLeft = value; }
-        }
-
-        public BitmapImage Sprite
-        {
-            get { return sprite; }
-            set { sprite = value; }
         }
 
         public IOnTickBehavior OnTickBehavior
@@ -178,6 +171,10 @@ namespace AdvancedWarsEngine.Classes
         //And Also get the delta for timed events.
         public bool OnTick(List<GameObject> gameObjects, float delta)
         {
+            if (onTickBehavior == null)
+            {
+                return false;
+            }
             return onTickBehavior.OnTick(this, gameObjects, delta);
         }
 

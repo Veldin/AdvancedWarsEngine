@@ -37,10 +37,10 @@ namespace AdvancedWarsEngine.Classes
                     // IRangeBehavior   rangebehavior       = new behavior
 
                     // Create the Unit with the created behaviors
-                    GameObject infantry = new Unit(width, height, fromTop, fromLeft, sprite, targetableBehavior, attackBehavior, healthBehavior, movementBehavior, defenceBehavior);
+                    //GameObject infantry = new Unit(width, height, fromTop, fromLeft, sprite, targetableBehavior, attackBehavior, healthBehavior, movementBehavior, defenceBehavior);
 
                     // Return the Unit
-                    return infantry;
+                    return null;
                /* case "AV_Infantry":
                     GameObject infantry = new Unit(width, height, fromTop, fromLeft);
                     return infantry;

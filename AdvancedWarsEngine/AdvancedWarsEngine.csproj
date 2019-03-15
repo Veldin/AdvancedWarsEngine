@@ -283,5 +283,12 @@
     <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AV_Vehicle.png" />
     <Resource Include="Sprites\Yellow_Comet.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Crosshair.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\DefaultCursor.gif" />
+    <Resource Include="Sprites\WindowsCursor.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

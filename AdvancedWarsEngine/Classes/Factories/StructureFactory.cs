@@ -16,8 +16,7 @@ namespace AdvancedWarsEngine.Classes
             switch (value)
             {
                 case "":
-                    BitmapImage sprite = new BitmapImage();
-                    GameObject structure = new Structure(width, height, fromTop, fromLeft, sprite);
+                    GameObject structure = new Structure(width, height, fromTop, fromLeft, "sprite");
                     return structure;
             }
 

@@ -31,7 +31,9 @@ namespace AdvancedWarsEngine
         private Camera camera;
         private World world;
         private Player player;
+
         private List<GameObject> gameObjects;
+
         private BitmapImage sprite;
 
         //The max fps we want to run at
@@ -45,7 +47,9 @@ namespace AdvancedWarsEngine
         //Holds string interpertation of all keys that are pressed right now
         private HashSet<string> pressedKeys;
 
+       
         private Cursor cursor;
+        private Prompt crosshair;
 
         public MainWindow()
         {
@@ -65,13 +69,34 @@ namespace AdvancedWarsEngine
             GetWindow(this).KeyUp += KeyUp;
             GetWindow(this).KeyDown += KeyDown;
 
-            camera = new Camera();
+            GetWindow(this).MouseDown += MouseDown;
+            GetWindow(this).MouseUp += MouseDown;
 
-            Cursor = Cursors.None; //Hide the default Cursor
-            cursor = new Cursor(30, 30, 300, 300, sprite);
+            camera = new Camera();
 
             gameObjects = new List<GameObject>();
 
+            Cursor = Cursors.None; //Hide the default Cursor
+
+            //Create the default crosshair to use
+            crosshair = new Prompt(30, 30, 300, 300, "Sprites/Crosshair.gif");
+            gameObjects.Add(crosshair);
+
+            //Create the default cursor to use
+            cursor = new Cursor(30, 30, 300, 300, "Sprites/DefaultCursor.gif");
+            gameObjects.Add(cursor);
+
+            GameObject testUnit = new Unit(10,10,10,10);
+
+
+            gameObjects.Add(testUnit);
+
+            world = new World();
+
+            Tile TestTile = world.Map.GetTile(0, 0);
+
+            Unit testUnitt = testUnit as Unit;
+            TestTile.OccupiedUnit = testUnitt;
 
             fps = 999999999; //Desired max fps.
             interval = 1000 / fps;
@@ -113,7 +138,6 @@ namespace AdvancedWarsEngine
                 {
                     //Try to duplicate the arraylist.
                     loopList = new ArrayList(gameObjects);
-                    loopList.Add(cursor);
                 }
                 catch
                 {
@@ -129,7 +153,17 @@ namespace AdvancedWarsEngine
 
                 TestCanvas.Background = backgroundBrush;
 
+                //Set the background
+                Rectangle BgRect = world.Map.rectangle;
+                Canvas.SetLeft(BgRect, 0 + camera.GetLeftOffSet());
+                Canvas.SetTop(BgRect, 0 + camera.GetTopOffSet());
 
+                if (!TestCanvas.Children.Contains(BgRect))
+                {
+                    TestCanvas.Children.Add(BgRect);
+                }  
+
+                //Draw the gameobjects in the loop list
                 foreach (GameObject gameObject in loopList)
                 {
                     Rectangle rect = gameObject.rectangle;
@@ -138,12 +172,38 @@ namespace AdvancedWarsEngine
                     rect.Height = gameObject.Height;
 
                     // Set up the position in the window, at mouse coordonate
-                    Canvas.SetLeft(rect, gameObject.FromLeft - camera.GetFromLeft());
-                    Canvas.SetTop(rect, gameObject.FromTop - camera.GetFromTop());
+                    Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
 
                     if (!TestCanvas.Children.Contains(rect))
+                    {
                         TestCanvas.Children.Add(rect);
+                    }   
                 }
+
+                //Draw all tiles
+                /*
+                for (int fromLeft = 0; fromLeft < world.Map.Tiles.GetLength(0); fromLeft += 1)
+                {
+                    for (int fromTop = 0; fromTop < world.Map.Tiles.GetLength(1); fromTop += 1)
+                    {
+                        Rectangle rectangle = new Rectangle();
+                        world.Map.Tiles[fromLeft, fromTop].Selected = false;
+
+                         
+                        BitmapImage newBitmap = new BitmapImage(new Uri("pack://application:,,,/AdvancedWarsEngine;component/" + "Sprites/Orange_Star.png", UriKind.Absolute));
+                
+                        rectangle = new Rectangle();
+                        rectangle.Fill = new ImageBrush{ImageSource = newBitmap};
+
+                        rectangle.Width = world.Map.Size;
+                        rectangle.Height = world.Map.Size;
+
+                        Canvas.SetLeft(rectangle, (fromLeft * world.Map.Size) + camera.GetLeftOffSet());
+                        Canvas.SetTop(rectangle, (fromTop * world.Map.Size) + camera.GetTopOffSet());
+
+                    }
+                }*/
             });
         }
 
@@ -158,7 +218,6 @@ namespace AdvancedWarsEngine
                 {
                     //Try to duplicate the arraylist.
                     loopList = new ArrayList(gameObjects);
-                    //loopList.Add(cursor);
                 }
                 catch
                 {
@@ -166,7 +225,6 @@ namespace AdvancedWarsEngine
                     return;
                 }
             }
-
 
             //For every gameobject in the room
             foreach (GameObject gameObject in loopList)
@@ -178,9 +236,45 @@ namespace AdvancedWarsEngine
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
                 Point p = Mouse.GetPosition(TestCanvas);
-                cursor.FromLeft = (float)p.X;
-                cursor.FromTop = (float)p.Y;
+                cursor.FromLeft = (float)p.X - camera.GetLeftOffSet();
+                cursor.FromTop = (float)p.Y - camera.GetTopOffSet();
             });
+
+            //Key input
+            if (IsKeyPressed("W"))
+            {
+                camera.AddFromTop((float)0.1);
+            }
+        
+            if (IsKeyPressed("S"))
+            {
+                camera.AddFromTop((float)-0.1);
+            }
+
+            if (IsKeyPressed("A"))
+            {
+                camera.AddFromLeft((float)0.1);
+            }
+            
+            if (IsKeyPressed("D"))
+            {
+                camera.AddFromLeft((float)-0.1);
+            }
+
+
+            //Get the tile at the location and put the crosshair on that location
+            int selectedFromTop = (int)(cursor.FromTop / world.Map.Size);
+            int selectedFromLeft = (int)(cursor.FromLeft / world.Map.Size);
+            world.Map.GetTile(selectedFromTop, selectedFromLeft);
+            crosshair.FromTop = world.Map.Size * selectedFromTop;
+            crosshair.FromLeft = world.Map.Size * selectedFromLeft;
+
+
+            if (IsKeyPressed("LeftMouseButton"))
+            {
+                //world.Map.DeselectAll();
+                world.Map.GetTile(selectedFromTop, selectedFromLeft).Selected = true;
+            }
 
             //Destory old objects
             foreach (GameObject gameObject in loopList)
@@ -198,7 +292,9 @@ namespace AdvancedWarsEngine
                     });
                 }
             }
-            
+
+            //Unpres the left mouse button (As there is no event that fires the mouse up)
+            pressedKeys.Remove("LeftMouseButton");
         }
 
         /* KeyDown */
@@ -222,6 +318,16 @@ namespace AdvancedWarsEngine
             pressedKeys.Remove(args.Key.ToString());
         }
 
+        /* MouseDown */
+        /* 
+        * Add the left mouse button key in the pressedKeys collection.
+        */
+        private new void MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            pressedKeys.Add("LeftMouseButton");
+        }
+
+        
         /* IsKeyPressed */
         /* 
          * Returns wheater the given key exists within the pressedKeys collection.
@@ -229,8 +335,7 @@ namespace AdvancedWarsEngine
          */
         public bool IsKeyPressed(string virtualKey)
         {
-            //return pressedKeys.Contains(virtualKey);
-            return false;
+            return pressedKeys.Contains(virtualKey);
         }
     }
 }

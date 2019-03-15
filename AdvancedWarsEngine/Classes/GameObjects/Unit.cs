@@ -19,11 +19,13 @@ namespace AdvancedWarsEngine.Classes
         protected IAttackBehavior attackBehavior;
         protected IDefenceBehavior defenceBehavior;
 
-        public Unit(float width, float height, float fromTop, float fromLeft, BitmapImage sprite, ITargetableBehavior isTargetable, IAttackBehavior attack, IDefenceBehavior defence, float range = 0)
-            : base(width, height, fromTop, fromLeft, sprite)
+        public Unit(float width, float height, float fromTop, float fromLeft)
+            : base(width, height, fromTop, fromLeft, "Sprites/Green_Earth.png")
         {
-            this.range = range;
+            this.range = 20;
         }
+
+   
 
         public void Attack(GameObject gameObject)
         {
@@ -72,7 +74,7 @@ namespace AdvancedWarsEngine.Classes
         {
                 //DO SOMETHING
         }
-
+        /*
         public ITargetableBehavior TargetableBehavior
         {
             get { return targetableBehavior; }
@@ -102,5 +104,6 @@ namespace AdvancedWarsEngine.Classes
             get { return defenceBehavior; }
             set { defenceBehavior = value; }
         }
+        */
     }
 }

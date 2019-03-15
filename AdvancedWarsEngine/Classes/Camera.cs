@@ -11,7 +11,7 @@ namespace AdvancedWarsEngine.Classes
         private float fromTop;
         private float fromLeft;
 
-         public Camera()
+        public Camera()
         {
             this.fromTop = 0;
             this.fromLeft = 0;
@@ -25,12 +25,12 @@ namespace AdvancedWarsEngine.Classes
 
         public float GetLeftOffSet()
         {
-            return 0;
+            return fromLeft + (360 / 2);
         }
 
         public float GetTopOffSet()
         {
-            return 0;
+            return fromTop + (225 / 2);
         }
 
         public float GetFromTop()
@@ -48,9 +48,14 @@ namespace AdvancedWarsEngine.Classes
             this.fromLeft = fromLeft;
         }
 
-        public void SetFromTop(float fromTop)
+        public void AddFromLeft(float fromLeft)
         {
-            this.fromTop = fromTop;
+            this.fromLeft += fromLeft;
+        }
+
+        public void AddFromTop(float fromTop)
+        {
+            this.fromTop += fromTop;
         }
     }
 }
