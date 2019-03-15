@@ -363,5 +363,11 @@
   <ItemGroup>
     <Resource Include="Sprites\Cursors\defaultCursor.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Maps\Level2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Maps\Level3.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

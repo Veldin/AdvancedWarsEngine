@@ -25,7 +25,7 @@ namespace AdvancedWarsEngine.Classes
 
         public void CreateMap()
         {
-            map = MapFactory.GetMap("plainlevel");
+            map = MapFactory.GetMap("lavalevel");
         }
     }
 }
