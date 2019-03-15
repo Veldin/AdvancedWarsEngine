@@ -330,10 +330,6 @@
     <Resource Include="Sprites\Arrows\ArrowTopToRight.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Sprites\Cursors\defaultCursor.gif" />
-    <Resource Include="Sprites\Cursors\windowsCursor.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Sprites\TileSelectors\TileSelectorBlack.gif" />
     <Resource Include="Sprites\TileSelectors\TileSelectorBlue.gif" />
     <Resource Include="Sprites\TileSelectors\TileSelectorGreen.gif" />
@@ -344,10 +340,9 @@
     <Resource Include="Sprites\TileSelectors\TileSelectorYellow.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="AW_Wrench.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Red_AI_Vehicle.ico" />
+    <Resource Include="Sprites\Cursors\defaultCursor.gif" />
+    <Resource Include="Sprites\Cursors\windowsCursor.gif" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
