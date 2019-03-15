@@ -91,7 +91,7 @@ namespace AdvancedWarsEngine
 
             world = new World();
 
-            Tile TestTile = world.Map.GetTile(6, 16);
+            Tile TestTile = world.Map.GetTile(0, 0);
 
             Unit testUnitt = testUnit as Unit;
             TestTile.OccupiedUnit = testUnitt;

@@ -358,5 +358,8 @@
   <ItemGroup>
     <Resource Include="Sprites\Maps\Level1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Units\Icons\Vehicle\Green_AV_Vehicle2.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

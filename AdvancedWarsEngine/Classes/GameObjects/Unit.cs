@@ -19,7 +19,7 @@ namespace AdvancedWarsEngine.Classes
         private bool                isDestroyed;                // A bool that checks if this Unit should be destroyed
 
         public Unit(float width, float height, float fromTop, float fromLeft)
-            : base(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/Green_AV_Vehicle.png")
+            : base(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/Green_AV_Vehicle2.gif")
         {
             health                  = 100;
             unitType           = EUnitType.Vehicle;
