@@ -93,7 +93,8 @@ namespace AdvancedWarsEngine
             gameObjects.Add(crosshair);
 
             //Create the default cursor to use
-            cursor = new Cursor(12, 11, 300, 300, "Sprites/Cursors/defaultCursor.gif");
+            cursor = new Cursor(12, 12, 300, 300, "Sprites/Cursors/defaultCursor.gif");
+
             gameObjects.Add(cursor);
 
             //Create the default cursor to use

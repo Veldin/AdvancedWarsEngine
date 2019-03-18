@@ -158,101 +158,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Sprites\BG\Water.psd" />
-    <None Include="Sprites\Units\Animations\Air\Blue_AA_Air.psd" />
-    <None Include="Sprites\Units\Animations\Air\Blue_AI_Air.psd" />
-    <None Include="Sprites\Units\Animations\Air\Blue_AV_Air.psd" />
-    <None Include="Sprites\Units\Animations\Air\Green_AA_Air.psd" />
-    <None Include="Sprites\Units\Animations\Air\Green_AI_Air.psd" />
-    <None Include="Sprites\Units\Animations\Air\Green_AV_Air.psd" />
-    <None Include="Sprites\Units\Animations\Air\Red_AA_Air.psd" />
-    <None Include="Sprites\Units\Animations\Air\Red_AI_Air.psd" />
-    <None Include="Sprites\Units\Animations\Air\Red_AV_Air.psd" />
-    <None Include="Sprites\Units\Animations\Air\Yellow_AA_Air.psd" />
-    <None Include="Sprites\Units\Animations\Air\Yellow_AI_Air.psd" />
-    <None Include="Sprites\Units\Animations\Air\Yellow_AV_Air.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Blue_AA_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Blue_AI_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Blue_AV_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Green_AA_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Green_AI_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Green_AV_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Red_AA_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Red_AI_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Red_AV_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Yellow_AA_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Yellow_AI_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Infantry\Yellow_AV_Infantry.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Blue_AA_Vehicle.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Blue_AI_Vehicle.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Blue_AV_Vehicle.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Green_AA_Vehicle.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Green_AI_Vehicle.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Green_AV_Vehicle.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Red_AA_Vehicle.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Red_AI_Vehicle.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Red_AV_Vehicle.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Yellow_AA_Vehicle.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Yellow_AI_Vehicle.psd" />
-    <None Include="Sprites\Units\Animations\Vehicle\Yellow_AV_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Air\Blue_AA_Air.psd" />
-    <None Include="Sprites\Units\Icons\Air\Blue_AI_Air.psd" />
-    <None Include="Sprites\Units\Icons\Air\Blue_AV_Air.psd" />
-    <None Include="Sprites\Units\Icons\Air\Green_AA_Air.psd" />
-    <None Include="Sprites\Units\Icons\Air\Green_AI_Air.psd" />
-    <None Include="Sprites\Units\Icons\Air\Green_AV_Air.psd" />
-    <None Include="Sprites\Units\Icons\Air\Red_AA_Air.psd" />
-    <None Include="Sprites\Units\Icons\Air\Red_AI_Air.psd" />
-    <None Include="Sprites\Units\Icons\Air\Red_AV_Air.psd" />
-    <None Include="Sprites\Units\Icons\Air\Yellow_AA_Air.psd" />
-    <None Include="Sprites\Units\Icons\Air\Yellow_AI_Air.psd" />
-    <None Include="Sprites\Units\Icons\Air\Yellow_AV_Air.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Blue_AA_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Blue_AI_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Blue_AV_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Green_AA_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Green_AI_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Green_AV_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Red_AA_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Red_AI_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Red_AV_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Yellow_AA_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Yellow_AI_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Infantry\Yellow_AV_Infantry.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Blue_AA_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Blue_AI_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Blue_AV_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Green_AA_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Green_AI_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Green_AV_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Red_AA_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Red_AI_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Red_AV_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Yellow_AA_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Yellow_AI_Vehicle.psd" />
-    <None Include="Sprites\Units\Icons\Vehicle\Yellow_AV_Vehicle.psd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Sprites\BG\Backgrounds_-_Normal.png" />
-    <Resource Include="Sprites\BG\Water.png" />
-    <Resource Include="Sprites\Blue_Moon.png" />
-    <Resource Include="Sprites\Green_Earth.png" />
-    <Resource Include="Sprites\Orange_Star.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Blue_AA_Air.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Blue_AI_Air.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Blue_AV_Air.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Green_AA_Air.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Green_AI_Air.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Green_AV_Air.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Red_AA_Air.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Red_AI_Air.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Red_AV_Air.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Yellow_AA_Air.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Yellow_AI_Air.png" />
-    <Resource Include="Sprites\Units\Animations\Air\Yellow_AV_Air.png" />
     <Resource Include="Sprites\Units\Animations\Infantry\Blue_AA_Infantry.png" />
     <Resource Include="Sprites\Units\Animations\Infantry\Blue_AI_Infantry.png" />
     <Resource Include="Sprites\Units\Animations\Infantry\Blue_AV_Infantry.png" />
@@ -277,6 +187,84 @@
     <Resource Include="Sprites\Units\Animations\Vehicle\Yellow_AA_Vehicle.png" />
     <Resource Include="Sprites\Units\Animations\Vehicle\Yellow_AI_Vehicle.png" />
     <Resource Include="Sprites\Units\Animations\Vehicle\Yellow_AV_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Blue_AA_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Blue_AI_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Blue_AV_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Green_AA_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Green_AI_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Green_AV_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Red_AA_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Red_AI_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Red_AV_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AA_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AI_Vehicle.png" />
+    <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AV_Vehicle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Arrows\ArrowBottomToLeft.gif" />
+    <Resource Include="Sprites\Arrows\ArrowBottomToRight.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadBottom.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadLeft.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadRight.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadTop.gif" />
+    <Resource Include="Sprites\Arrows\ArrowLeftToRight.gif" />
+    <Resource Include="Sprites\Arrows\ArrowLeftToTop.gif" />
+    <Resource Include="Sprites\Arrows\ArrowTopToBottom.gif" />
+    <Resource Include="Sprites\Arrows\ArrowTopToRight.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\TileSelectors\TileSelectorBlack.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorBlue.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorGreen.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorOrange.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorPink.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorRed.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorWhite.gif" />
+    <Resource Include="Sprites\TileSelectors\TileSelectorYellow.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Red_AI_Vehicle.ico" />
+    <Resource Include="Sprites\Cursors\windowsCursor.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Maps\Level1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Cursors\defaultCursor.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Maps\Level2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Maps\Level3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Units\Animations\Air\Blue_AA_Air.png" />
+    <Resource Include="Sprites\Units\Animations\Air\Blue_AI_Air.png" />
+    <Resource Include="Sprites\Units\Animations\Air\Blue_AV_Air.png" />
+    <Resource Include="Sprites\Units\Animations\Air\Green_AA_Air.png" />
+    <Resource Include="Sprites\Units\Animations\Air\Green_AI_Air.png" />
+    <Resource Include="Sprites\Units\Animations\Air\Green_AV_Air.png" />
+    <Resource Include="Sprites\Units\Animations\Air\Red_AA_Air.png" />
+    <Resource Include="Sprites\Units\Animations\Air\Red_AI_Air.png" />
+    <Resource Include="Sprites\Units\Animations\Air\Red_AV_Air.png" />
+    <Resource Include="Sprites\Units\Animations\Air\Yellow_AA_Air.png" />
+    <Resource Include="Sprites\Units\Animations\Air\Yellow_AI_Air.png" />
+    <Resource Include="Sprites\Units\Animations\Air\Yellow_AV_Air.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Sprites\Units\Icons\Air\Blue_AA_Air.png" />
     <Resource Include="Sprites\Units\Icons\Air\Blue_AI_Air.png" />
     <Resource Include="Sprites\Units\Icons\Air\Blue_AV_Air.png" />
@@ -301,66 +289,12 @@
     <Resource Include="Sprites\Units\Icons\Infantry\Yellow_AA_Infantry.png" />
     <Resource Include="Sprites\Units\Icons\Infantry\Yellow_AI_Infantry.png" />
     <Resource Include="Sprites\Units\Icons\Infantry\Yellow_AV_Infantry.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Blue_AA_Vehicle.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Blue_AI_Vehicle.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Blue_AV_Vehicle.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Green_AA_Vehicle.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Green_AI_Vehicle.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Green_AV_Vehicle.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Red_AA_Vehicle.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Red_AI_Vehicle.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Red_AV_Vehicle.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AA_Vehicle.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AI_Vehicle.png" />
-    <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AV_Vehicle.png" />
-    <Resource Include="Sprites\Yellow_Comet.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Sprites\DefaultCursor.gif" />
-    <Resource Include="Sprites\WindowsCursor.gif" />
-    <Resource Include="Sprites\Arrows\ArrowBottomToLeft.gif" />
-    <Resource Include="Sprites\Arrows\ArrowBottomToRight.gif" />
-    <Resource Include="Sprites\Arrows\ArrowHeadBottom.gif" />
-    <Resource Include="Sprites\Arrows\ArrowHeadLeft.gif" />
-    <Resource Include="Sprites\Arrows\ArrowHeadRight.gif" />
-    <Resource Include="Sprites\Arrows\ArrowHeadTop.gif" />
-    <Resource Include="Sprites\Arrows\ArrowLeftToRight.gif" />
-    <Resource Include="Sprites\Arrows\ArrowLeftToTop.gif" />
-    <Resource Include="Sprites\Arrows\ArrowTopToBottom.gif" />
-    <Resource Include="Sprites\Arrows\ArrowTopToRight.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Sprites\TileSelectors\TileSelectorBlack.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorBlue.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorGreen.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorOrange.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorPink.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorRed.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorWhite.gif" />
-    <Resource Include="Sprites\TileSelectors\TileSelectorYellow.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Red_AI_Vehicle.ico" />
-    <Resource Include="Sprites\Cursors\defaultCursor.gif" />
-    <Resource Include="Sprites\Cursors\windowsCursor.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Sprites\Maps\Level1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Sprites\Units\Icons\Vehicle\Green_AV_Vehicle2.gif" />
+    <Resource Include="Sprites\computerTurn.gif" />
+    <Resource Include="Sprites\defeat.gif" />
+    <Resource Include="Sprites\playerTurn.gif" />
+    <Resource Include="Sprites\victory.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
