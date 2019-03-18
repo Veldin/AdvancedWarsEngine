@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdvancedWarsEngine.Classes.Behaviors
+namespace AdvancedWarsEngine.Classes
 {
     interface IOnTickBehavior
     {

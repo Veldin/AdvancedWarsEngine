@@ -95,6 +95,7 @@
     <Compile Include="Classes\Behaviors\DefenceBehaviors\AirDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\DefenceBehaviors\VehicleDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\DefenceBehaviors\InfantryDefenceBehavior.cs" />
+    <Compile Include="Classes\Behaviors\OnTickBehaviors\DefaultOnTickBehavior.cs" />
     <Compile Include="Classes\Behaviors\RangeBehaviors\LowRangeBehavior.cs" />
     <Compile Include="Classes\Behaviors\IProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />

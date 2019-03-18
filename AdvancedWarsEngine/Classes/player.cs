@@ -9,33 +9,35 @@ namespace AdvancedWarsEngine.Classes
     class Player
     {
         protected bool isControllable;                      // Checks if this player can be controlled by an actual person
-        protected bool isTurn;                              // Checks if it's this players its turn
         private List<GameObject> gameObjects;               // All the gameObject that are owned by this player
         protected Player nextPlayer;                        // This is the who gets the turn when this players turn ends
 
         //Holds the selected unit.
         private Unit selectedUnit;                          //Holds the currently selected unit
-        private Structure structure;                        //Holds the currently selected structure
-
+        private Structure selectedStructure;                        //Holds the currently selected structure
 
         public Player(bool isControllable)
         {
             this.isControllable = isControllable;
-            this.isTurn         = false;
-
             gameObjects = new List<GameObject>();
-        }
-        
-        public bool IsTurn
-        {
-            get { return isTurn; }
-            set { isTurn = value; }
         }
 
         public bool IsControllable
         {
             get { return isControllable; }
             set { isControllable = value; }
+        }
+
+        public Unit SelectedUnit
+        {
+            get { return selectedUnit; }
+            set { selectedUnit = value; }
+        }
+
+        public Structure SelectedStructure
+        {
+            get { return selectedStructure; }
+            set { selectedStructure = value; }
         }
 
         public void AddGameObject(GameObject gameObject)
@@ -50,6 +52,35 @@ namespace AdvancedWarsEngine.Classes
             return gameObjects;
         }
 
+        public void AllowedAllToAct()
+        {
+            foreach (GameObject needle in gameObjects)
+            {
+                needle.IsAllowedToAct = true;
+            }
+        }
+
+        public void AllowedNoneToAct()
+        {
+            foreach (GameObject needle in gameObjects)
+            {
+                needle.IsAllowedToAct = false;
+            }
+        }
+
+        public bool InGameObjects(GameObject search)
+        {
+            foreach (GameObject needle in gameObjects)
+            {
+                if (search == needle)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void DeleteGameObject(GameObject gameObject)
         {
             // Deletes a GameObject from the list gameObjects
@@ -61,5 +92,8 @@ namespace AdvancedWarsEngine.Classes
             get { return nextPlayer; }
             set { nextPlayer = value; }
         }
+
+
+
     }
 }

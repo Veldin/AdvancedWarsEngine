@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AdvancedWarsEngine.Classes.Behaviors;
+using AdvancedWarsEngine.Classes;
 using System.Windows.Media.Imaging;
 
 namespace AdvancedWarsEngine.Classes
