@@ -76,7 +76,7 @@ namespace AdvancedWarsEngine
 
             //Make a new player and set the variable to that player
             player = new Player(true);      //First player is controlable
-            Player ai = new Player(false);  //Second player is not controllable
+            Player ai = new Player(true);  //Second player is not controllable
 
             //the players are each others next players so the player loop is created
             player.NextPlayer = ai;
@@ -201,7 +201,6 @@ namespace AdvancedWarsEngine
                     rect.Width = gameObject.Width;
                     rect.Height = gameObject.Height;
 
-
                     Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
                     Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
 
@@ -311,6 +310,8 @@ namespace AdvancedWarsEngine
                     world.Map.DeselectAll();
                     world.Map.SelectTile(selectedFromTop, selectedFromLeft).Selected = true;
 
+                    Tile pressedOnTile = world.Map.GetTile(selectedFromTop, selectedFromLeft);
+
                     //If you select a unit, check if the current players owns that unit
                     if (player.InGameObjects(world.Map.SelectTile(selectedFromTop, selectedFromLeft).OccupiedUnit))
                     {
@@ -330,12 +331,35 @@ namespace AdvancedWarsEngine
                             if(player.SelectedUnit.IsAllowedToAct)
                             {
                                 Debug.WriteLine("ALLOWED TO ACT UPON THIS!");
+                                if (player.SelectedUnit.CanTarget(player.SelectedUnit.Target.GetFromLeft() / 16, player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop))
+                                {
+                                    Debug.WriteLine("ATTAC");
+                                    player.SelectedUnit.Attack(world.Map.SelectTile(selectedFromTop, selectedFromLeft).OccupiedUnit, pressedOnTile);
+                                    player.SelectedUnit.IsAllowedToAct = false;
+                                    player.SelectedUnit = null;
+
+
+
+                                    selectedTileIndicator.FromLeft = -1000;
+                                    selectedTileIndicator.FromTop = -1000;
+                                }
                             }
                         }
-     
                     }else{
                         Debug.WriteLine("there is no unit");
                         if (player.SelectedUnit != null) //Current player has a unit selected
+                        {
+                            if (player.SelectedUnit.CanTarget(player.SelectedUnit.Target.GetFromLeft() / 16, player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop))
+                            {
+                                Debug.WriteLine("YES");
+                                
+                            }
+                            else
+                            {
+                                Debug.WriteLine("NO");
+                            }
+                        }
+                        else
                         {
 
                         }
@@ -344,8 +368,27 @@ namespace AdvancedWarsEngine
                 }
             }
 
+            /*
+             * Selects the next Player.
+             */
+            if (player.HasAlowedUnits())
+            {
 
-            //Destory old objects
+            }
+            else
+            {
+                //The turn of this player has ended. Select the next player, and allow all units to act
+                player = player.NextPlayer;
+                player.AllowedAllToAct();
+
+                //Hide the tile indicator
+                selectedTileIndicator.FromLeft = -1000;
+                selectedTileIndicator.FromTop = -1000;
+            }
+
+            /*
+             * Destroy old units.
+             */
             foreach (GameObject gameObject in loopList)
             {
                 if (gameObject.destroyed)

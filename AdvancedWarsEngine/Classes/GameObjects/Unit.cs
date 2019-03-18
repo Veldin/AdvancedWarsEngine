@@ -68,6 +68,11 @@ namespace AdvancedWarsEngine.Classes
                 // Deal the damage to the enemy unit by decreasing it's health
                 unit.DecreaseHealth(damageValue);
 
+                if (unit.Health < 0)
+                {
+                    destroyed = true;
+                }
+
                 //Todo show here the damage prompt
             }
 
@@ -124,14 +129,16 @@ namespace AdvancedWarsEngine.Classes
         /**********************************************************************
          * This function checks if the requested action is allowed and returns a bool
          * ARGUMENTS:
+         * fromFromLeft:    The fromLeft from the tile from where the requested action takes place.
+         * fromFromTop:     The fromTop from the tile from where the requested action takes place.
          * tile:            The Tile where the requested action takes place.
-         * targetFromLeft:  The fromLeft from the tile where the requested action takes place.
-         * targetFromLeft:  The fromTop from the tile where the requested action takes place.
+         * targetFromLeft:  The fromLeft from the tile where the requested action takes place to.
+         * targetFromTop:   The fromTop from the tile where the requested action takes place to.
          * ********************************************************************/
-        public bool CanTarget(Tile tile, float targetFromLeft, float targetFromTop)
+        public bool CanTarget(float fromFromLeft, float fromFromTop, Tile tile, float targetFromLeft, float targetFromTop)
         {
             // The rangeBehavior will check if the requested action is allowed and return true or false
-            return rangeBehavior.Range(this, fromLeft, fromTop, tile, targetFromLeft, targetFromTop);
+            return rangeBehavior.Range(this, fromFromLeft, fromFromTop, tile, targetFromLeft, targetFromTop);
         }
 
         public void AutoMove()

@@ -14,7 +14,7 @@ namespace AdvancedWarsEngine.Classes
 
         //Holds the selected unit.
         private Unit selectedUnit;                          //Holds the currently selected unit
-        private Structure selectedStructure;                        //Holds the currently selected structure
+        private Structure selectedStructure;                //Holds the currently selected structure
 
         public Player(bool isControllable)
         {
@@ -66,6 +66,19 @@ namespace AdvancedWarsEngine.Classes
             {
                 needle.IsAllowedToAct = false;
             }
+        }
+
+        public bool HasAlowedUnits()
+        {
+            foreach (GameObject needle in gameObjects)
+            {
+                if (needle.IsAllowedToAct)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool InGameObjects(GameObject search)

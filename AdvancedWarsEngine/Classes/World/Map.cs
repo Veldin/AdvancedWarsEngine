@@ -61,9 +61,8 @@ namespace AdvancedWarsEngine.Classes
                 rectangle.Width = tiles.GetLength(1) * size;
                 rectangle.Height = tiles.GetLength(0) * size;
             }));
-
-
         }
+
 
         public Tile SelectTile(int x, int y)
         {

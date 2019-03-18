@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace AdvancedWarsEngine.Classes
             // If the distance is bigger than the maxMoveDistance, return false.
             if (distance > maxMoveDistance)
             {
+                Debug.WriteLine(distance);
                 return false;
             }
 
