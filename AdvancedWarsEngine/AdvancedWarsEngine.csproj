@@ -289,5 +289,11 @@
     <Resource Include="Sprites\Units\Icons\Infantry\Yellow_AI_Infantry.png" />
     <Resource Include="Sprites\Units\Icons\Infantry\Yellow_AV_Infantry.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\computerTurn.gif" />
+    <Resource Include="Sprites\defeat.gif" />
+    <Resource Include="Sprites\playerTurn.gif" />
+    <Resource Include="Sprites\victory.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
