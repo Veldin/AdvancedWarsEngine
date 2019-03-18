@@ -16,14 +16,12 @@ namespace AdvancedWarsEngine.Classes
         protected IAttackBehavior   attackBehavior;             // The attackBehavior calculates the dammageValue
         protected IDefenceBehavior  defenceBehavior;            // The defenceBehavior calculates the defenceValue
         private EUnitType           unitType;                   // The unitType specifice the type of this Unit for example infantry or vehicle
-        private bool                isDestroyed;                // A bool that checks if this Unit should be destroyed
 
         public Unit(float width, float height, float fromTop, float fromLeft)
             : base(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/Green_AV_Vehicle2.gif")
         {
             health                  = 100;
-            unitType           = EUnitType.Vehicle;
-            isDestroyed             = false;
+            unitType                = EUnitType.Vehicle;
         }
 
 
@@ -35,7 +33,7 @@ namespace AdvancedWarsEngine.Classes
             this.attackBehavior     = attackBehavior;
             this.defenceBehavior    = defenceBehavior;
             this.unitType           = unitType;
-            isDestroyed             = false;
+
         }
 
         /**********************************************************************
@@ -100,10 +98,10 @@ namespace AdvancedWarsEngine.Classes
             health -= value;
 
             // Checks if the health of this Unit is zero of below
-            // If so set isDestroyed on true so the Engine will destroy it
+            // If so set destroyed on true so the Engine will destroy it
             if (health <= 0)
             {
-                isDestroyed = true;
+                destroyed = true;
             }
         }
 
