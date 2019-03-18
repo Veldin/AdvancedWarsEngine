@@ -14,14 +14,13 @@ namespace AdvancedWarsEngine.Classes
         protected float height;
         protected float fromTop;
         protected float fromLeft;
-        private Target target;
+        protected Target target;
 
         protected IOnTickBehavior onTickBehavior;
 
         public Rectangle rectangle;
         public string assemblyName;
-
-        public Random random;
+        
         public bool destroyed;
 
         //The sprite location and the CanvasBitmap are stored seperatly
@@ -43,7 +42,7 @@ namespace AdvancedWarsEngine.Classes
 
             assemblyName = "AdvancedWarsEngine";
 
-            setActiveBitmap(location);
+            SetActiveBitmap(location);
             this.location = location;
         }
 
@@ -51,21 +50,6 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return isAllowedToAct; }
             set { isAllowedToAct = value; }
-        }
-
-        public void AddTarget(Target target)
-        {
-            this.target = target;
-        }
-
-        public void DeleteTarget()
-        {
-            this.target = null;
-        }
-
-        public Target GetTarget()
-        {
-            return target;
         }
 
         public Target Target
@@ -79,7 +63,7 @@ namespace AdvancedWarsEngine.Classes
             get { return width; }
             set { width = value; }
         }
-        
+
         public float Height
         {
             get { return height; }
@@ -130,20 +114,7 @@ namespace AdvancedWarsEngine.Classes
             return this.fromLeft += fromLeft;
         }
 
-        public double CalculateDistance(GameObject gameObject1, GameObject gameObject2)
-        {
-            // Get the horizontal and vertical distance between the two gameobjects
-            float horizontalDistance = (gameObject2.FromLeft + gameObject2.Width / 2) - (gameObject1.FromLeft + gameObject1.Width / 2);
-            float verticalDistance = (gameObject2.FromTop + gameObject2.Height / 2) - (gameObject1.FromTop + gameObject2.Height / 2);
-
-            // Using pythagoras theorem to calculate the distance
-            float diagonalDistance = (horizontalDistance * horizontalDistance) + (verticalDistance * verticalDistance);
-            double distance = Math.Sqrt(diagonalDistance);
-
-            return distance;
-        }
-
-        public BitmapImage getActiveBitmap(string assemblyName, bool reload = false)
+        public BitmapImage GetActiveBitmap(string assemblyName, bool reload = false)
         {
             if (!Textures.textures.ContainsKey(location))
             {
@@ -158,22 +129,20 @@ namespace AdvancedWarsEngine.Classes
             }
         }
 
-        public bool setActiveBitmap(string set)
+        public bool SetActiveBitmap(string set)
         {
             if (location != set)
             {
                 Application.Current.Dispatcher.Invoke(delegate
                 {
                     location = set;
-                    //if (rectangle is null) { rectangle = new Rectangle(); }
                     rectangle.Fill = new ImageBrush
                     {
-                        ImageSource = getActiveBitmap(assemblyName)
+                        ImageSource = GetActiveBitmap(assemblyName)
                     };
                 });
                 return true;
             }
-
             return false;
         }
 

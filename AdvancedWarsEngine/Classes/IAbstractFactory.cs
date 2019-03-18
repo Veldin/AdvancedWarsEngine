@@ -1,6 +1,4 @@
-﻿using System.Windows.Media.Imaging;
-
-namespace AdvancedWarsEngine.Classes
+﻿namespace AdvancedWarsEngine.Classes
 {
     interface IAbstractFactory
     {

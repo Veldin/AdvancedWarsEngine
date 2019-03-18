@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AdvancedWarsEngine.Classes;
-using System.Windows.Media.Imaging;
-
-namespace AdvancedWarsEngine.Classes
+﻿namespace AdvancedWarsEngine.Classes
 {
     class Structure : GameObject
     {
@@ -32,13 +24,8 @@ namespace AdvancedWarsEngine.Classes
 
         public void AddCapturePoints(float value)
         {
-            capturePoints += value;
-        }
-        
-        public void DecreaseCapturePoints(float value)
-        {
             // Decrease the capturePoints by the given value
-            capturePoints -= value;
+            capturePoints += value;
 
             // If capturePoints is equal or smaller than 0, set destroy true
             if (capturePoints <= 0)

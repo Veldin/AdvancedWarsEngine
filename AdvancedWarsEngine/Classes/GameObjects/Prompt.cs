@@ -1,33 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows;
 
 namespace AdvancedWarsEngine.Classes
 {
     class Prompt : GameObject
     {
-        private float       maxDuration;
-        private float       currentDuration;
-        private TextBlock   textBlock;
-        private bool        isUsingDuration;
+        protected float maxDuration;
+        private float currentDuration;
+        protected TextBlock textBlock;
+        protected bool isUsingDuration;
 
         public Prompt(float width, float height, float fromTop, float fromLeft, string text, float maxDuration)
             : base(width, height, fromTop, fromLeft)
         {
             // Set the durations of this prompt
-            isUsingDuration     = true;
-            this.maxDuration    = maxDuration;
-            currentDuration     = 0;
+            isUsingDuration = true;
+            this.maxDuration = maxDuration;
+            currentDuration = 0;
 
             // Create the brushes for the text and background
             SolidColorBrush backgroundBrush = new SolidColorBrush(Colors.Transparent);
-            SolidColorBrush textBrush       = new SolidColorBrush(Colors.Red);
+            SolidColorBrush textBrush = new SolidColorBrush(Colors.Red);
 
             // Create a textBlock and set the necessary attributes
             Application.Current.Dispatcher.Invoke((Action)delegate
@@ -40,16 +35,14 @@ namespace AdvancedWarsEngine.Classes
                     Focusable = false
                 };
             });
-            
         }
 
         public Prompt(float width, float height, float fromTop, float fromLeft, string sprite)
             : base(width, height, fromTop, fromLeft, sprite)
         {
             isUsingDuration = false;
-
         }
-        
+
         public void IncreaseCurrentDuration(float time)
         {
             // Check if the prompt uses a duration

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AdvancedWarsEngine.Classes.Enums;
+﻿using AdvancedWarsEngine.Classes.Enums;
+using System;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -57,7 +52,6 @@ namespace AdvancedWarsEngine.Classes
                     break;
             }
 
-            // Return true
             return true;
         }
     }

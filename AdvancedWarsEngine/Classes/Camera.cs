@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdvancedWarsEngine.Classes
+﻿namespace AdvancedWarsEngine.Classes
 {
     class Camera
     {
@@ -13,8 +7,8 @@ namespace AdvancedWarsEngine.Classes
 
         public Camera()
         {
-            this.fromTop = 0;
-            this.fromLeft = 0;
+            fromTop = 0;
+            fromLeft = 0;
         }
 
         public Camera(float fromTop, float fromLeft)
