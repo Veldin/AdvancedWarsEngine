@@ -12,6 +12,8 @@ namespace AdvancedWarsEngine.Classes
     class Unit : GameObject
     {
         protected float             health;                     // The health of the Unit
+        protected float             movementSpeed;              // The movement speed of the Unit (for animations)
+
         protected IRangeBehavior    rangeBehavior;              // The rangeBehavior calculates the range of the Unit
         protected IAttackBehavior   attackBehavior;             // The attackBehavior calculates the dammageValue
         protected IDefenceBehavior  defenceBehavior;            // The defenceBehavior calculates the defenceValue
@@ -22,13 +24,14 @@ namespace AdvancedWarsEngine.Classes
         {
             health                  = 100;
             unitType                = EUnitType.Vehicle;
+            movementSpeed           = 100;
         }
-
 
         public Unit(float width, float height, float fromTop, float fromLeft, string sprite, IRangeBehavior rangeBehavior, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior, EUnitType unitType)
             : base(width, height, fromTop, fromLeft, sprite)
         {
             health                  = 100;
+            movementSpeed = 100;
             this.rangeBehavior      = rangeBehavior;
             this.attackBehavior     = attackBehavior;
             this.defenceBehavior    = defenceBehavior;
@@ -77,9 +80,10 @@ namespace AdvancedWarsEngine.Classes
             IsAllowedToAct = false;
         }
 
-        public void Move()
+
+        public float MovementSpeed
         {
-            // DO SOMETHING
+            get { return movementSpeed; }
         }
 
         public float Defence(Tile tile)
@@ -122,7 +126,7 @@ namespace AdvancedWarsEngine.Classes
          * targetFromLeft:  The fromLeft from the tile where the requested action takes place.
          * targetFromLeft:  The fromTop from the tile where the requested action takes place.
          * ********************************************************************/
-        public bool Target(Tile tile, float targetFromLeft, float targetFromTop)
+        public bool CanTarget(Tile tile, float targetFromLeft, float targetFromTop)
         {
             // The rangeBehavior will check if the requested action is allowed and return true or false
             return rangeBehavior.Range(this, fromLeft, fromTop, tile, targetFromLeft, targetFromTop);

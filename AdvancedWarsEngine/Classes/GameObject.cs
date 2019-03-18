@@ -1,5 +1,4 @@
-﻿using AdvancedWarsEngine.Classes.Behaviors;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
@@ -15,7 +14,7 @@ namespace AdvancedWarsEngine.Classes
         protected float height;
         protected float fromTop;
         protected float fromLeft;
-        private List<Target> targets;
+        private Target target;
 
         protected IOnTickBehavior onTickBehavior;
 
@@ -44,7 +43,6 @@ namespace AdvancedWarsEngine.Classes
 
             assemblyName = "AdvancedWarsEngine";
 
-            
             setActiveBitmap(location);
             this.location = location;
         }
@@ -57,17 +55,23 @@ namespace AdvancedWarsEngine.Classes
 
         public void AddTarget(Target target)
         {
-            targets.Add(target);
+            this.target = target;
         }
 
-        public void DeleteTarget(Target target)
+        public void DeleteTarget()
         {
-            targets.Remove(target);
+            this.target = null;
         }
 
-        public List<Target> GetTargets()
+        public Target GetTarget()
         {
-            return targets;
+            return target;
+        }
+
+        public Target Target
+        {
+            get { return target; }
+            set { target = value; }
         }
 
         public float Width

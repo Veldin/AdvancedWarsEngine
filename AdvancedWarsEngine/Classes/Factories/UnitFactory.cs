@@ -26,7 +26,8 @@ namespace AdvancedWarsEngine.Classes
             IRangeBehavior      rangeBehavior;                  // The rangeBehavior of the Unit
             IAttackBehavior     attackBehavior;                 // The attackBehavior of the Unit
             IDefenceBehavior    defenceBehavior;                // The defenceBehavrior of the Unit
-            GameObject          unit                = null;     // The GameObject is the Unit that will be returned
+            IOnTickBehavior     onTickBehavior      = new DefaultOnTickBehavior() ;     // The default onTick of the Unit
+            GameObject          unit                = null;                             // The GameObject is the Unit that will be returned
 
             // Check which Unit should be created and create it
             switch (value)
@@ -38,7 +39,7 @@ namespace AdvancedWarsEngine.Classes
                     defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AA_Infantry", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Infantry);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/Green_AA_Infantry.png", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Infantry);
                     break;
 
                 case "AV_Infantry":     // Anti-Vehicle Infantry
@@ -48,7 +49,7 @@ namespace AdvancedWarsEngine.Classes
                     defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AV_Infantry", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Infantry);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/Green_AV_Infantry.png", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Infantry);
                     break;
 
                 case "AI_Infantry":     // Anti-Infantry Infantry
@@ -58,7 +59,7 @@ namespace AdvancedWarsEngine.Classes
                     defenceBehavior = new InfantryDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AI_Infantry", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Infantry);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/Green_AI_Infantry.png", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Infantry);
                     break;
 
                 case "AI_Vehicle":          // Anti_Infantry Vehicle
@@ -68,7 +69,7 @@ namespace AdvancedWarsEngine.Classes
                     defenceBehavior = new VehicleDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "IV_Vehicle", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/Green_AI_Vehicle.png", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
                     break;
 
                 case "AV_Vehicle":          // Anti-Vehicle Vehicle
@@ -78,7 +79,7 @@ namespace AdvancedWarsEngine.Classes
                     defenceBehavior = new VehicleDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AV_Vehicle", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/Green_AV_Vehicle.png", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
                     break;
 
                 case "AA_Vehicle":          // Anti-Air Vehicle
@@ -88,7 +89,7 @@ namespace AdvancedWarsEngine.Classes
                     defenceBehavior = new VehicleDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AA_Vehicle", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/Green_AA_Vehicle.png", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Vehicle);
                     break;
 
                 case "AI_Air":              // Anti_Infantry Air
@@ -98,7 +99,7 @@ namespace AdvancedWarsEngine.Classes
                     defenceBehavior = new AirDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AI_Air", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/Green_AI_Air.png", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);
                     break;
 
                 case "AV_Air":              // Anti-Vehicle Air
@@ -108,7 +109,7 @@ namespace AdvancedWarsEngine.Classes
                     defenceBehavior = new AirDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AV_Air", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/Green_AV_Air.png", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);
                     break;
 
                 case "AA_Air":              // Anti-Air Air
@@ -118,9 +119,11 @@ namespace AdvancedWarsEngine.Classes
                     defenceBehavior = new AirDefenceBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "AA_Air", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/Green_AA_Air.png", rangeBehavior, attackBehavior, defenceBehavior, EUnitType.Air);
                     break;
             }
+
+            unit.OnTickBehavior = onTickBehavior;
 
             // Return the Unit as GameObject
             return unit;

@@ -50,6 +50,8 @@ namespace AdvancedWarsEngine
         private Prompt crosshair;               //Holds information of the crosshair
         private Prompt selectedTileIndicator;   //Holds information about the selected crosshair
 
+        //Holds the factoryProducer
+        FactoryProducer factoryProducer;
 
         public MainWindow()
         {
@@ -99,29 +101,43 @@ namespace AdvancedWarsEngine
             selectedTileIndicator = new Prompt(16, 16, 300, 300, "Sprites/TileSelectors/TileSelectorGreen.gif");
             gameObjects.Add(selectedTileIndicator);
 
-            GameObject testUnit = new Unit(16,16, -1,-1);
-            gameObjects.Add(testUnit);
+            factoryProducer = new FactoryProducer();
 
-            player.AddGameObject(testUnit);
+            IAbstractFactory factory = factoryProducer.GetFactory("UnitFactory");
+
+            Unit testUnit = (Unit)factory.GetGameObject("AA_Infantry", 16,16,0,0);
+            gameObjects.Add(testUnit); 
+
+            Unit testUnit2 = (Unit)factory.GetGameObject("AI_Vehicle", 16,16,32,32);
+            gameObjects.Add(testUnit2);
+
+            player.AddGameObject(testUnit); //player one owns unit one
+            player.NextPlayer.AddGameObject(testUnit2); //player two own unit two
 
             world = new World();
 
-            Tile TestTile = world.Map.GetTile(0, 0);
+            Tile TestTile = world.Map.GetTile(6, 9);
 
-            Unit testUnitt = testUnit as Unit;
-            TestTile.OccupiedUnit = testUnitt;
+            Tile TestTile2 = world.Map.GetTile(7, 9);
+            
+            TestTile.OccupiedUnit = testUnit;
+            TestTile.OccupiedUnit.Target = new Target(6 * 16, 9 * 16);
+
+            TestTile2.OccupiedUnit = testUnit2;
+            TestTile2.OccupiedUnit.Target = new Target(7 * 16, 9 * 16);
 
             fps = 999999999; //Desired max fps.
             interval = 1000 / fps;
             then = Stopwatch.GetTimestamp();
+
+            //Allow the player's gameobject to act
+            player.AllowedAllToAct();
 
             Run();
         }
 
         public void Run()
         {
-
-
             now = Stopwatch.GetTimestamp();
             delta = (now - then) / 1000; //Defide by 1000 to get the delta in MS
 
@@ -269,9 +285,9 @@ namespace AdvancedWarsEngine
                 selectedFromTop = 0;
             }
 
-            if (selectedFromTop >= world.Map.Tiles.GetLength(1)-1)
+            if (selectedFromTop >= world.Map.Tiles.GetLength(0)-1)
             {
-                selectedFromTop = world.Map.Tiles.GetLength(1) -1;
+                selectedFromTop = world.Map.Tiles.GetLength(0) -1;
             }
 
             if (selectedFromLeft < 0)
@@ -279,27 +295,54 @@ namespace AdvancedWarsEngine
                 selectedFromLeft = 0;
             }
 
-            if (selectedFromLeft >= world.Map.Tiles.GetLength(0)-1)
+            if (selectedFromLeft >= world.Map.Tiles.GetLength(1)-1)
             {
-                selectedFromLeft = world.Map.Tiles.GetLength(0) -1;
+                selectedFromLeft = world.Map.Tiles.GetLength(1) -1;
             }
 
             world.Map.GetTile(selectedFromTop, selectedFromLeft);
             crosshair.FromTop = world.Map.Size * selectedFromTop;
             crosshair.FromLeft = world.Map.Size * selectedFromLeft;
 
-
-            if (IsKeyPressed("LeftMouseButton"))
+            if (player.IsControllable)
             {
-                world.Map.DeselectAll();
-                world.Map.SelectTile(selectedFromTop, selectedFromLeft).Selected = true;
+                if (IsKeyPressed("LeftMouseButton"))
+                {
+                    world.Map.DeselectAll();
+                    world.Map.SelectTile(selectedFromTop, selectedFromLeft).Selected = true;
 
-                
-                selectedTileIndicator.FromLeft = selectedFromLeft * world.Map.Size;
-                selectedTileIndicator.FromTop = selectedFromTop * world.Map.Size;
-                //Debug.WriteLine(world.Map.GetTile(selectedFromTop, selectedFromLeft).OccupiedUnit.Location);
+                    //If you select a unit, check if the current players owns that unit
+                    if (player.InGameObjects(world.Map.SelectTile(selectedFromTop, selectedFromLeft).OccupiedUnit))
+                    {
+                        player.SelectedUnit = world.Map.SelectTile(selectedFromTop, selectedFromLeft).OccupiedUnit;
+
+                        selectedTileIndicator.FromLeft = selectedFromLeft * world.Map.Size;
+                        selectedTileIndicator.FromTop = selectedFromTop * world.Map.Size;
+                    }
+                    else if(world.Map.SelectTile(selectedFromTop, selectedFromLeft).OccupiedUnit != null) 
+                        //Clicked a unit the current player doest own.
+                    {
+                        Debug.WriteLine("you dont own the unit");
+                        if (player.SelectedUnit != null) //Current player has a unit selected
+                        {
+                            Debug.WriteLine("you selected the unit");
+
+                            if(player.SelectedUnit.IsAllowedToAct)
+                            {
+                                Debug.WriteLine("ALLOWED TO ACT UPON THIS!");
+                            }
+                        }
+     
+                    }else{
+                        Debug.WriteLine("there is no unit");
+                        if (player.SelectedUnit != null) //Current player has a unit selected
+                        {
+
+                        }
+                    }
+                    //Debug.WriteLine(world.Map.GetTile(selectedFromTop, selectedFromLeft).OccupiedUnit.Location);
+                }
             }
-
 
 
             //Destory old objects
@@ -307,9 +350,6 @@ namespace AdvancedWarsEngine
             {
                 if (gameObject.destroyed)
                 {
-                    //Do the deathrattle effect
-                    //gameObject.OnDeath(GameObjects, pressedKeys);
-
                     //If a gameObject is marked to be destroyed remove it from the list and remove them from the canvas
                     gameObjects.Remove(gameObject);
                     Application.Current.Dispatcher.Invoke((Action)delegate

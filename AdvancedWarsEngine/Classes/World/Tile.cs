@@ -44,6 +44,8 @@ namespace AdvancedWarsEngine.Classes
             set { size = value; }
         }
 
+        public bool SelectedUnit { get; internal set; }
+
         public bool toggleSelection()
         {
             return true;
