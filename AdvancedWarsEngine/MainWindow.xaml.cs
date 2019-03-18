@@ -132,7 +132,7 @@ namespace AdvancedWarsEngine
 
             //Allow the player's gameobject to act
             player.AllowedAllToAct();
-
+            
             Run();
         }
 
@@ -193,20 +193,80 @@ namespace AdvancedWarsEngine
                     TestCanvas.Children.Add(BgRect);
                 }
 
-                //Draw the gameobjects in the loop list
+                //Draw the gameobjects in the loop list exept for the Prompts
                 foreach (GameObject gameObject in loopList)
                 {
-                    Rectangle rect = gameObject.rectangle;
-
-                    rect.Width = gameObject.Width;
-                    rect.Height = gameObject.Height;
-
-                    Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
-
-                    if (!TestCanvas.Children.Contains(rect))
+                    // Don't draw the prompts just yet
+                    if (gameObject is Prompt)
                     {
-                        TestCanvas.Children.Add(rect);
+                        // Dont do anything
+                    }
+                    else
+                    {
+                        Rectangle rect = gameObject.rectangle;
+
+                        rect.Width = gameObject.Width;
+                        rect.Height = gameObject.Height;
+
+                        Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                        Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                        if (!TestCanvas.Children.Contains(rect))
+                        {
+                            TestCanvas.Children.Add(rect);
+                        }
+                    }
+                }
+
+                // Draw the prompts
+                foreach (GameObject gameObject in loopList)
+                {
+                    // todo make this prettier
+                    if (gameObject is Prompt)
+                    {
+                        // Cast the gameObject to a Prompt
+                        Prompt prompt = gameObject as Prompt;
+
+                        // Checks if the prompt has a TextBlock
+                        if (prompt.TextBlock != null)
+                        {
+                            // Get the textBlock from the prompt
+                            TextBlock textBlock = prompt.TextBlock;
+
+                            // Set the width and the height of the textBlock
+                            textBlock.Width = gameObject.Width;
+                            textBlock.Height = gameObject.Height;
+
+                            Canvas.SetLeft(textBlock, gameObject.FromLeft + camera.GetLeftOffSet());
+                            Canvas.SetTop(textBlock, gameObject.FromTop + camera.GetTopOffSet());
+
+                            if (!TestCanvas.Children.Contains(textBlock))
+                            {
+                                TestCanvas.Children.Add(textBlock);
+                            }
+                            
+                            // Move the prompt a little bit up
+                            prompt.FromTop -= 0.05f;
+                        } else
+                        {
+                            // Get the rectangle from the prompt
+                            Rectangle rect = prompt.rectangle;
+
+                            // Set the width and height of the rect
+                            rect.Width = gameObject.Width;
+                            rect.Height = gameObject.Height;
+
+                            Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                            Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                            if (!TestCanvas.Children.Contains(rect))
+                            {
+                                TestCanvas.Children.Add(rect);
+                            }
+                        }
+
+                        // Increase the currentDuration of this promt by the delta
+                        prompt.IncreaseCurrentDuration(delta);
                     }
                 }
             });
@@ -237,7 +297,7 @@ namespace AdvancedWarsEngine
             {
                 gameObject.OnTick(gameObjects, delta);
             }
-
+            
             //Set the new curser location
             try
             {
@@ -333,13 +393,42 @@ namespace AdvancedWarsEngine
                                 Debug.WriteLine("ALLOWED TO ACT UPON THIS!");
                                 if (player.SelectedUnit.CanTarget(player.SelectedUnit.Target.GetFromLeft() / 16, player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop))
                                 {
-                                    Debug.WriteLine("ATTAC");
-                                    player.SelectedUnit.Attack(world.Map.SelectTile(selectedFromTop, selectedFromLeft).OccupiedUnit, pressedOnTile);
+                                    // Define a GameObject
+                                    GameObject enemyGameObject;
+
+                                    // Try to get the Unit from the selected tile
+                                    enemyGameObject = world.Map.SelectTile(selectedFromTop, selectedFromLeft).OccupiedUnit;
+
+                                    // If there is no Unit try to select the structure
+                                    if (enemyGameObject == null)
+                                    {
+                                        enemyGameObject = world.Map.SelectTile(selectedFromTop, selectedFromLeft).OccupiedStructure;
+                                    }
+
+                                    // The selectedUnit attacks the Unit on the selectedTile
+                                    float dmgValue = player.SelectedUnit.Attack(enemyGameObject, pressedOnTile);
+
+                                    // Create a promptFactory
+                                    IAbstractFactory promtFactory = factoryProducer.GetFactory("PromptFactory");
+
+                                    // Display the damageValue in a prompt
+                                    try
+                                    {
+                                        Application.Current.Dispatcher.Invoke((Action)delegate
+                                        {
+                                            gameObjects.Add(promtFactory.GetGameObject(dmgValue.ToString(), 50, 20, enemyGameObject.FromTop, enemyGameObject.FromLeft));
+                                        });
+                                    }
+                                    catch
+                                    {
+
+                                    }
+                                   
+                                    // End the turn for this Unit and deselect it
                                     player.SelectedUnit.IsAllowedToAct = false;
                                     player.SelectedUnit = null;
 
-
-
+                                    // Remove the selectedTileIndicator from sight
                                     selectedTileIndicator.FromLeft = -1000;
                                     selectedTileIndicator.FromTop = -1000;
                                 }

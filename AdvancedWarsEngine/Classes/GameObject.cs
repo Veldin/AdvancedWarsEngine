@@ -29,7 +29,7 @@ namespace AdvancedWarsEngine.Classes
         //protected CanvasBitmap sprite;
         protected string location;
 
-        public GameObject(float width, float height, float fromTop, float fromLeft, string location)
+        public GameObject(float width, float height, float fromTop, float fromLeft, string location = "Sprites/Units/Icons/Infantry/Green_AA_Infantry.png") //todo Change the default location
         {
             this.width = width;
             this.height = height;

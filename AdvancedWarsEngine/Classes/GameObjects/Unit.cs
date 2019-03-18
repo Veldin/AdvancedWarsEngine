@@ -31,7 +31,7 @@ namespace AdvancedWarsEngine.Classes
             : base(width, height, fromTop, fromLeft, sprite)
         {
             health                  = 100;
-            movementSpeed = 100;
+            movementSpeed           = 100;
             this.rangeBehavior      = rangeBehavior;
             this.attackBehavior     = attackBehavior;
             this.defenceBehavior    = defenceBehavior;
@@ -45,13 +45,13 @@ namespace AdvancedWarsEngine.Classes
          * gameObject:  The gameObject that gets attacked
          * tile:        The Tile where the gameObject that gets attacked stands on.
          * ********************************************************************/
-        public void Attack(GameObject gameObject, Tile tile)
+        public float Attack(GameObject gameObject, Tile tile)
         {
             // If the gameObject is a prompt give some feedback and return.
             if (gameObject is Prompt)
             {
                 Debug.WriteLine("A prompt cannot be attacked");
-                return;
+                return -1;
             }
 
             // Check if the attacked gameobject is an Unit
@@ -71,18 +71,25 @@ namespace AdvancedWarsEngine.Classes
                     destroyed = true;
                 }
 
-                //Todo show here the damage prompt
+                // return the damageValue
+                return damageValue;
             }
 
             // Check if the gameObject is a Structure
             if (gameObject is Structure)
             {
-                throw new Exception("Still needs to be implemented"); //Todo
-                // Just deal 10 damage/capture points to the structure no matter what??
+                // Cast the gameObject to an Unit
+                Structure structure = gameObject as Structure;
+
+                // Decrease the capturePoints of this structure by 10
+                structure.DecreaseCapturePoints(10);
+
+                // Return the damageValue
+                return 10;
             }
-                 
-            // The Unit has attacked so it is no longer allowed to act this turn.
-            IsAllowedToAct = false;
+            
+            // Return -1 because nothing is done
+            return -1;
         }
 
 

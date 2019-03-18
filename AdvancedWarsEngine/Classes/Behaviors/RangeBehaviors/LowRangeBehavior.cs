@@ -26,7 +26,6 @@ namespace AdvancedWarsEngine.Classes
             // If the distance is bigger than the maxMoveDistance, return false.
             if (distance > maxMoveDistance)
             {
-                Debug.WriteLine(distance);
                 return false;
             }
 
