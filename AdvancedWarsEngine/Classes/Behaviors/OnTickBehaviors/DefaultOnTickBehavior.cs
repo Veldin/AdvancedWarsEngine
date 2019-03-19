@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -10,7 +7,6 @@ namespace AdvancedWarsEngine.Classes
     {
         public bool OnTick(GameObject gameobject, List<GameObject> gameObjects, float delta)
         {
-
             if (gameobject is Unit && gameobject.Target != null)
             {
                 Unit unit = gameobject as Unit;
@@ -23,8 +19,6 @@ namespace AdvancedWarsEngine.Classes
 
                 float differenceTopPercent = differenceTopAbs / (totalDifferenceAbs / 100);
                 float differenceLeftPercent = differenceLeftAbs / (totalDifferenceAbs / 100);
-                //totalDifference = differenceTop + differenceLeft;
-                //totalDifferenceAbs = differenceTopAbs + differenceLeftAbs;
 
                 float moveTopDistance = unit.MovementSpeed * (differenceTopPercent / 100);
                 float moveLeftDistance = unit.MovementSpeed * (differenceLeftPercent / 100);

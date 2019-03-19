@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
-
-namespace AdvancedWarsEngine.Classes
+﻿namespace AdvancedWarsEngine.Classes
 {
     class World
     {
-        private Map map;
+        protected Map map;
+
         public Map Map
         {
             get { return map; }
@@ -17,13 +11,6 @@ namespace AdvancedWarsEngine.Classes
         }
 
         public World()
-        {
-            
-            //DO SOMETHING
-            CreateMap();
-        }
-
-        public void CreateMap()
         {
             map = MapFactory.GetMap("plainlevel");
         }

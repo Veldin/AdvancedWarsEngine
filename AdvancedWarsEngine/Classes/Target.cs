@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdvancedWarsEngine.Classes
+﻿namespace AdvancedWarsEngine.Classes
 {
     class Target
     {
@@ -72,7 +66,8 @@ namespace AdvancedWarsEngine.Classes
             {
                 // returns the fromTop from the gameObject
                 return gameObject.FromTop;
-            } else
+            }
+            else
             {
                 // Returns fromTop because the gameObject doesn't exist
                 return fromTop;

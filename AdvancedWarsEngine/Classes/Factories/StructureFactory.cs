@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Windows.Media.Imaging;
-
-namespace AdvancedWarsEngine.Classes
+﻿namespace AdvancedWarsEngine.Classes
 {
     class StructureFactory : IAbstractFactory
     {
@@ -16,8 +8,8 @@ namespace AdvancedWarsEngine.Classes
         public GameObject GetGameObject(string value, float width, float height, float fromTop, float fromLeft)
         {
             // Define some local variables
-            IProduceBehavior    produceBehavior;                // The produceBehavior of the Structure
-            GameObject          structure           = null;     // The GameObject is the Structure that will be returned
+            IProduceBehavior produceBehavior;   // The produceBehavior of the Structure
+            GameObject structure = null;        // The GameObject is the Structure that will be returned
 
             // Check which Structure shoud be created and returned
             switch (value)

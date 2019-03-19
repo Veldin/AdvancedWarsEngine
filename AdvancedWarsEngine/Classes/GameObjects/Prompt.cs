@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -11,48 +7,48 @@ namespace AdvancedWarsEngine.Classes
 {
     class Prompt : GameObject
     {
-        private float       maxDuration;
-        private float       currentDuration;
-        private TextBlock   textBlock;
+        protected float maxDuration;
+        private float currentDuration;
+        protected TextBlock textBlock;
+        protected bool isUsingDuration;
 
-        public Prompt(float width, float height, float fromTop, float fromLeft, string sprite = "Undefined", float duration = 130, string text = "Undefined")
-            : base(width, height, fromTop, fromLeft, sprite)
+        public Prompt(float width, float height, float fromTop, float fromLeft, string text, float maxDuration)
+            : base(width, height, fromTop, fromLeft)
         {
             // Set the durations of this prompt
-            maxDuration     = duration;
+            isUsingDuration = true;
+            this.maxDuration = maxDuration;
             currentDuration = 0;
 
             // Create the brushes for the text and background
             SolidColorBrush backgroundBrush = new SolidColorBrush(Colors.Transparent);
-            SolidColorBrush textBrush       = new SolidColorBrush(Colors.Red);
+            SolidColorBrush textBrush = new SolidColorBrush(Colors.Red);
 
             // Create a textBlock and set the necessary attributes
-            textBlock = new TextBlock
+            Application.Current.Dispatcher.Invoke((Action)delegate
             {
-                Text        = text,
-                Background  = backgroundBrush,
-                Foreground  = textBrush,
-                Focusable   = false
-            };
+                textBlock = new TextBlock
+                {
+                    Text = text,
+                    Background = backgroundBrush,
+                    Foreground = textBrush,
+                    Focusable = false,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+            });
         }
 
         public Prompt(float width, float height, float fromTop, float fromLeft, string sprite)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            maxDuration     = 120;
-            currentDuration = 120;
-
+            isUsingDuration = false;
         }
 
-        // Return the textBox
-        public TextBlock GetTextBox()
-        {
-            return textBlock;
-        }
-
-        
         public void IncreaseCurrentDuration(float time)
         {
+            // Check if the prompt uses a duration
+            if (!isUsingDuration) { return; }
+
             // Increase the currentDuration by the given value
             currentDuration += time;
 
@@ -62,6 +58,26 @@ namespace AdvancedWarsEngine.Classes
                 textBlock.Opacity = 0;
                 destroyed = true;
             }
+        }
+
+        // Getter for the textBox
+        public TextBlock TextBlock
+        {
+            get { return textBlock; }
+        }
+
+        // Getter and setter for maxDuration
+        public float MaxDuration
+        {
+            get { return maxDuration; }
+            set { maxDuration = value; }
+        }
+
+        // Getter and setter for isUsingDuration
+        public bool IsUsingDuration
+        {
+            get { return isUsingDuration; }
+            set { isUsingDuration = value; }
         }
     }
 }

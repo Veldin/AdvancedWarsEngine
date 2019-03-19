@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdvancedWarsEngine.Classes
+﻿namespace AdvancedWarsEngine.Classes
 {
     abstract class Tile
     {
@@ -12,7 +6,6 @@ namespace AdvancedWarsEngine.Classes
         protected Structure occupiedStructure;
         protected Unit occupiedUnit;
         protected int size;
-        protected IDefenceBehavior defenceBehavior;
 
         public Tile()
         {
@@ -36,19 +29,6 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return occupiedUnit; }
             set { occupiedUnit = value; }
-        }
-
-        public int Size
-        {
-            get { return size; }
-            set { size = value; }
-        }
-
-        public bool SelectedUnit { get; internal set; }
-
-        public bool toggleSelection()
-        {
-            return true;
         }
     }
 }
