@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -98,6 +99,26 @@ namespace AdvancedWarsEngine.Classes
                     tiles[fromLeft, fromTop].Selected = false;
                 }
             }
+        }
+
+        public List<int> GetTileCoords(Tile tile)
+        {
+            List<int> coords = new List<int>();
+
+            for (int fromLeft = 0; fromLeft < tiles.GetLength(0); fromLeft++)
+            {
+                for (int fromTop = 0; fromTop < tiles.GetLength(1); fromTop++)
+                {
+                    if (tiles[fromLeft, fromTop] == tile)
+                    {
+                        coords.Add(fromLeft);
+                        coords.Add(fromTop);
+                        return coords;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
