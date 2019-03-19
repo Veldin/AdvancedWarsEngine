@@ -150,11 +150,13 @@ namespace AdvancedWarsEngine.Classes
         //And Also get the delta for timed events.
         public bool OnTick(List<GameObject> gameObjects, float delta)
         {
+
             if (onTickBehavior == null)
             {
                 return false;
             }
             return onTickBehavior.OnTick(this, gameObjects, delta);
+            
         }
 
         /* IsColliding */

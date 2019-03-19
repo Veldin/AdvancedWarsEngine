@@ -1,4 +1,5 @@
 ﻿using AdvancedWarsEngine.Classes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -80,7 +81,7 @@ namespace AdvancedWarsEngine
             gameObjects.Add(cursor);
 
             //Create the default crosshair to use
-            crosshair = new Prompt(16, 16, 300, 300, "Sprites/TileSelectors/TileSelectorWhite.gif");
+            crosshair = new Prompt(16, 16, 0, 0, "Sprites/TileSelectors/TileSelectorWhite.gif");
             gameObjects.Add(crosshair);
 
             //Create the default cursor to use
@@ -114,27 +115,26 @@ namespace AdvancedWarsEngine
             //Allow the player's gameobject to act
             player.AllowedAllToAct();
 
-            Run();
+            RunAsync();
         }
 
-        public void Run()
+        public void RunAsync()
         {
             now = Stopwatch.GetTimestamp();
             delta = (now - then) / 1000; //Defide by 1000 to get the delta in MS
 
-            if (delta > interval)
+  
+            then = now; //Remember when this frame was.
+            lock (this)
             {
-                then = now; //Remember when this frame was.
                 Logic(delta); //Run the logic of the simulation.
                 Draw();
             }
-            else
-            {
-                Thread.Sleep(1); //Sleep the thread so time is passed
-            }
 
-            Task.Yield();  //Force this task to complete asynchronously (This way the main thread is not blocked by this task calling itself.
-            Task.Run(() => Run());  //Schedule new Run() task
+            Task.Delay((int)interval);
+
+            //Task.Yield();  //Force this task to complete asynchronously (This way the main thread is not blocked by this task calling itself.
+            Task.Run(() => RunAsync());  //Schedule new Run() task
         }
 
         private void Draw()
@@ -159,9 +159,12 @@ namespace AdvancedWarsEngine
             //Run it in the UI thread
             try
             {
+
                 Application.Current.Dispatcher.Invoke(delegate
                 {
+                    TestCanvas.Children.Clear();    //Remove all recs from the canvas, start clean every loop
                     TestCanvas.Background = backgroundBrush;
+
 
                     //Set the background
                     Rectangle BgRect = world.Map.rectangle;
@@ -177,32 +180,9 @@ namespace AdvancedWarsEngine
                     //Draw the gameobjects in the loop list exept for the Prompts
                     foreach (GameObject gameObject in loopList)
                     {
+
+
                         // Don't draw the prompts just yet. These will be drawn later so it's on top of other gameObjects
-                        if (gameObject is Prompt)
-                        {
-                            // Dont do anything
-                        }
-                        else
-                        {
-                            Rectangle rect = gameObject.rectangle;
-
-                            rect.Width = gameObject.Width;
-                            rect.Height = gameObject.Height;
-
-                            Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                            Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
-
-                            if (!TestCanvas.Children.Contains(rect))
-                            {
-                                TestCanvas.Children.Add(rect);
-                            }
-                        }
-                    }
-
-                    // Draw the prompts
-                    foreach (GameObject gameObject in loopList)
-                    {
-                        // todo make this prettier
                         if (gameObject is Prompt)
                         {
                             // Cast the gameObject to a Prompt
@@ -230,30 +210,116 @@ namespace AdvancedWarsEngine
                             }
                             else
                             {
-                                // Get the rectangle from the prompt
-                                Rectangle rect = prompt.rectangle;
+                                Rectangle rect = gameObject.rectangle;
 
-                                // Set the width and height of the rect
                                 rect.Width = gameObject.Width;
                                 rect.Height = gameObject.Height;
+
 
                                 Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
                                 Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
 
+                                if (Double.IsNaN(gameObject.FromLeft) || Double.IsNaN(gameObject.FromTop))
+                                {
+
+                                    if (gameObject.Target != null)
+                                    {
+                                        gameObject.FromLeft = gameObject.Target.GetFromLeft();
+                                    }
+                                    else
+                                    {
+                                        gameObject.FromLeft = 0;
+                                    }
+
+                                    if (gameObject.Target != null)
+                                    {
+                                        gameObject.FromTop = gameObject.Target.GetFromLeft();
+                                    }
+                                    else
+                                    {
+                                        gameObject.FromTop = 0;
+                                    }
+
+
+                                    foreach (GameObject gameObject2 in loopList)
+                                    {
+                                        Debug.WriteLine("lel");
+                                        Debug.WriteLine(loopList.Count);
+                                        Debug.WriteLine(gameObject2);
+                                    }
+
+                                }
+
+                                Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                                Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                                //Draw the rect if the rect isnt in yet
                                 if (!TestCanvas.Children.Contains(rect))
                                 {
                                     TestCanvas.Children.Add(rect);
                                 }
                             }
-                            // Increase the currentDuration of this promt by the delta
+
                             prompt.IncreaseCurrentDuration(delta);
                         }
+                        else //gameobject is not a prompt
+                        {
+                            Rectangle rect = gameObject.rectangle;
+
+                            rect.Width = gameObject.Width;
+                            rect.Height = gameObject.Height;
+
+                            Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                            Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                            if (Double.IsNaN(gameObject.FromLeft) || Double.IsNaN(gameObject.FromTop))
+                            {
+
+                                if (gameObject.Target != null)
+                                {
+                                    gameObject.FromLeft = gameObject.Target.GetFromLeft();
+                                }
+                                else
+                                {
+                                    gameObject.FromLeft = 0;
+                                }
+
+                                if (gameObject.Target != null)
+                                {
+                                    gameObject.FromTop = gameObject.Target.GetFromLeft();
+                                }
+                                else
+                                {
+                                    gameObject.FromTop = 0;
+                                }
+
+
+                                foreach (GameObject gameObject2 in loopList)
+                                {
+                                    Debug.WriteLine("lel");
+                                    Debug.WriteLine(loopList.Count);
+                                    Debug.WriteLine(gameObject2);
+                                }
+
+                            }
+
+                            Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                            Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                            //Draw the rect if the rect isnt in yet
+                            if (!TestCanvas.Children.Contains(rect))
+                            {
+                                TestCanvas.Children.Add(rect);
+                            }
+                        }
+
+                        
                     }
                 });
             }
             catch
             {
-                // if drawing failes do nothing
+
             }
         }
 
@@ -408,11 +474,13 @@ namespace AdvancedWarsEngine
                                     player.SelectedUnit = null;
 
                                     // Remove the selectedTileIndicator from sight
+
                                     selectedTileIndicator.FromLeft = -1000;
                                     selectedTileIndicator.FromTop = -1000;
                                 }
                             }
                         }
+
                     }
                     else
                     {
@@ -420,6 +488,37 @@ namespace AdvancedWarsEngine
                         {
                             if (player.SelectedUnit.CanTarget(player.SelectedUnit.Target.GetFromLeft() / 16, player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop))
                             {
+
+                                player.SelectedUnit.IsAllowedToAct = false;
+
+                                lock (world.Map.Tiles)
+                                {
+                                    //If you can move, remove the reference to the tile the unit is in now
+                                    for (int fromLeft = 0; fromLeft < world.Map.Tiles.GetLength(0); fromLeft += 1)
+                                    {
+                                        for (int fromTop = 0; fromTop < world.Map.Tiles.GetLength(1); fromTop += 1)
+                                        {
+                                            lock (player.SelectedUnit)
+                                            {
+                                                if(world.Map.GetTile(fromLeft,fromTop).OccupiedUnit != null &&
+                                                    world.Map.GetTile(fromLeft, fromTop).OccupiedUnit == player.SelectedUnit
+                                                )
+                                                {
+                                                    world.Map.GetTile(fromLeft, fromTop).OccupiedUnit = null;
+                                            
+                                                    fromLeft = world.Map.Tiles.GetLength(0);    //Get out of the outer loop
+                                                    break;                                      //Get out of the inner loop
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    //Put the unit in the new tile
+                                    pressedOnTile.OccupiedUnit = player.SelectedUnit;
+                                    player.SelectedUnit.Target = new Target(selectedFromTop * 16, selectedFromLeft * 16);
+
+                                    player.SelectedUnit.IsAllowedToAct = false;
+                                }
                                 Debug.WriteLine("In range");
                             }
                             else
@@ -431,6 +530,7 @@ namespace AdvancedWarsEngine
                         {
                             //Do nothing
                         }
+                       
                     }
                 }
             }
@@ -438,39 +538,98 @@ namespace AdvancedWarsEngine
             /*
              * Selects the next Player.
              */
-            if (player.HasAlowedUnits())
+            if (player.HasAllowedUnits())
             {
                 //Do nothing, because the player can still act with a unit
             }
             else
             {
+                player.SelectedStructure = null;
+                player.SelectedUnit = null;
+
                 //The turn of this player has ended. Select the next player, and allow all units to act
                 player = player.NextPlayer;
+
                 player.AllowedAllToAct();
 
                 //Hide the tile indicator
-                selectedTileIndicator.FromLeft = -1000;
-                selectedTileIndicator.FromTop = -1000;
+                if (player.SelectedUnit != null && player.SelectedUnit.Target != null)
+                {
+                    selectedTileIndicator.FromLeft = player.SelectedUnit.Target.GetFromLeft();
+                    selectedTileIndicator.FromTop = player.SelectedUnit.Target.GetFromTop();
+                }
+                else
+                {
+                    //Player has no unit selected or selected unit has no tile
+                    selectedTileIndicator.FromLeft = -99999;
+                    selectedTileIndicator.FromTop = -99999;
+                }
             }
 
             /*
-             * Destroy old units.
+             * Remove references in map to destroyed units
+             */
+
+            for (int fromLeft = 0; fromLeft < world.Map.Tiles.GetLength(0); fromLeft += 1)
+            {
+                for (int fromTop = 0; fromTop < world.Map.Tiles.GetLength(1); fromTop += 1)
+                {
+                    if(world.Map.GetTile(fromLeft,fromTop).OccupiedUnit != null &&
+                        world.Map.GetTile(fromLeft, fromTop).OccupiedUnit.destroyed
+                    )
+                    {
+                        world.Map.GetTile(fromLeft, fromTop).OccupiedUnit = null;
+                    }
+                }
+            }
+
+             /*
+             * set destroyed on true for units
+             */
+            foreach (GameObject gameObject in loopList)
+            {
+                if (gameObject is Unit)
+                {
+                    Unit unit = gameObject as Unit;
+                    if (unit.Health < 0)
+                    {
+                        gameObject.destroyed = true;
+                    }
+                }
+            }
+
+            /*
+             * Destroy destroyed gameobjects.
              */
             foreach (GameObject gameObject in loopList)
             {
                 if (gameObject.destroyed)
                 {
-                    foreach (Tile tile in world.Map.Tiles)
+                    //Remove the gameobject from the tile.
+                    for (int fromLeft = 0; fromLeft < world.Map.Tiles.GetLength(0); fromLeft += 1)
                     {
-                        if (tile.OccupiedStructure == gameObject)
+                        for (int fromTop = 0; fromTop < world.Map.Tiles.GetLength(1); fromTop += 1)
                         {
-                            tile.OccupiedStructure = null;
-                        }
-                        if (tile.OccupiedUnit == gameObject)
-                        {
-                            tile.OccupiedUnit = null;
+                            if(world.Map.GetTile(fromLeft,fromTop).OccupiedUnit != null &&
+                                world.Map.GetTile(fromLeft, fromTop).OccupiedUnit == gameObject
+                            )
+                            {
+                                world.Map.GetTile(fromLeft, fromTop).OccupiedUnit = null;
+                            }
                         }
                     }
+
+                    //Remove the gameObject from the array
+                    gameObjects.Remove(gameObject);
+
+                    int i = 50;
+                    while (player.NextPlayer != null && i > 0)
+                    {
+                        player.DeleteGameObject(gameObject);
+                        i--;
+                    }
+
+
                     //If a gameObject is marked to be destroyed remove it from the list and remove them from the canvas
                     gameObjects.Remove(gameObject);
                     Application.Current.Dispatcher.Invoke(delegate

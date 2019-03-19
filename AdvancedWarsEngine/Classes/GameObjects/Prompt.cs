@@ -32,7 +32,8 @@ namespace AdvancedWarsEngine.Classes
                     Text = text,
                     Background = backgroundBrush,
                     Foreground = textBrush,
-                    Focusable = false
+                    Focusable = false,
+                    HorizontalAlignment = HorizontalAlignment.Center
                 };
             });
         }

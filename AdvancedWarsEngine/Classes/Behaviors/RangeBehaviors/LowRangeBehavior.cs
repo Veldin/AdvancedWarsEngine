@@ -9,7 +9,7 @@ namespace AdvancedWarsEngine.Classes
         {
             //**************************************************DISTANCE CHECK****************************************************
             // Setting some base values
-            float maxMoveDistance = 2;
+            float maxMoveDistance = 8;
 
             // Calculate the movement that will be made
             float horizontalMovement = fromLeft - targetFromLeft;
