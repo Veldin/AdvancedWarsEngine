@@ -99,14 +99,14 @@ namespace AdvancedWarsEngine
             player.AddGameObject(testUnit); //player one owns unit one
             ai.AddGameObject(testUnit2); //player two own unit two
 
-            Tile TestTile = world.Map.GetTile(0, 1);
-            Tile TestTile2 = world.Map.GetTile(0, 0);
+            Tile TestTile = world.Map.GetTile(6, 9);
+            Tile TestTile2 = world.Map.GetTile(7, 9);
 
             TestTile.OccupiedUnit = testUnit;
-            TestTile.OccupiedUnit.Target = new Target(0 * 16, 1 * 16);
+            TestTile.OccupiedUnit.Target = new Target(6 * 16, 9 * 16);
 
             TestTile2.OccupiedUnit = testUnit2;
-            TestTile2.OccupiedUnit.Target = new Target(0 * 16, 0 * 16);
+            TestTile2.OccupiedUnit.Target = new Target(7 * 16, 9 * 16);
 
             fps = 999999999; //Desired max fps.
             interval = 1000 / fps;
