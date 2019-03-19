@@ -1,20 +1,34 @@
-﻿namespace AdvancedWarsEngine.Classes
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AdvancedWarsEngine.Classes
 {
     class Camera
     {
         private float fromTop;
         private float fromLeft;
 
-        public Camera()
-        {
-            fromTop = 0;
-            fromLeft = 0;
-        }
+        private float currentMapHeight;
+        private float currentMapWidth;
 
-        public Camera(float fromTop, float fromLeft)
+        private float bottomLine;
+        private float rightLine;
+
+
+        public Camera(int mapHeight, int mapWidth)
         {
-            this.fromTop = fromTop;
-            this.fromLeft = fromLeft;
+            fromTop = (float)-56.25;
+            fromLeft = -90;
+
+            currentMapHeight = mapHeight * 16;
+            currentMapWidth = mapWidth * 16;
+
+            bottomLine = currentMapHeight - 360 - (float)56.25;
+            rightLine = currentMapHeight - 360 - (float)56.25;
         }
 
         public float GetLeftOffSet()
@@ -45,11 +59,26 @@
         public void AddFromLeft(float fromLeft)
         {
             this.fromLeft += fromLeft;
+
+            if (GetLeftOffSet() >= 0)
+            {
+                this.fromLeft = -90;
+            }
         }
 
         public void AddFromTop(float fromTop)
         {
             this.fromTop += fromTop;
+
+            if (GetTopOffSet() >= 0)
+            {
+                this.fromTop = (float)-56.25;
+            }
+
+            //if (GetTopOffSet() <= bottomLine)
+            //{
+            //    this.fromTop = bottomLine - (float)72.25;
+            //}
         }
     }
 }
