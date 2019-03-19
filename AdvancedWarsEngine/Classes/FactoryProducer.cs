@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdvancedWarsEngine.Classes
+﻿namespace AdvancedWarsEngine.Classes
 {
     class FactoryProducer
     {
         public FactoryProducer()
         {
-
         }
 
         /**********************************************************************
@@ -35,11 +27,9 @@ namespace AdvancedWarsEngine.Classes
                 case "PromptFactory":       // Create and return an PromptFactory
                     IAbstractFactory promptFactory = new PromptFactory();
                     return promptFactory;
+                default:
+                    return null;
             }
-
-            // Give feedback and return null
-            Debug.WriteLine("No factory is created because there is no factory with that name.");
-            return null;
         }
     }
 }

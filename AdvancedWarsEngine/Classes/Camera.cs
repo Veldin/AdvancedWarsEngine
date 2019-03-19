@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -17,6 +17,7 @@ namespace AdvancedWarsEngine.Classes
 
         private float bottomLine;
         private float rightLine;
+
 
         public Camera(int mapHeight, int mapWidth)
         {

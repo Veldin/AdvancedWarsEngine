@@ -1,44 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using AdvancedWarsEngine.Classes.Enums;
+﻿using AdvancedWarsEngine.Classes.Enums;
 using System.Diagnostics;
 
 namespace AdvancedWarsEngine.Classes
 {
     class Unit : GameObject
     {
-        protected float             health;                     // The health of the Unit
-        protected float             movementSpeed;              // The movement speed of the Unit (for animations)
+        protected float health = 100;                     // The health of the Unit
+        protected float movementSpeed = 100;              // The movement speed of the Unit (for animations)
 
-        protected IRangeBehavior    rangeBehavior;              // The rangeBehavior calculates the range of the Unit
-        protected IAttackBehavior   attackBehavior;             // The attackBehavior calculates the dammageValue
-        protected IDefenceBehavior  defenceBehavior;            // The defenceBehavior calculates the defenceValue
-        private EUnitType           unitType;                   // The unitType specifice the type of this Unit for example infantry or vehicle
-        private bool                isDestroyed;                // A bool that checks if this Unit should be destroyed
+        protected IRangeBehavior rangeBehavior;              // The rangeBehavior calculates the range of the Unit
+        protected IAttackBehavior attackBehavior;             // The attackBehavior calculates the dammageValue
+        protected IDefenceBehavior defenceBehavior;            // The defenceBehavior calculates the defenceValue
+        protected EUnitType unitType;                   // The unitType specifice the type of this Unit for example infantry or vehicle
 
         public Unit(float width, float height, float fromTop, float fromLeft)
             : base(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/Green_AV_Vehicle2.gif")
         {
-            health                  = 100;
-            movementSpeed           = 100;
-            unitType           = EUnitType.Vehicle;
-            isDestroyed             = false;
+            unitType = EUnitType.Vehicle;
         }
 
         public Unit(float width, float height, float fromTop, float fromLeft, string sprite, IRangeBehavior rangeBehavior, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior, EUnitType unitType)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            health                  = 100;
-            movementSpeed = 100;
-            this.rangeBehavior      = rangeBehavior;
-            this.attackBehavior     = attackBehavior;
-            this.defenceBehavior    = defenceBehavior;
-            this.unitType           = unitType;
-            isDestroyed             = false;
+            this.rangeBehavior = rangeBehavior;
+            this.attackBehavior = attackBehavior;
+            this.defenceBehavior = defenceBehavior;
+            this.unitType = unitType;
+
         }
 
         /**********************************************************************
@@ -47,13 +35,13 @@ namespace AdvancedWarsEngine.Classes
          * gameObject:  The gameObject that gets attacked
          * tile:        The Tile where the gameObject that gets attacked stands on.
          * ********************************************************************/
-        public void Attack(GameObject gameObject, Tile tile)
+        public float Attack(GameObject gameObject, Tile tile)
         {
             // If the gameObject is a prompt give some feedback and return.
             if (gameObject is Prompt)
             {
                 Debug.WriteLine("A prompt cannot be attacked");
-                return;
+                return -1;
             }
 
             // Check if the attacked gameobject is an Unit
@@ -66,22 +54,33 @@ namespace AdvancedWarsEngine.Classes
                 float damageValue = attackBehavior.Attack(this, unit) - unit.Defence(tile);
 
                 // Deal the damage to the enemy unit by decreasing it's health
-                unit.DecreaseHealth(damageValue);
+                unit.AddHealth(-damageValue);
 
-                //Todo show here the damage prompt
+                if (unit.Health < 0)
+                {
+                    destroyed = true;
+                }
+
+                // return the damageValue
+                return damageValue;
             }
 
             // Check if the gameObject is a Structure
             if (gameObject is Structure)
             {
-                throw new Exception("Still needs to be implemented"); //Todo
-                // Just deal 10 damage/capture points to the structure no matter what??
-            }
-                 
-            // The Unit has attacked so it is no longer allowed to act this turn.
-            IsAllowedToAct = false;
-        }
+                // Cast the gameObject to an Unit
+                Structure structure = gameObject as Structure;
 
+                // Decrease the capturePoints of this structure by 10
+                structure.AddCapturePoints(-10);
+
+                // Return the damageValue
+                return 10;
+            }
+
+            // Return -1 because nothing is done
+            return -1;
+        }
 
         public float MovementSpeed
         {
@@ -98,19 +97,6 @@ namespace AdvancedWarsEngine.Classes
             get { return health; }
         }
 
-        public void DecreaseHealth(float value)
-        {
-            // Decrease the heath of this Unit by the given value
-            health -= value;
-
-            // Checks if the health of this Unit is zero of below
-            // If so set isDestroyed on true so the Engine will destroy it
-            if (health <= 0)
-            {
-                isDestroyed = true;
-            }
-        }
-
         public EUnitType UnitType
         {
             get { return unitType; }
@@ -118,45 +104,36 @@ namespace AdvancedWarsEngine.Classes
 
         public float AddHealth(float value)
         {
-            return health += value;
+            // Add the heath of this Unit by the given value
+            health += value;
+
+            // Checks if the health of this Unit is zero of below
+            // If so set destroyed on true so the Engine will destroy it
+            if (health <= 0)
+            {
+                destroyed = true;
+            }
+            return health;
         }
 
         /**********************************************************************
          * This function checks if the requested action is allowed and returns a bool
          * ARGUMENTS:
+         * fromFromLeft:    The fromLeft from the tile from where the requested action takes place.
+         * fromFromTop:     The fromTop from the tile from where the requested action takes place.
          * tile:            The Tile where the requested action takes place.
-         * targetFromLeft:  The fromLeft from the tile where the requested action takes place.
-         * targetFromLeft:  The fromTop from the tile where the requested action takes place.
+         * targetFromLeft:  The fromLeft from the tile where the requested action takes place to.
+         * targetFromTop:   The fromTop from the tile where the requested action takes place to.
          * ********************************************************************/
-        public bool CanTarget(Tile tile, float targetFromLeft, float targetFromTop)
+        public bool CanTarget(float fromFromLeft, float fromFromTop, Tile tile, float targetFromLeft, float targetFromTop)
         {
             // The rangeBehavior will check if the requested action is allowed and return true or false
-            return rangeBehavior.Range(this, fromLeft, fromTop, tile, targetFromLeft, targetFromTop);
+            return rangeBehavior.Range(this, fromFromLeft, fromFromTop, tile, targetFromLeft, targetFromTop);
         }
 
         public void AutoMove()
         {
-                //DO SOMETHING
+            //DO SOMETHING
         }
-
-        /*
-        public ITargetableBehavior TargetableBehavior
-
-
-        public IRangeBehavior RangeBehavior
-        {
-            get { return rangeBehavior; }
-        }
-
-        public IAttackBehavior AttackBehavior
-        {
-            get { return attackBehavior; }
-        }
-
-        public IDefenceBehavior DefenceBehavior
-        {
-            get { return defenceBehavior; }
-        }
-        */
     }
 }

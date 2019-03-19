@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdvancedWarsEngine.Classes
+﻿namespace AdvancedWarsEngine.Classes
 {
     static class MapFactory
     {
@@ -18,7 +12,7 @@ namespace AdvancedWarsEngine.Classes
                 case "plainlevel":
                     tiles = new Tile[20, 30];
                     sprite = "/Sprites/Maps/Level1.png";
-                    
+
                     tiles[0, 0] = TileFactory.GetTile("Water");
                     tiles[0, 1] = TileFactory.GetTile("Water");
                     tiles[0, 2] = TileFactory.GetTile("Water");
@@ -2431,7 +2425,6 @@ namespace AdvancedWarsEngine.Classes
                     tiles[39, 29] = TileFactory.GetTile("Mountain");
                     break;
             }
-
             return new Map(tiles, sprite);
         }
     }

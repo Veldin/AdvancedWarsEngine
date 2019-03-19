@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AdvancedWarsEngine.Classes.Enums;
+﻿using AdvancedWarsEngine.Classes.Enums;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -12,8 +7,8 @@ namespace AdvancedWarsEngine.Classes
         public float Attack(Unit unit, GameObject gameObject)
         {
             // Setting some local variables
-            float baseValue     = 40;                       // The baseValue
-            float attackValue   = baseValue;                // The total attack value which will be returned
+            float baseValue = 40;                       // The baseValue
+            float attackValue = baseValue;                // The total attack value which will be returned
 
             // Check if the attacked gameObject is a Unit
             if (gameObject is Unit)
@@ -24,11 +19,9 @@ namespace AdvancedWarsEngine.Classes
                 // Check if the unitType is Air. If so increase attackValue by 50%
                 if (enemyUnit.UnitType == EUnitType.Air)
                 {
-                    attackValue += baseValue * 0.5f; 
+                    attackValue += baseValue * 0.5f;
                 }
             }
-
-            // Return the attackValue
             return attackValue;
         }
     }

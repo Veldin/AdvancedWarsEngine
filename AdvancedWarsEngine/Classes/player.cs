@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -13,8 +9,8 @@ namespace AdvancedWarsEngine.Classes
         protected Player nextPlayer;                        // This is the who gets the turn when this players turn ends
 
         //Holds the selected unit.
-        private Unit selectedUnit;                          //Holds the currently selected unit
-        private Structure selectedStructure;                        //Holds the currently selected structure
+        protected Unit selectedUnit;                        //Holds the currently selected unit
+        protected Structure selectedStructure;              //Holds the currently selected structure
 
         public Player(bool isControllable)
         {
@@ -54,30 +50,41 @@ namespace AdvancedWarsEngine.Classes
 
         public void AllowedAllToAct()
         {
-            foreach (GameObject needle in gameObjects)
+            foreach (GameObject gameObject in gameObjects)
             {
-                needle.IsAllowedToAct = true;
+                gameObject.IsAllowedToAct = true;
             }
         }
 
         public void AllowedNoneToAct()
         {
-            foreach (GameObject needle in gameObjects)
+            foreach (GameObject gameObject in gameObjects)
             {
-                needle.IsAllowedToAct = false;
+                gameObject.IsAllowedToAct = false;
             }
         }
 
-        public bool InGameObjects(GameObject search)
+        public bool HasAlowedUnits()
         {
-            foreach (GameObject needle in gameObjects)
+            foreach (GameObject gameObject in gameObjects)
             {
-                if (search == needle)
+                if (gameObject.IsAllowedToAct)
                 {
                     return true;
                 }
             }
+            return false;
+        }
 
+        public bool InGameObjects(GameObject search)
+        {
+            foreach (GameObject gameObject in gameObjects)
+            {
+                if (search == gameObject)
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -86,14 +93,11 @@ namespace AdvancedWarsEngine.Classes
             // Deletes a GameObject from the list gameObjects
             gameObjects.Remove(gameObject);
         }
-        
+
         public Player NextPlayer
         {
             get { return nextPlayer; }
             set { nextPlayer = value; }
         }
-
-
-
     }
 }

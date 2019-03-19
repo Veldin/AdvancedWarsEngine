@@ -1,39 +1,82 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace AdvancedWarsEngine.Classes
 {
     class Prompt : GameObject
     {
-        protected string text;
-        private float maxDuration;
+        protected float maxDuration;
         private float currentDuration;
+        protected TextBlock textBlock;
+        protected bool isUsingDuration;
 
-        public Prompt(float width, float height, float fromTop, float fromLeft, string sprite = "Undefined", float duration = 130, string text = "Undefined")
-            : base(width, height, fromTop, fromLeft, sprite)
+        public Prompt(float width, float height, float fromTop, float fromLeft, string text, float maxDuration)
+            : base(width, height, fromTop, fromLeft)
         {
-            this.text = text;
-            maxDuration = duration;
-            currentDuration = duration;
+            // Set the durations of this prompt
+            isUsingDuration = true;
+            this.maxDuration = maxDuration;
+            currentDuration = 0;
+
+            // Create the brushes for the text and background
+            SolidColorBrush backgroundBrush = new SolidColorBrush(Colors.Transparent);
+            SolidColorBrush textBrush = new SolidColorBrush(Colors.Red);
+
+            // Create a textBlock and set the necessary attributes
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
+                textBlock = new TextBlock
+                {
+                    Text = text,
+                    Background = backgroundBrush,
+                    Foreground = textBrush,
+                    Focusable = false
+                };
+            });
         }
 
         public Prompt(float width, float height, float fromTop, float fromLeft, string sprite)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            this.text = "Test";
-            maxDuration = 120;
-            currentDuration = 120;
-
+            isUsingDuration = false;
         }
 
-        public string Text
+        public void IncreaseCurrentDuration(float time)
         {
-            get { return text; }
-            set { text = value; }
+            // Check if the prompt uses a duration
+            if (!isUsingDuration) { return; }
+
+            // Increase the currentDuration by the given value
+            currentDuration += time;
+
+            // If the currentDuration is bigger than maxDuration, make it invisible and destroy it
+            if (currentDuration >= maxDuration)
+            {
+                textBlock.Opacity = 0;
+                destroyed = true;
+            }
+        }
+
+        // Getter for the textBox
+        public TextBlock TextBlock
+        {
+            get { return textBlock; }
+        }
+
+        // Getter and setter for maxDuration
+        public float MaxDuration
+        {
+            get { return maxDuration; }
+            set { maxDuration = value; }
+        }
+
+        // Getter and setter for isUsingDuration
+        public bool IsUsingDuration
+        {
+            get { return isUsingDuration; }
+            set { isUsingDuration = value; }
         }
     }
 }

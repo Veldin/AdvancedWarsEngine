@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -18,7 +14,7 @@ namespace AdvancedWarsEngine.Classes
 
         protected string sprite;
         public Rectangle rectangle;
-        private int size;
+        protected int size;
 
         public Tile[,] Tiles
         {
@@ -48,27 +44,20 @@ namespace AdvancedWarsEngine.Classes
         {
             this.tiles = tiles;
             this.sprite = sprite;
-            this.size = 16;
-            //DO SOMETHING
+            size = 16;
 
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 BitmapImage newBitmap = new BitmapImage(new Uri("pack://application:,,,/AdvancedWarsEngine;component/" + sprite, UriKind.Absolute));
-                
-                rectangle = new Rectangle();
-                rectangle.Fill = new ImageBrush{ImageSource = newBitmap};
 
-                rectangle.Width = tiles.GetLength(1) * size;
-                rectangle.Height = tiles.GetLength(0) * size;
+                rectangle = new Rectangle
+                {
+                    Fill = new ImageBrush { ImageSource = newBitmap },
+
+                    Width = tiles.GetLength(1) * size,
+                    Height = tiles.GetLength(0) * size
+                };
             }));
-
-
-        }
-
-        public Tile SelectTile(int x, int y)
-        {
-            selectedTile = GetTile (x, y);
-            return selectedTile;
         }
 
         public Tile GetTile(int x, int y)
@@ -82,7 +71,7 @@ namespace AdvancedWarsEngine.Classes
             //If its above the limit recall the function on the limit
             if (x >= tiles.GetLength(0))
             {
-                return GetTile(tiles.GetLength(0) -1, y);
+                return GetTile(tiles.GetLength(0) - 1, y);
             }
 
             //If its below zero recall the function with a zero
@@ -94,7 +83,7 @@ namespace AdvancedWarsEngine.Classes
             //If its above the limit recall the function on the limit
             if (y >= tiles.GetLength(1))
             {
-                return GetTile(x, tiles.GetLength(1)-1);
+                return GetTile(x, tiles.GetLength(1) - 1);
             }
 
             return tiles[x, y];
@@ -102,9 +91,9 @@ namespace AdvancedWarsEngine.Classes
 
         public void DeselectAll()
         {
-            for (int fromLeft = 0; fromLeft < tiles.GetLength(0); fromLeft += 1)
+            for (int fromLeft = 0; fromLeft < tiles.GetLength(0); fromLeft++)
             {
-                for (int fromTop = 0; fromTop < tiles.GetLength(1); fromTop += 1)
+                for (int fromTop = 0; fromTop < tiles.GetLength(1); fromTop++)
                 {
                     tiles[fromLeft, fromTop].Selected = false;
                 }
