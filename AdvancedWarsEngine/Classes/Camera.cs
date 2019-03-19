@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -27,8 +22,8 @@ namespace AdvancedWarsEngine.Classes
             currentMapHeight = mapHeight * 16;
             currentMapWidth = mapWidth * 16;
 
-            bottomLine = currentMapHeight - 360 - (float)56.25;
-            rightLine = currentMapHeight - 360 - (float)56.25;
+            bottomLine = -currentMapHeight + 90;
+            rightLine = 306 - currentMapWidth + (float)56.25;
         }
 
         public float GetLeftOffSet()
@@ -64,6 +59,11 @@ namespace AdvancedWarsEngine.Classes
             {
                 this.fromLeft = -90;
             }
+
+            if (GetLeftOffSet() <= rightLine)
+            {
+                this.fromLeft = rightLine - 90;
+            }
         }
 
         public void AddFromTop(float fromTop)
@@ -75,10 +75,24 @@ namespace AdvancedWarsEngine.Classes
                 this.fromTop = (float)-56.25;
             }
 
-            //if (GetTopOffSet() <= bottomLine)
-            //{
-            //    this.fromTop = bottomLine - (float)72.25;
-            //}
+            if (GetTopOffSet() <= bottomLine + 112.5)
+            {
+                this.fromTop = bottomLine + (float)56.25;
+            }
+        }
+
+        public void MoveTo(GameObject gameObject)
+        {
+            if (gameObject.FromLeft >= 0 && gameObject.FromLeft <= currentMapWidth)
+            {
+                float horizontalDifference = (gameObject.FromLeft + 8 - 90) * -1 - fromLeft;
+                AddFromLeft(horizontalDifference);
+            }
+            if (gameObject.FromTop >= 0 && gameObject.FromTop <= currentMapHeight)
+            {
+                float verticalDifference = (gameObject.FromTop + 8 - (float)56.25) * -1 - fromTop;
+                AddFromTop(verticalDifference);
+            }
         }
     }
 }

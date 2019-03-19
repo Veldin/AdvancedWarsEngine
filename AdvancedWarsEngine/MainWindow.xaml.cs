@@ -47,13 +47,12 @@ namespace AdvancedWarsEngine
         {
             pressedKeys = new HashSet<string>();
 
-            backgroundBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 24, 40, 80));
+            backgroundBrush = new SolidColorBrush(Color.FromArgb(255, 24, 40, 80));
 
             InitializeComponent();
             
             WindowState = WindowState.Maximized;
             WindowStyle = WindowStyle.None;
-            //Topmost = true;
 
             //Bind the keyup/down to the window's keyup/down
             GetWindow(this).KeyUp += KeyUp;
@@ -72,7 +71,7 @@ namespace AdvancedWarsEngine
 
             world = new World();
 
-            camera = new Camera(world.Map.Tiles.GetLength(0),world.Map.Tiles.GetLength(0));
+            camera = new Camera(world.Map.Tiles.GetLength(0),world.Map.Tiles.GetLength(1));
 
             gameObjects = new List<GameObject>();
 
@@ -85,7 +84,7 @@ namespace AdvancedWarsEngine
             gameObjects.Add(crosshair);
 
             //Create the default cursor to use
-            selectedTileIndicator = new Prompt(16, 16, 300, 300, "Sprites/TileSelectors/TileSelectorGreen.gif");
+            selectedTileIndicator = new Prompt(16, 16, 0, 0, "Sprites/TileSelectors/TileSelectorGreen.gif");
             gameObjects.Add(selectedTileIndicator);
 
             factoryProducer = new FactoryProducer();
@@ -99,14 +98,14 @@ namespace AdvancedWarsEngine
             player.AddGameObject(testUnit); //player one owns unit one
             ai.AddGameObject(testUnit2); //player two own unit two
 
-            Tile TestTile = world.Map.GetTile(6, 9);
-            Tile TestTile2 = world.Map.GetTile(7, 9);
+            Tile TestTile = world.Map.GetTile(0, 1);
+            Tile TestTile2 = world.Map.GetTile(0, 0);
 
             TestTile.OccupiedUnit = testUnit;
-            TestTile.OccupiedUnit.Target = new Target(6 * 16, 9 * 16);
+            TestTile.OccupiedUnit.Target = new Target(0 * 16, 1 * 16);
 
             TestTile2.OccupiedUnit = testUnit2;
-            TestTile2.OccupiedUnit.Target = new Target(7 * 16, 9 * 16);
+            TestTile2.OccupiedUnit.Target = new Target(0 * 16, 0 * 16);
 
             fps = 999999999; //Desired max fps.
             interval = 1000 / fps;
@@ -317,6 +316,10 @@ namespace AdvancedWarsEngine
             if (IsKeyPressed("D"))
             {
                 camera.AddFromLeft((float)-0.1);
+            }
+            if (IsKeyPressed("Space"))
+            {
+                camera.MoveTo(selectedTileIndicator);
             }
 
             //Get the tile at the location and put the crosshair on that location
