@@ -66,6 +66,10 @@ namespace AdvancedWarsEngine
             backgroundBrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 24, 40, 80));
 
             InitializeComponent();
+            
+            WindowState = WindowState.Maximized;
+            WindowStyle = WindowStyle.None;
+            Topmost = true;
 
             //Bind the keyup/down to the window's keyup/down
             GetWindow(this).KeyUp += KeyUp;
@@ -82,7 +86,9 @@ namespace AdvancedWarsEngine
             player.NextPlayer = ai;
             ai.NextPlayer = player;
 
-            camera = new Camera();
+            world = new World();
+
+            camera = new Camera(world.Map.Tiles.GetLength(0),world.Map.Tiles.GetLength(0));
 
             gameObjects = new List<GameObject>();
 
@@ -113,8 +119,6 @@ namespace AdvancedWarsEngine
 
             player.AddGameObject(testUnit); //player one owns unit one
             player.NextPlayer.AddGameObject(testUnit2); //player two own unit two
-
-            world = new World();
 
             Tile TestTile = world.Map.GetTile(6, 9);
 
