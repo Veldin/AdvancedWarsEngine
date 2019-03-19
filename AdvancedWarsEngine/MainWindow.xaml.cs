@@ -53,7 +53,7 @@ namespace AdvancedWarsEngine
             
             WindowState = WindowState.Maximized;
             WindowStyle = WindowStyle.None;
-            Topmost = true;
+            //Topmost = true;
 
             //Bind the keyup/down to the window's keyup/down
             GetWindow(this).KeyUp += KeyUp;

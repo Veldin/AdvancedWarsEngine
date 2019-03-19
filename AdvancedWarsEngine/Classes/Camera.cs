@@ -70,20 +70,15 @@ namespace AdvancedWarsEngine.Classes
         {
             this.fromTop += fromTop;
 
-            Debug.WriteLine(this.fromTop);
-            Debug.WriteLine(GetTopOffSet());
-            Debug.WriteLine(bottomLine);
-            Debug.WriteLine("");
-
             if (GetTopOffSet() >= 0)
             {
                 this.fromTop = (float)-56.25;
             }
 
-            if (GetTopOffSet() < bottomLine)
-            {
-                this.fromTop = bottomLine - (float)72.25;
-            }
+            //if (GetTopOffSet() <= bottomLine)
+            //{
+            //    this.fromTop = bottomLine - (float)72.25;
+            //}
         }
     }
 }
