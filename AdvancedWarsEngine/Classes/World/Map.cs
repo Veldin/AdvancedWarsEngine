@@ -101,23 +101,19 @@ namespace AdvancedWarsEngine.Classes
             }
         }
 
-        public List<int> GetTileCoords(Tile tile)
+        public Target GetTileCoords(Tile tile)
         {
-            List<int> coords = new List<int>();
-
             for (int fromLeft = 0; fromLeft < tiles.GetLength(0); fromLeft++)
             {
                 for (int fromTop = 0; fromTop < tiles.GetLength(1); fromTop++)
                 {
                     if (tiles[fromLeft, fromTop] == tile)
                     {
-                        coords.Add(fromLeft);
-                        coords.Add(fromTop);
+                        Target coords = new Target(fromTop, fromLeft);
                         return coords;
                     }
                 }
             }
-
             return null;
         }
     }
