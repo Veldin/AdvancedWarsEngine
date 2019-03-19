@@ -68,7 +68,7 @@ namespace AdvancedWarsEngine.Classes
             }
         }
 
-        public bool HasAlowedUnits()
+        public bool HasAllowedUnits()
         {
             foreach (GameObject needle in gameObjects)
             {

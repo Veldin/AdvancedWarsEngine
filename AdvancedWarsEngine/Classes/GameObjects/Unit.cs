@@ -66,11 +66,6 @@ namespace AdvancedWarsEngine.Classes
                 // Deal the damage to the enemy unit by decreasing it's health
                 unit.DecreaseHealth(damageValue);
 
-                if (unit.Health < 0)
-                {
-                    destroyed = true;
-                }
-
                 //Todo show here the damage prompt
             }
 
