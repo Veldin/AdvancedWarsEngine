@@ -614,7 +614,7 @@
                     tiles[19, 28] = TileFactory.GetTile("Water");
                     tiles[19, 29] = TileFactory.GetTile("Water");
                     break;
-                case "snowlevel":
+                case "desertlevel":
                     tiles = new Tile[20, 30];
                     sprite = "/Sprites/Maps/Level2.png";
 
