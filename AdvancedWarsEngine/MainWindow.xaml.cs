@@ -474,13 +474,13 @@ namespace AdvancedWarsEngine
                         #region setColourOverlay
 
                         // Set the start Target
-                        Target start = new Target((player.SelectedUnit.Target.GetFromTop() / 16), (player.SelectedUnit.Target.GetFromLeft() / 16));
+                        Target start = new Target((world.Player.SelectedUnit.Target.GetFromTop() / 16), (world.Player.SelectedUnit.Target.GetFromLeft() / 16));
 
                         // Create a promptFactory
                         IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
 
                         // Get the Arrows as prompt
-                        List<GameObject> colorOverlay = pathing.SetColorOverlay(player.SelectedUnit, start, promptFactory, player);
+                        List<GameObject> colorOverlay = pathing.SetColorOverlay(world.Player.SelectedUnit, start, promptFactory, world.Player);
 
                         // Add the prompts to the gameObjectsList
                         foreach (GameObject gameObject in colorOverlay)
