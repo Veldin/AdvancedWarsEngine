@@ -312,5 +312,23 @@
     <Resource Include="Sprites\RangeIndicators\rangeIndicatorGreen.png" />
     <Resource Include="Sprites\RangeIndicators\rangeIndicatorRed.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Buildings\Blue_Airport.png" />
+    <Resource Include="Sprites\Buildings\Blue_Barracks.png" />
+    <Resource Include="Sprites\Buildings\Blue_HQ.png" />
+    <Resource Include="Sprites\Buildings\Blue_Workshop.png" />
+    <Resource Include="Sprites\Buildings\Green_Airport.png" />
+    <Resource Include="Sprites\Buildings\Green_Barracks.png" />
+    <Resource Include="Sprites\Buildings\Green_HQ.png" />
+    <Resource Include="Sprites\Buildings\Green_Workshop.png" />
+    <Resource Include="Sprites\Buildings\Red_Airport.png" />
+    <Resource Include="Sprites\Buildings\Red_Barracks.png" />
+    <Resource Include="Sprites\Buildings\Red_HQ.png" />
+    <Resource Include="Sprites\Buildings\Red_Workshop.png" />
+    <Resource Include="Sprites\Buildings\Yellow_Airport.png" />
+    <Resource Include="Sprites\Buildings\Yellow_Barracks.png" />
+    <Resource Include="Sprites\Buildings\Yellow_HQ.png" />
+    <Resource Include="Sprites\Buildings\Yellow_Workshop.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
