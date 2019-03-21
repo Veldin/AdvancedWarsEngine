@@ -244,16 +244,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Sprites\Maps\Level1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Sprites\Cursors\defaultCursor.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Sprites\Maps\Level2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Sprites\Maps\Level3.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Sprites\Units\Animations\Air\Blue_AA_Air.png" />
@@ -344,6 +335,11 @@
     <Resource Include="Sprites\Timer\timer6.gif" />
     <Resource Include="Sprites\Timer\timer7.gif" />
     <Resource Include="Sprites\Timer\timer8.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Maps\Level1.png" />
+    <Resource Include="Sprites\Maps\Level2.png" />
+    <Resource Include="Sprites\Maps\Level3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
