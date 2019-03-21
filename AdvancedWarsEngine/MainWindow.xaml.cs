@@ -643,21 +643,72 @@ namespace AdvancedWarsEngine
                         if (factoryNeedle.ProductionCooldown > 0)
                         {
                             factoryNeedle.ProductionCooldown = factoryNeedle.ProductionCooldown - 1;
-
-                            IAbstractFactory factory =  factoryProducer.GetFactory("PromptFactory");
-
-                            Application.Current.Dispatcher.Invoke(delegate
-                            {
-                                gameObjects.Add(
-                                    factory.GetGameObject(factoryNeedle.ProductionCooldown.ToString(), 16, 16, factoryNeedle.FromTop, factoryNeedle.FromLeft)
-                                );
-                            });
-
                         }
-                        else
+
+                        //Use two sprites to have an animation
+
+                        string spriteNow;
+                        String spriteLast;
+                        switch (factoryNeedle.ProductionCooldown)
                         {
-                            factoryNeedle.ProductionCooldown = 6;
+                            case 1:
+                                spriteNow = "Sprites/Timer/timer7.gif";
+                                spriteLast = "Sprites/Timer/timer6.gif";
+                                break;
+                            case 2:
+                                spriteNow = "Sprites/Timer/timer6.gif";
+                                spriteLast = "Sprites/Timer/timer5.gif";
+                                break;
+                            case 3:
+                                spriteNow = "Sprites/Timer/timer5.gif";
+                                spriteLast = "Sprites/Timer/timer4.gif";
+                                break;
+                            case 4:
+                                spriteNow = "Sprites/Timer/timer4.gif";
+                                spriteLast = "Sprites/Timer/timer3.gif";
+                                break;
+                            case 5:
+                                spriteNow = "Sprites/Timer/timer3.gif";
+                                spriteLast = "Sprites/Timer/timer2.gif";
+                                break;
+                            case 6:
+                                spriteNow = "Sprites/Timer/timer2.gif";
+                                spriteLast = "Sprites/Timer/timer1.gif";
+                                break;
+                            case 7:
+                                spriteNow = "Sprites/Timer/timer1.gif";
+                                spriteLast = "Sprites/Timer/timer0.gif";
+                                break;
+                            case 8:
+                                spriteNow = "Sprites/Timer/timer0.gif";
+                                spriteLast = "Sprites/Timer/timer8.gif";
+                                break;
+                            default:
+                                spriteNow = "Sprites/Timer/timer8.gif";
+                                spriteLast = "Sprites/Timer/timer7.gif";
+                                break;
                         }
+
+                        IAbstractFactory factory = factoryProducer.GetFactory("PromptFactory");
+
+                        Prompt timerLast = (Prompt)factory.GetGameObject(spriteLast, 12, 12, factoryNeedle.FromTop - 6, factoryNeedle.FromLeft - 6);
+                        timerLast.IsUsingDuration = true;
+                        timerLast.MaxDuration = 4000;
+
+                        Prompt timerNow = (Prompt)factory.GetGameObject(spriteNow, 12, 12, factoryNeedle.FromTop - 6, factoryNeedle.FromLeft - 6);
+                        timerNow.IsUsingDuration = true;
+                        timerNow.MaxDuration = 9000;
+
+                        gameObjects.Add(timerNow);
+                        gameObjects.Add(timerLast);
+
+
+                        if (factoryNeedle.ProductionCooldown == 0)
+                        {
+                            factoryNeedle.ProductionCooldown = 8;
+                        }
+
+                        //The factory is done acting, so its not allowed to act again.
                         factoryNeedle.IsAllowedToAct = false;
                     }
                 }

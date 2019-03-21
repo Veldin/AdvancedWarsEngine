@@ -334,5 +334,16 @@
     <Resource Include="Sprites\Buildings\Yellow_HQ.png" />
     <Resource Include="Sprites\Buildings\Yellow_Workshop.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Timer\timer0.gif" />
+    <Resource Include="Sprites\Timer\timer1.gif" />
+    <Resource Include="Sprites\Timer\timer2.gif" />
+    <Resource Include="Sprites\Timer\timer3.gif" />
+    <Resource Include="Sprites\Timer\timer4.gif" />
+    <Resource Include="Sprites\Timer\timer5.gif" />
+    <Resource Include="Sprites\Timer\timer6.gif" />
+    <Resource Include="Sprites\Timer\timer7.gif" />
+    <Resource Include="Sprites\Timer\timer8.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

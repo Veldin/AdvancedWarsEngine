@@ -41,6 +41,7 @@ namespace AdvancedWarsEngine.Classes
         public Prompt(float width, float height, float fromTop, float fromLeft, string sprite)
             : base(width, height, fromTop, fromLeft, sprite)
         {
+            currentDuration = 0;
             isUsingDuration = false;
         }
 
@@ -55,7 +56,10 @@ namespace AdvancedWarsEngine.Classes
             // If the currentDuration is bigger than maxDuration, make it invisible and destroy it
             if (currentDuration >= maxDuration)
             {
-                textBlock.Opacity = 0;
+                if (textBlock != null)
+                {
+                    textBlock.Opacity = 0;
+                }
                 destroyed = true;
             }
         }
