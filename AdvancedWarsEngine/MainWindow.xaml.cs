@@ -22,8 +22,6 @@ namespace AdvancedWarsEngine
 
         private Camera camera;
         private World world;
-        private Player player;
-        private Player ai;
 
         private List<GameObject> gameObjects;
 
@@ -53,7 +51,7 @@ namespace AdvancedWarsEngine
 
             InitializeComponent();
             
-            WindowState = WindowState.Normal;
+            WindowState = WindowState.Maximized;
             WindowStyle = WindowStyle.None;
 
             //Bind the keyup/down to the window's keyup/down
@@ -63,15 +61,10 @@ namespace AdvancedWarsEngine
             GetWindow(this).MouseDown += MouseDown;
             GetWindow(this).MouseUp += MouseDown;
 
-            //Make a new player and set the variable to that player
-            player = new Player(true);  //First player is controlable
-            ai = new Player(true);      //Second player is not controllable
+            factoryProducer = new FactoryProducer();
+            IAbstractFactory factory = factoryProducer.GetFactory("UnitFactory");
 
-            //the players are each others next players so the player loop is created
-            player.NextPlayer = ai;
-            ai.NextPlayer = player;
-
-            world = new World();
+            world = new World(factoryProducer, "plainlevel");
 
             camera = new Camera(world.Map.Tiles.GetLength(0),world.Map.Tiles.GetLength(1));
 
@@ -89,32 +82,16 @@ namespace AdvancedWarsEngine
             selectedTileIndicator = new Prompt(16, 16, 0, 0, "Sprites/TileSelectors/TileSelectorGreen.gif");
             gameObjects.Add(selectedTileIndicator);
 
-            factoryProducer = new FactoryProducer();
-            IAbstractFactory factory = factoryProducer.GetFactory("UnitFactory");
+            //Add all the gameObjects from the world to the main gameplay loop.
+            gameObjects.AddRange(world.GetGameObjects());
 
-            Unit testUnit = (Unit)factory.GetGameObject("AA_Infantry", 16, 16, 0, 0);
-            gameObjects.Add(testUnit);
-            Unit testUnit2 = (Unit)factory.GetGameObject("AI_Vehicle", 16, 16, 32, 32);
-            gameObjects.Add(testUnit2);
-
-            player.AddGameObject(testUnit); //player one owns unit one
-            ai.AddGameObject(testUnit2); //player two own unit two
-
-            Tile TestTile = world.Map.GetTile(6, 9);
-            Tile TestTile2 = world.Map.GetTile(7, 9);
-
-            TestTile.OccupiedUnit = testUnit;
-            TestTile.OccupiedUnit.Target = new Target(6 * 16, 9 * 16);
-
-            TestTile2.OccupiedUnit = testUnit2;
-            TestTile2.OccupiedUnit.Target = new Target(7 * 16, 9 * 16);
-
-            fps = 999999999; //Desired max fps.
+            //Desired max fps
+            fps = 90; //Desired max fps.
             interval = 1000 / fps;
             then = Stopwatch.GetTimestamp();
 
-            //Allow the player's gameobject to act
-            player.AllowedAllToAct();
+            //Allow the world.Player's gameobject to act
+            //world.Player.AllowedAllToAct();
 
             // Create a Pathing class
             pathing = new Pathing(world.Map);
@@ -421,6 +398,7 @@ namespace AdvancedWarsEngine
             crosshair.FromTop = world.Map.Size * selectedFromTop;
             crosshair.FromLeft = world.Map.Size * selectedFromLeft;
 
+
             #region CreateArrowPrompts
                 Tile selectedTile = world.Map.GetTile((int)(selectedTileIndicator.FromTop/16), (int)(selectedTileIndicator.FromLeft/16));
             
@@ -458,7 +436,7 @@ namespace AdvancedWarsEngine
                 }
             #endregion
 
-            if (player.IsControllable)
+            if (world.Player.IsControllable)
             {
                 if (IsKeyPressed("LeftMouseButton"))
                 {
@@ -485,10 +463,10 @@ namespace AdvancedWarsEngine
 
                     pressedOnTile.Selected = true;
 
-                    //If you select a unit, check if the current players owns that unit
-                    if (player.InGameObjects(pressedOnTile.OccupiedUnit))
+                    //If you select a unit, check if the current world.Players owns that unit
+                    if (world.Player.InGameObjects(pressedOnTile.OccupiedUnit))
                     {
-                        player.SelectedUnit = pressedOnTile.OccupiedUnit;
+                        world.Player.SelectedUnit = pressedOnTile.OccupiedUnit;
 
                         selectedTileIndicator.FromLeft = selectedFromLeft * world.Map.Size;
                         selectedTileIndicator.FromTop = selectedFromTop * world.Map.Size;
@@ -512,12 +490,12 @@ namespace AdvancedWarsEngine
                         #endregion
                     }
                     else if (pressedOnTile.OccupiedUnit != null || pressedOnTile.OccupiedStructure != null)
-                    {   //Clicked a unit the current player doest own.
-                        if (player.SelectedUnit != null) //Current player has a unit selected
+                    {   //Clicked a unit the current world.Player doest own.
+                        if (world.Player.SelectedUnit != null) //Current world.Player has a unit selected
                         {
-                            if (player.SelectedUnit.IsAllowedToAct)
+                            if (world.Player.SelectedUnit.IsAllowedToAct)
                             {
-                                if (player.SelectedUnit.CanTarget(player.SelectedUnit.Target.GetFromLeft() / 16, player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop))
+                                if (world.Player.SelectedUnit.CanTarget(world.Player.SelectedUnit.Target.GetFromLeft() / 16, world.Player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop))
                                 {
                                     // Define a GameObject
                                     GameObject enemyGameObject;
@@ -531,7 +509,7 @@ namespace AdvancedWarsEngine
                                     }
 
                                     // The selectedUnit attacks the Unit on the selectedTile
-                                    float dmgValue = player.SelectedUnit.Attack(enemyGameObject, pressedOnTile);
+                                    float dmgValue = world.Player.SelectedUnit.Attack(enemyGameObject, pressedOnTile);
 
                                     #region CreateDmgNumbers
                                     // Create a promptFactory
@@ -552,8 +530,8 @@ namespace AdvancedWarsEngine
                                     #endregion
 
                                     // End the turn for this Unit and deselect it
-                                    player.SelectedUnit.IsAllowedToAct = false;
-                                    player.SelectedUnit = null;
+                                    world.Player.SelectedUnit.IsAllowedToAct = false;
+                                    world.Player.SelectedUnit = null;
 
                                     // Remove the selectedTileIndicator from sight
 
@@ -566,13 +544,17 @@ namespace AdvancedWarsEngine
                     }
                     else
                     {
-                        if (player.SelectedUnit != null) //Current player has a unit selected
+                        if (world.Player.SelectedUnit != null) //Current world.Player has a unit selected
                         {
-                           
-                            if (player.SelectedUnit.CanTarget(player.SelectedUnit.Target.GetFromLeft() / 16, player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop))
+
+                            //Check if the selected unit is allowed to act and if it can target
+                            if (
+                                world.Player.SelectedUnit.CanTarget(world.Player.SelectedUnit.Target.GetFromLeft() / 16, world.Player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop)
+                                && world.Player.SelectedUnit.IsAllowedToAct
+                            )
                             {
 
-                                player.SelectedUnit.IsAllowedToAct = false;
+                                world.Player.SelectedUnit.IsAllowedToAct = false;
 
                                 lock (world.Map.Tiles)
                                 {
@@ -581,10 +563,10 @@ namespace AdvancedWarsEngine
                                     {
                                         for (int fromTop = 0; fromTop < world.Map.Tiles.GetLength(1); fromTop += 1)
                                         {
-                                            lock (player.SelectedUnit)
+                                            lock (world.Player.SelectedUnit)
                                             {
                                                 if(world.Map.GetTile(fromLeft,fromTop).OccupiedUnit != null &&
-                                                    world.Map.GetTile(fromLeft, fromTop).OccupiedUnit == player.SelectedUnit
+                                                    world.Map.GetTile(fromLeft, fromTop).OccupiedUnit == world.Player.SelectedUnit
                                                 )
                                                 {
                                                     world.Map.GetTile(fromLeft, fromTop).OccupiedUnit = null;
@@ -597,10 +579,10 @@ namespace AdvancedWarsEngine
                                     }
 
                                     //Put the unit in the new tile
-                                    pressedOnTile.OccupiedUnit = player.SelectedUnit;
-                                    player.SelectedUnit.Target = new Target(selectedFromTop * 16, selectedFromLeft * 16);
+                                    pressedOnTile.OccupiedUnit = world.Player.SelectedUnit;
+                                    world.Player.SelectedUnit.Target = new Target(selectedFromTop * 16, selectedFromLeft * 16);
 
-                                    player.SelectedUnit.IsAllowedToAct = false;
+                                    world.Player.SelectedUnit.IsAllowedToAct = false;
                                 }
                                 Debug.WriteLine("In range");
                             }
@@ -619,33 +601,65 @@ namespace AdvancedWarsEngine
             }
 
             /*
-             * Selects the next Player.
+             * Selects the next world.Player.
              */
-            if (player.HasAllowedUnits())
+            if (world.Player.HasAllowedUnits())
             {
-                //Do nothing, because the player can still act with a unit
+                //Do nothing, because the world.Player can still act with a unit
             }
             else
             {
-                player.SelectedStructure = null;
-                player.SelectedUnit = null;
+                //Other player has a turn.
+                world.Player.SelectedStructure = null;
+                world.Player.SelectedUnit = null;
 
-                //The turn of this player has ended. Select the next player, and allow all units to act
-                player = player.NextPlayer;
+                //The turn of this world.Player has ended. Select the next world.Player, and allow all units to act
+                world.Player = world.Player.NextPlayer;
 
-                player.AllowedAllToAct();
+                Debug.WriteLine(world.Player.Colour);
+
+                world.Player.AllowedAllToAct();
 
                 //Hide the tile indicator
-                if (player.SelectedUnit != null && player.SelectedUnit.Target != null)
+                if (world.Player.SelectedUnit != null && world.Player.SelectedUnit.Target != null)
                 {
-                    selectedTileIndicator.FromLeft = player.SelectedUnit.Target.GetFromLeft();
-                    selectedTileIndicator.FromTop = player.SelectedUnit.Target.GetFromTop();
+                    selectedTileIndicator.FromLeft = world.Player.SelectedUnit.Target.GetFromLeft();
+                    selectedTileIndicator.FromTop = world.Player.SelectedUnit.Target.GetFromTop();
                 }
                 else
                 {
-                    //Player has no unit selected or selected unit has no tile
+                    //world.Player has no unit selected or selected unit has no tile
                     selectedTileIndicator.FromLeft = -99999;
                     selectedTileIndicator.FromTop = -99999;
+                }
+
+
+                //Check all structures and reduce the production cooldown.
+                foreach (GameObject gameObject in world.Player.GetGameObjects())
+                {
+                    if (gameObject is Structure)
+                    {
+                        Structure factoryNeedle = gameObject as Structure;
+                        if (factoryNeedle.ProductionCooldown > 0)
+                        {
+                            factoryNeedle.ProductionCooldown = factoryNeedle.ProductionCooldown - 1;
+
+                            IAbstractFactory factory =  factoryProducer.GetFactory("PromptFactory");
+
+                            Application.Current.Dispatcher.Invoke(delegate
+                            {
+                                gameObjects.Add(
+                                    factory.GetGameObject(factoryNeedle.ProductionCooldown.ToString(), 16, 16, factoryNeedle.FromTop, factoryNeedle.FromLeft)
+                                );
+                            });
+
+                        }
+                        else
+                        {
+                            factoryNeedle.ProductionCooldown = 6;
+                        }
+                        factoryNeedle.IsAllowedToAct = false;
+                    }
                 }
             }
 
@@ -706,9 +720,9 @@ namespace AdvancedWarsEngine
                     gameObjects.Remove(gameObject);
 
                     int i = 50;
-                    while (player.NextPlayer != null && i > 0)
+                    while (world.Player.NextPlayer != null && i > 0)
                     {
-                        player.DeleteGameObject(gameObject);
+                        world.Player.DeleteGameObject(gameObject);
                         i--;
                     }
 

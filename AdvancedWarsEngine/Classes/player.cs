@@ -4,17 +4,20 @@ namespace AdvancedWarsEngine.Classes
 {
     class Player
     {
-        protected bool isControllable;                      // Checks if this player can be controlled by an actual person
+        private bool isControllable;                      // Checks if this player can be controlled by an actual person
         private List<GameObject> gameObjects;               // All the gameObject that are owned by this player
-        protected Player nextPlayer;                        // This is the who gets the turn when this players turn ends
+        private Player nextPlayer;                        // This is the who gets the turn when this players turn ends
 
         //Holds the selected unit.
-        protected Unit selectedUnit;                        //Holds the currently selected unit
-        protected Structure selectedStructure;              //Holds the currently selected structure
+        private Unit selectedUnit;                        //Holds the currently selected unit
+        private Structure selectedStructure;              //Holds the currently selected structure
 
-        public Player(bool isControllable)
+        private string colour;
+
+        public Player(bool isControllable = false, string colour = "green")
         {
             this.isControllable = isControllable;
+            this.colour = colour;
             gameObjects = new List<GameObject>();
         }
 
@@ -96,8 +99,16 @@ namespace AdvancedWarsEngine.Classes
 
         public Player NextPlayer
         {
-            get { return nextPlayer; }
+            get {
+                return nextPlayer;
+            }
             set { nextPlayer = value; }
+        }
+
+        public string Colour
+        {
+            get { return colour; }
+            set { colour = value; }
         }
     }
 }
