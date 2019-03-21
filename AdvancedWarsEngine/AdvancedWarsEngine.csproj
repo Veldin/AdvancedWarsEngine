@@ -297,5 +297,22 @@
     <Resource Include="Sprites\playerTurn.gif" />
     <Resource Include="Sprites\victory.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\RangeIndicators\rangeIndicatorGreen.png" />
+    <Resource Include="Sprites\RangeIndicators\rangeIndicatorRed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Arrows\ArrowHeadBottomToLeft.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadBottomToRight.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadLeftToBottom.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadLeftToTop.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadRightToBottom.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadRightToTop.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadTopToLeft.gif" />
+    <Resource Include="Sprites\Arrows\ArrowHeadTopToRight.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\RangeIndicators\rangeIndicatorBlue.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
