@@ -5,9 +5,12 @@
         protected float capturePoints;
         protected IProduceBehavior produceBehavior;
 
+        private int productionCooldown; 
+
         public Structure(float width, float height, float fromTop, float fromLeft, string sprite, IProduceBehavior produceBehavior)
             : base(width, height, fromTop, fromLeft, sprite)
         {
+            productionCooldown = 5;
             capturePoints = 100;
             this.produceBehavior = produceBehavior;
         }
@@ -32,6 +35,12 @@
             {
                 destroyed = true;
             }
+        }
+
+        public int ProductionCooldown
+        {
+            get { return productionCooldown; }
+            set { productionCooldown = value; }
         }
     }
 }

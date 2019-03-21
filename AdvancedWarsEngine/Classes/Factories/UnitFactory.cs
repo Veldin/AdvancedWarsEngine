@@ -116,6 +116,7 @@ namespace AdvancedWarsEngine.Classes
                     break;
             }
 
+            //Set the onTickBehavior
             unit.OnTickBehavior = onTickBehavior;
 
             // Return the Unit as GameObject

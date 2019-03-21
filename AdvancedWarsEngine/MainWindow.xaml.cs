@@ -50,8 +50,8 @@ namespace AdvancedWarsEngine
 
             InitializeComponent();
             
-            WindowState = WindowState.Maximized;
-            WindowStyle = WindowStyle.None;
+            //WindowState = WindowState.Maximized;
+            //WindowStyle = WindowStyle.None;
 
             //Bind the keyup/down to the window's keyup/down
             GetWindow(this).KeyUp += KeyUp;
@@ -81,36 +81,16 @@ namespace AdvancedWarsEngine
             selectedTileIndicator = new Prompt(16, 16, 0, 0, "Sprites/TileSelectors/TileSelectorGreen.gif");
             gameObjects.Add(selectedTileIndicator);
 
-            /*
-            Unit testUnit = (Unit)factory.GetGameObject("AA_Infantry", 16, 16, 0, 0);
-            gameObjects.Add(testUnit);
-            world.Player.AddGameObject(testUnit);
+            //Add all the gameObjects from the world to the main gameplay loop.
+            gameObjects.AddRange(world.GetGameObjects());
 
-            Unit testUnit2 = (Unit)factory.GetGameObject("AI_Vehicle", 16, 16, 32, 32);
-            gameObjects.Add(testUnit2);
-            world.Player.NextPlayer.AddGameObject(testUnit2);
-            */
-
-            //world.Player.AddGameObject(testUnit); //world.Player one owns unit one
-            //ai.AddGameObject(testUnit2); //world.Player two own unit two
-
-            gameObjects.Add(world.Map.GetTile(6, 9).OccupiedUnit); //TODO: loop trough all tiles and add them
-            gameObjects.Add(world.Map.GetTile(7, 9).OccupiedUnit);
-
-            /*
-            TestTile.OccupiedUnit = testUnit;
-            TestTile.OccupiedUnit.Target = new Target(6 * 16, 9 * 16);
-
-            TestTile2.OccupiedUnit = testUnit2;
-            TestTile2.OccupiedUnit.Target = new Target(7 * 16, 9 * 16);
-            */
-
-            fps = 999999999; //Desired max fps.
+            //Desired max fps
+            fps = 90; //Desired max fps.
             interval = 1000 / fps;
             then = Stopwatch.GetTimestamp();
 
             //Allow the world.Player's gameobject to act
-            world.Player.AllowedAllToAct();
+            //world.Player.AllowedAllToAct();
 
             RunAsync();
         }
@@ -483,7 +463,11 @@ namespace AdvancedWarsEngine
                     {
                         if (world.Player.SelectedUnit != null) //Current world.Player has a unit selected
                         {
-                            if (world.Player.SelectedUnit.CanTarget(world.Player.SelectedUnit.Target.GetFromLeft() / 16, world.Player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop))
+                            //Check if the selected unit is allowed to act and if it can target
+                            if (
+                                world.Player.SelectedUnit.CanTarget(world.Player.SelectedUnit.Target.GetFromLeft() / 16, world.Player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop)
+                                && world.Player.SelectedUnit.IsAllowedToAct
+                            )
                             {
 
                                 world.Player.SelectedUnit.IsAllowedToAct = false;
@@ -541,11 +525,14 @@ namespace AdvancedWarsEngine
             }
             else
             {
+                //Other player has a turn.
                 world.Player.SelectedStructure = null;
                 world.Player.SelectedUnit = null;
 
                 //The turn of this world.Player has ended. Select the next world.Player, and allow all units to act
                 world.Player = world.Player.NextPlayer;
+
+                Debug.WriteLine(world.Player.Colour);
 
                 world.Player.AllowedAllToAct();
 
@@ -560,6 +547,35 @@ namespace AdvancedWarsEngine
                     //world.Player has no unit selected or selected unit has no tile
                     selectedTileIndicator.FromLeft = -99999;
                     selectedTileIndicator.FromTop = -99999;
+                }
+
+
+                //Check all structures and reduce the production cooldown.
+                foreach (GameObject gameObject in world.Player.GetGameObjects())
+                {
+                    if (gameObject is Structure)
+                    {
+                        Structure factoryNeedle = gameObject as Structure;
+                        if (factoryNeedle.ProductionCooldown > 0)
+                        {
+                            factoryNeedle.ProductionCooldown = factoryNeedle.ProductionCooldown - 1;
+
+                            IAbstractFactory factory =  factoryProducer.GetFactory("PromptFactory");
+
+                            Application.Current.Dispatcher.Invoke(delegate
+                            {
+                                gameObjects.Add(
+                                    factory.GetGameObject(factoryNeedle.ProductionCooldown.ToString(), 16, 16, factoryNeedle.FromTop, factoryNeedle.FromLeft)
+                                );
+                            });
+
+                        }
+                        else
+                        {
+                            factoryNeedle.ProductionCooldown = 6;
+                        }
+                        factoryNeedle.IsAllowedToAct = false;
+                    }
                 }
             }
 

@@ -99,7 +99,9 @@ namespace AdvancedWarsEngine.Classes
 
         public Player NextPlayer
         {
-            get { return nextPlayer; }
+            get {
+                return nextPlayer;
+            }
             set { nextPlayer = value; }
         }
 
