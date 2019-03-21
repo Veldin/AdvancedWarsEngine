@@ -103,11 +103,11 @@ namespace AdvancedWarsEngine.Classes
 
         public Target GetTileCoords(Tile tile)
         {
-            for (int fromLeft = 0; fromLeft < tiles.GetLength(0); fromLeft++)
+            for (int fromLeft = 0; fromLeft < tiles.GetLength(1); fromLeft++)
             {
-                for (int fromTop = 0; fromTop < tiles.GetLength(1); fromTop++)
+                for (int fromTop = 0; fromTop < tiles.GetLength(0); fromTop++)
                 {
-                    if (tiles[fromLeft, fromTop] == tile)
+                    if (tiles[fromTop, fromLeft] == tile)
                     {
                         Target coords = new Target(fromTop, fromLeft);
                         return coords;

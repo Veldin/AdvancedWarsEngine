@@ -5,12 +5,13 @@ namespace AdvancedWarsEngine.Classes
 {
     class Unit : GameObject
     {
-        protected float health = 100;                     // The health of the Unit
-        protected float movementSpeed = 100;              // The movement speed of the Unit (for animations)
-
-        protected IRangeBehavior rangeBehavior;              // The rangeBehavior calculates the range of the Unit
-        protected IAttackBehavior attackBehavior;             // The attackBehavior calculates the dammageValue
-        protected IDefenceBehavior defenceBehavior;            // The defenceBehavior calculates the defenceValue
+        protected float health = 100;                   // The health of the Unit
+        protected float movementSpeed = 100;            // The movement speed of the Unit (for animations)
+        protected int movementRange = 2;                // The amount of tiles the Unit can move
+        protected IRangeBehavior rangeBehavior;         // The rangeBehavior calculates the range of the Unit
+        protected IAttackBehavior attackBehavior;       // The attackBehavior calculates the dammageValue
+        protected IDefenceBehavior defenceBehavior;     // The defenceBehavior calculates the defenceValue
+        protected ITileBehavior tileBehavior;           // The tileBehavior checks if the unit is allowed on the given tile
         protected EUnitType unitType;                   // The unitType specifice the type of this Unit for example infantry or vehicle
 
         public Unit(float width, float height, float fromTop, float fromLeft)
@@ -19,13 +20,14 @@ namespace AdvancedWarsEngine.Classes
             unitType = EUnitType.Vehicle;
         }
 
-        public Unit(float width, float height, float fromTop, float fromLeft, string sprite, IRangeBehavior rangeBehavior, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior, EUnitType unitType)
+        public Unit(float width, float height, float fromTop, float fromLeft, string sprite, IRangeBehavior rangeBehavior, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior, ITileBehavior tileBehavior, EUnitType unitType)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            this.rangeBehavior = rangeBehavior;
-            this.attackBehavior = attackBehavior;
-            this.defenceBehavior = defenceBehavior;
-            this.unitType = unitType;
+            this.rangeBehavior      = rangeBehavior;
+            this.attackBehavior     = attackBehavior;
+            this.defenceBehavior    = defenceBehavior;
+            this.tileBehavior       = tileBehavior;
+            this.unitType           = unitType;
 
         }
 
@@ -136,5 +138,21 @@ namespace AdvancedWarsEngine.Classes
         {
             //DO SOMETHING
         }
+
+        /// <summary>
+        /// This function checks if the Unit is allowed to move to the given Tile
+        /// </summary>
+        /// <param name="tile"> The tile that needs to be checked</param>
+        /// <returns> Returns if the movement to this tile is allowed</returns>
+        public bool IsTileAllowed(Tile tile)
+        {
+            return tileBehavior.IsAllowed(tile);
+        }
+
+        public int MovementRange
+        {
+            get { return movementRange; }
+        }
+
     }
 }

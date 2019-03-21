@@ -10,149 +10,190 @@ namespace AdvancedWarsEngine.Classes
 {
     class Pathing
     {
-        private List<GameObject>    colourOverlay;
-        private List<GameObject>    arrowPrompts;
-        private List<Tile>          allowedTiles;
-        private List<List<Tile>>    pathes;
-        private World               world;
+        private List<GameObject>    colourOverlay;              // This list keeps track of the last created colourOverlay which is necessary for the removal thereof
+        private List<GameObject>    arrowPrompts;               // This list keeps track of the last created arrowPrompts which is necessary for the removal thereof
+        private List<Tile>          allowedTiles;               // This list keeps track of which tiles the Unit is allowed to stand on
+        private List<List<Tile>>    paths;                      // This list keeps track of all possible paths
+        private Map                 map;                        // This is the map on which the paths are created
 
-        public Pathing(World world)
+        public Pathing(Map map)
         {
             // Initalize everything
             colourOverlay   = new List<GameObject>();
             arrowPrompts    = new List<GameObject>();
             allowedTiles    = new List<Tile>();
-            pathes          = new List<List<Tile>>();
-            this.world      = world;
-
-            Debug.WriteLine("Pathing class created");
+            paths           = new List<List<Tile>>();
+            this.map        = map;
         }
 
-
-        //selectedUnit
-        // promptfactory
-        // player of the selected unit
-        public List<GameObject> SetColorOverlay(Unit unit, IAbstractFactory factory, Player player)
+        /***************************************************************
+         * Getters and Setters
+         * ************************************************************/
+        public List<GameObject> ColourOverlay
         {
+            get { return colourOverlay; }
+        }
+
+        public List<GameObject> ArrowPrompts
+        {
+            get { return arrowPrompts; }
+        }
+
+        /***************************************************************
+         * Public functions
+         * ************************************************************/
+
+        /// <summary>
+        /// This function clears the colorOverlay list
+        /// </summary>
+        public void EmptyColorOverlay()
+        {
+            colourOverlay.Clear();
+        }
+
+        /// <summary>
+        /// This function creates een colorOvelay over the tiles where a movement or attack of a unit allowed is.
+        /// </summary>
+        /// <param name="unit"> The Unit wherefore the color overlay is created</param>
+        /// <param name="unitLocation"> The current location of the unit</param>
+        /// <param name="factory"> A PromptFactory</param>
+        /// <param name="player"> The player that owns the Unit</param>
+        /// <returns> Returns a list of prompts which is the color overlay</returns>
+        public List<GameObject> SetColorOverlay(Unit unit, Target unitLocation, IAbstractFactory factory, Player player)
+        {
+            // Create the pathes necessary for this function
+            Target end = new Target(0, 0);
+            CreatePaths(unitLocation, end, unit);
+
+            // Clear the list paths because it is not necessary for this function and breaks other functions if not cleared
+            paths.Clear();
+
             // Clear the colourOverlay list
             colourOverlay.Clear();
             
-
-            // Get the map
-            Map map = world.Map;
-
-
-            // Tile[,] tiles = world.Map.Tiles;
-
-            // Get on the right thread??
-            Application.Current.Dispatcher.Invoke(delegate
+            // Loops through each tile of the allowedTiles list and check which color the prompt should have
+            foreach (Tile tile in allowedTiles)
             {
-                foreach (Tile tile in allowedTiles)
+                // Get the fromTop and fromLeft of the tile in tiles
+                float fromTop = map.GetTileCoords(tile).GetFromTop() * 16;
+                float fromLeft = map.GetTileCoords(tile).GetFromLeft() * 16;
+
+                // The tile contains only a structure
+                if (tile.OccupiedUnit == null && tile.OccupiedStructure != null)
                 {
-                    
-                    float fromTop = map.GetTileCoords(tile).GetFromTop() * 16;
-                    float fromLeft = map.GetTileCoords(tile).GetFromLeft() * 16;
-                    //Debug.WriteLine("TileCoords" + fromTop / 16 + "  " + fromLeft / 16);
-
-
-                    // The tile contains only a structure
-                    if (tile.OccupiedUnit == null && tile.OccupiedStructure != null)
+                    // Check if the Structure is allied
+                    if (player.InGameObjects(tile.OccupiedStructure))
                     {
-                        // Check if the Structure is allied
-                        if (player.InGameObjects(tile.OccupiedStructure))
-                        {
-                            //Create move prompt
-                            colourOverlay.Add(factory.GetGameObject("Sprites/TileSelectors/TileSelectorGreen.gif", 16, 16, fromTop, fromLeft));
-                            continue;
-                        } else {
-                        //Create attack prompt
-                        colourOverlay.Add(factory.GetGameObject("Sprites/TileSelectors/TileSelectorRed.gif", 16, 16, fromTop, fromLeft));
+                        //Create move prompt
+                        colourOverlay.Add(factory.GetGameObject("Sprites/RangeIndicators/rangeIndicatorGreen.png", 16, 16, fromTop, fromLeft));
                         continue;
-                        }
-                    } // The tile contains only a Unit
-                    else if (tile.OccupiedUnit != null && tile.OccupiedStructure == null)
-                    {
-                        // Check if the Unit is allied
-                        if (player.InGameObjects(tile.OccupiedUnit))
-                        {
-                        //Create allied prompt
-                        colourOverlay.Add(factory.GetGameObject("Sprites/TileSelectors/TileSelectorBlue.gif", 16, 16, fromTop, fromLeft));
-                        continue;
-                        }
-                        else
-                        {
-                        //Create attack prompt
-                        colourOverlay.Add(factory.GetGameObject("Sprites/TileSelectors/TileSelectorRed.gif", 16, 16, fromTop, fromLeft));
-                        continue;
-                        }
+                    } else {
+                    //Create attack prompt
+                    colourOverlay.Add(factory.GetGameObject("Sprites/RangeIndicators/rangeIndicatorRed.png", 16, 16, fromTop, fromLeft));
+                    continue;
                     }
-                    else if(tile.OccupiedUnit == null && tile.OccupiedStructure == null)
+                } // The tile contains only a Unit
+                else if (tile.OccupiedUnit != null && tile.OccupiedStructure == null)
+                {
+                    // Check if the Unit is allied
+                    if (player.InGameObjects(tile.OccupiedUnit))
                     {
-                        // Create move prompt
-                        colourOverlay.Add(factory.GetGameObject("Sprites/TileSelectors/TileSelectorGreen.gif", 16, 16, fromTop, fromLeft));
-                        continue;
+                    //Create allied prompt
+                    colourOverlay.Add(factory.GetGameObject("Sprites/RangeIndicators/rangeIndicatorBlue.png", 16, 16, fromTop, fromLeft));
+                    continue;
+                    }
+                    else
+                    {
+                    //Create attack prompt
+                    colourOverlay.Add(factory.GetGameObject("Sprites/RangeIndicators/rangeIndicatorRed.png", 16, 16, fromTop, fromLeft));
+                    continue;
                     }
                 }
-            });
-
+                else if(tile.OccupiedUnit == null && tile.OccupiedStructure == null)
+                {
+                    // Create move prompt
+                    colourOverlay.Add(factory.GetGameObject("Sprites/RangeIndicators/rangeIndicatorGreen.png", 16, 16, fromTop, fromLeft));
+                    continue;
+                }
+            }
+ 
+            // Clear the allowedTiles list because it has used it purpuse and should be empty for the next time it will be used
             allowedTiles.Clear();
+
             return colourOverlay;
         }
 
-        public List<GameObject> CreateArrows(List<Tile> path, Target start, Target end, IAbstractFactory promptFactory)
+        /// <summary>
+        /// This function creates the arrow prompts.
+        /// </summary>
+        /// <param name="start"> The Target where the Unit starts</param>
+        /// <param name="end"> The Target of the destination of the Unit</param>
+        /// <param name="unit"> The Unit wherefore the arrows are created</param>
+        /// <param name="promptFactory"> The factory that creates the prompts </param>
+        /// <returns> Returns a list of prompts which are the arrow images</returns>
+        public List<GameObject> CreateArrows( Target start, Target end, Unit unit, IAbstractFactory promptFactory)
         {
+            // Get the path
+            List<Tile> path = GetPath(start, end, unit);
+
+            // If there is no path found return
+            if (path == null) { return null; }
+            
             // Clear the list for the arrowPrompts
             arrowPrompts.Clear();
             allowedTiles.Clear();
 
-            // Get the map
-            Map map = world.Map;
-
             // Remove the last tile of the path because we dont want an arrow on the last tile
-            if (path.Count > 1)
+            if (path.Count >= 1)
             {
                 path.RemoveAt(path.Count - 1);
             }
             
-
             // Create a list with target of the path and fill it
             List<Target> targets = new List<Target>();
             foreach (Tile tile in path)
             {
                 targets.Add(map.GetTileCoords(tile));
-            }
-            
-            // Get on the right thread??
-            Application.Current.Dispatcher.Invoke(delegate
+            }    
+
+            // Declare some variables
+            int lastTile = targets.Count -1;
+            string imageLocation;
+
+            // Loop through every target
+            for (int i = 0; i < targets.Count; i++)
             {
-                // Declare some variables
-                int lastTile = targets.Count -1;
-                string imageLocation;
-
-                // Loop through every target
-                for (int i = 0; i < targets.Count; i++)
+                // Check if this is the first target
+                if (i == 0)
                 {
-                    // Check if this is the first target
-                    if (i == 0)
-                    {
-                        // Get the imageLocation for the first target
-                        imageLocation = GetImageLocation(start, targets[0], i == lastTile ? end : targets[i + 1], i == lastTile ? true : false);
-                    } else
-                    {
-                        // Get the imageLocation
-                        imageLocation = GetImageLocation(targets[i-1], targets[i], i == lastTile ? end : targets[i + 1], i == lastTile ? true : false);
-                    }
-
-                    // Add the arrow prompt
-                    arrowPrompts.Add(promptFactory.GetGameObject(imageLocation, 16, 16, targets[i].GetFromTop() * 16, targets[i].GetFromLeft() * 16));
+                    // Get the imageLocation for the first target
+                    imageLocation = GetImageLocation(start, targets[0], i == lastTile ? end : targets[i + 1], i == lastTile ? true : false);
+                } else
+                {
+                    // Get the imageLocation
+                    imageLocation = GetImageLocation(targets[i-1], targets[i], i == lastTile ? end : targets[i + 1], i == lastTile ? true : false);
                 }
 
-            });
+                // Add the arrow prompt
+                arrowPrompts.Add(promptFactory.GetGameObject(imageLocation, 16, 16, targets[i].GetFromTop() * 16, targets[i].GetFromLeft() * 16));
+            }
 
             return arrowPrompts;
         }
 
-        public string GetImageLocation(Target previous, Target current, Target next, bool isLast)
+        /***************************************************************
+         * Private functions
+         * ************************************************************/
+
+        /// <summary>
+        /// This function calculates which arrow image should be used and returns the image location of that image.
+        /// </summary>
+        /// <param name="previous"> The Tile which was before the current tile</param>
+        /// <param name="current"> The Tile where the image should be placed</param>
+        /// <param name="next"> The Tile which comes after the current tile</param>
+        /// <param name="isLast"> True if it is the last Tile of the path</param>
+        /// <returns>Returns the image location as string</returns>
+        private string GetImageLocation(Target previous, Target current, Target next, bool isLast)
         {
             // Get the coords
             float prevFromLeft  = previous.GetFromLeft();
@@ -168,7 +209,6 @@ namespace AdvancedWarsEngine.Classes
             int nextHor = currFromLeft.CompareTo(nextFromLeft);
             int nextVer = currFromTop.CompareTo(nextFromTop);
 
-
             // The meaning of the results of the comparision
             // -1 is prev left from curr 
             //  1 is prev right from cuur
@@ -176,20 +216,22 @@ namespace AdvancedWarsEngine.Classes
             //  1 is perv under curr
             // -1 is curr left from next 
             // -1 is curr above next
+
+            // Returns the correct image location
             if (isLast)
             {
                 if (prevHor < 0 && nextHor < 0) { return "Sprites/Arrows/ArrowHeadRight.gif"; }
-            //    if (prevHor < 0 && nextVer < 0) { return null; } // ArrowHeadFromLeftToBottom
-            //    if (prevHor < 0 && nextVer > 0) { return null; } // ArrowHeadFromLeftToTop
+                if (prevHor < 0 && nextVer < 0) { return "Sprites/Arrows/ArrowHeadLeftToBottom.gif"; } // ArrowHeadLeftToBottom
+                if (prevHor < 0 && nextVer > 0) { return "Sprites/Arrows/ArrowHeadLeftToTop.gif"; } // ArrowHeadLeftToTop
                 if (prevHor > 0 && nextHor > 0) { return "Sprites/Arrows/ArrowHeadLeft.gif"; }
-            //    if (prevHor > 0 && nextVer < 0) { return null; } // ArrowHeadFromRightToBottom
-            //    if (prevHor > 0 && nextVer > 0) { return null; } // ArrowHeadFromRightToTop
+                if (prevHor > 0 && nextVer < 0) { return "Sprites/Arrows/ArrowHeadRightToBottom.gif"; } // ArrowHeadRightToBottom
+                if (prevHor > 0 && nextVer > 0) { return "Sprites/Arrows/ArrowHeadRightToTop.gif"; } // ArrowHeadRightToTop
                 if (prevVer < 0 && nextVer < 0) { return "Sprites/Arrows/ArrowHeadBottom.gif"; }
-            //    if (prevVer < 0 && nextHor < 0) { return null; } // ArrowHeadFromTopToRight
-            //    if (prevVer < 0 && nextHor > 0) { return null; } // ArrowHeadFromTopToLeft
+                if (prevVer < 0 && nextHor < 0) { return "Sprites/Arrows/ArrowHeadTopToRight.gif"; } // ArrowHeadTopToRight
+                if (prevVer < 0 && nextHor > 0) { return "Sprites/Arrows/ArrowHeadTopToLeft.gif"; } // ArrowHeadTopToLeft
                 if (prevVer > 0 && nextVer > 0) { return "Sprites/Arrows/ArrowHeadTop.gif"; }
-           //     if (prevVer < 0 && nextHor < 0) { return null; } // ArrowHeadFromBottomToRight
-           //     if (prevVer < 0 && nextHor > 0) { return null; } // ArrowHeadFromBottomToLeft
+                if (prevVer < 0 && nextHor < 0) { return "Sprites/Arrows/ArrowHeadBottomToRight.gif"; } // ArrowHeadBottomToRight
+                if (prevVer < 0 && nextHor > 0) { return "Sprites/Arrows/ArrowHeadBottomToLeft.gif"; } // ArrowHeadBottomToLeft
             } else
             {
                 if (prevHor == 0 && nextHor == 0) { return "Sprites/Arrows/ArrowTopToBottom.gif"; }
@@ -200,19 +242,26 @@ namespace AdvancedWarsEngine.Classes
                 if (prevHor > 0 && nextVer > 0 || prevVer < 0 && nextHor < 0) { return "Sprites/Arrows/ArrowTopToRight.gif"; }
             }
 
+            // If the right image location is not found return this one
             return "Sprites/Arrows/ArrowHeadRight.gif";
         }
 
-        public bool CreatePaths(Target start, Target end, float movingDistance, List<Tile> path = null)
+        /// <summary>
+        /// This funcion bruteforced all possible paths. It fills the lists allowedTiles and pathes.
+        /// Note that this is a recursive function.
+        /// </summary>
+        /// <param name="start"> The Target where the Unit starts</param>
+        /// <param name="end"> The Target of the destination of the Unit</param>
+        /// <param name="unit"> The Unit wherefore the path is created</param>
+        /// <param name="path"> A list used for the recursive function to track it's path</param>
+        private void CreatePaths(Target start, Target end, Unit unit, List<Tile> path = null)
         {
-            
-            Map map = world.Map;
-
+            // Get the x and y value of the start Target
             int x = (int) (start.GetFromLeft() );
             int y = (int) (start.GetFromTop() );
 
             // Create new tiles
-            List<Tile> temp = new List<Tile>
+            List<Tile> temp = new List<Tile> // todo check if it is within the map
             {
                 map.GetTile(y - 1, x), //top
                 map.GetTile(y + 1, x), //bot
@@ -223,14 +272,21 @@ namespace AdvancedWarsEngine.Classes
             foreach (Tile tile in temp)
             {
                 // Check if there can be moved to this tile
-                if (!CheckTile(tile)) { continue; }
+                if (!unit.IsTileAllowed(tile)) {
+                    if (tile.OccupiedUnit != null)
+                    {
+                        // The tile is allowed so try to add it to the list
+                        if (!allowedTiles.Contains(tile))
+                        {
+                            allowedTiles.Add(tile);
+                        }
+                    }
+                    continue;
+                }
 
                 // The tile is allowed so try to add it to the list
                 if (!allowedTiles.Contains(tile))
                 {
-                    float a = map.GetTileCoords(tile).GetFromTop();
-                    float b = map.GetTileCoords(tile).GetFromLeft();
-                    Debug.WriteLine("TILELIST Tile coords:  " + a + "   " + b);
                     allowedTiles.Add(tile);
                 }
 
@@ -258,54 +314,44 @@ namespace AdvancedWarsEngine.Classes
                 // If endTarget has been reached add path to pathes
                 if (fromLeft == end.GetFromLeft() && fromTop == end.GetFromTop())
                 {
-                    pathes.Add(tmpPath);
+                    paths.Add(tmpPath);
                    // return true;
                    continue;
                 } // If the path is as long or longer than the movementDistance return
-                else if (tmpPath.Count >= movingDistance)
+                else if (tmpPath.Count >= unit.MovementRange)
                 {
                     
                     continue;
                 } // Find the next tile in the possible path
                 else
                 {
-                    CreatePaths(tileTarget, end, movingDistance, tmpPath);
+                    CreatePaths(tileTarget, end, unit, tmpPath);
                 }
             }
-
-
-            return true;
         }
 
-        public List<Tile> GetPath(Target start, Target end, float movingDistance)
+        /// <summary>
+        /// This function calculates the shortest path of for a Unit to get from A to B.
+        /// This function is also necessary for the creation of the colorOverlay and the arrowPrompts
+        /// </summary>
+        /// <param name="start"> The Target where the Unit starts</param>
+        /// <param name="end"> The Target of the destination of the Unit</param>
+        /// <param name="unit"> The Unit wherefore the path is created</param>
+        /// <returns> Returns a list of Tiles which is the shortes way to get from A to B</returns>
+        private List<Tile> GetPath(Target start, Target end, Unit unit)
         {
+            // Clear the previous made paths
+            paths.Clear();
+
             // Create the pathes
-            CreatePaths(start, end, movingDistance, null);
-
-            // Debug everything
-   /*         for (int i = 0; i < pathes.Count; i++)
-            {
-                Debug.WriteLine("---Path " + i + "---");
-                Debug.WriteLine("TotalTiles: " + pathes[i].Count);
-
-                foreach (Tile tile in pathes[i])
-                {
-                    float fromLeft = world.Map.GetTileCoords(tile).GetFromLeft();
-                    float fromTop = world.Map.GetTileCoords(tile).GetFromTop();
-                    Debug.WriteLine("Tile coords: "  + fromTop + "  " + fromLeft + "  " +  tile.GetType().Name);
-                }
-            }
-            if (pathes.Count == 0)
-            {
-                Debug.WriteLine("No pathes found");
-            }*/
+            CreatePaths(start, end, unit, null);
 
             // Set some variables
             int tilesDistance = -1;
             List<Tile> finalPath = null;
 
             // Pick the shortest path
-            foreach (List<Tile> tmp in pathes)
+            foreach (List<Tile> tmp in paths)
             {
                 // If no distance and path is set, set them
                 if (tilesDistance == -1)
@@ -318,93 +364,10 @@ namespace AdvancedWarsEngine.Classes
                     tilesDistance = tmp.Count;
                     finalPath = tmp;
                 }
-            }
-
-            if (finalPath != null)
-            {
-                Debug.WriteLine("---The Final Path---");
-                Debug.WriteLine("TotalTiles: " + finalPath.Count);
-
-                foreach (Tile tile in finalPath)
-                {
-                    float fromLeft = world.Map.GetTileCoords(tile).GetFromLeft();
-                    float fromTop = world.Map.GetTileCoords(tile).GetFromTop();
-                    Debug.WriteLine("Tile coords: "  + fromTop + "  " + fromLeft + "  " + tile.GetType().Name);
-                }
-            }
-            else
-            {
-                Debug.WriteLine("No path found");
-            }
-
+            }  
 
             return finalPath;
         }
-
-        private void AddTileToList(Tile tile)
-        {
-
-        }
-
-        private bool CheckTile(Tile targetTile)
-        {
-            //targetTile.GetType().Name
-            switch (targetTile.GetType().Name)
-            {
-                case "Mountain":
-                    //if (unit.UnitType == EUnitType.Vehicle) { return false; }
-                return false;
-                case "Plain":
-                    break;
-                case "Forest":
-                    break;
-                case "Water":
-                 //   if (unit.UnitType == EUnitType.Vehicle) { return false; }
-                   //     if (unit.UnitType == EUnitType.Infantry) { return false; }
-                    return false;
-                   //break;
-                case "Urban":
-                    break;
-                case "Road":
-                    break;
-            }
-
-            return true;
-        }
-
-        // ------------------GETTERS -------------------
-        public List<GameObject> ColourOverlay
-        {
-            get { return colourOverlay; }
-        }
-
-        public List<GameObject> ArrowPrompts
-        {
-            get { return arrowPrompts; }
-        }
-
-
-        //        private List<GameObject>    colourOverlay;
-        //          private List<GameObject> arrowPrompts;
-        //    if (start == end) return true;
-
-        //    //Sorted by shortest direct path first
-        //    var q = new SortedList<double, Tile>(allowDiagonalMovement ? 6 : 4, new DupeKeyComparer<double>());
-        //    if (start.x + 1 < map.X) q.Add((start + new vec2 { x = 1, y = 0 }) * end,    map[start.x + 1, start.y]);
-        //    if (start.x - 1 >= 0)    q.Add((start + new vec2 { x = -1, y =  0 }) * end,  map[start.x - 1, start.y]);
-        //    if (start.y + 1 < map.Y) q.Add((start + new vec2 { x = 0, y = 1 }) * end,    map[start.x, start.y + 1]);
-        //    if (start.y - 1 >= 0)    q.Add((start + new vec2 { x =  0, y = -1 }) * end,  map[start.x, start.y - 1]);
-
-        //    foreach(var p in q) {
-        //        if (p.Value.ttype == Tile.TileType.OBSTACLE || 
-        //            stack.Count != 0 && stack.Contains(p.Value)) continue;
-
-        //        stack.Push(map[start.x, start.y]);
-        //        if (findPath(p.Value.xy, end)) return true;
-        //    }
-        //    stack.Pop();
-        //    return false;
-        //}
 
     }
 }

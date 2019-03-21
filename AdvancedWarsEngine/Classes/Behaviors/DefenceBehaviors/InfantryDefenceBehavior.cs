@@ -12,6 +12,7 @@
             switch (tile.GetType().Name)     //Todo make enums or something for this
             {
                 case "Mountain":
+                    defenceValue += baseValue * 0.5f;
                     break;
                 case "Forest":
                     defenceValue += baseValue * 0.5f;
@@ -19,7 +20,7 @@
                 case "Plain":
                     break;
                 case "Urban":
-                    defenceValue += baseValue * 0.2f;
+                    defenceValue += baseValue * 0.5f;
                     break;
                 case "Water":                           // Infantry cannot stand on Water
                 case "Road":

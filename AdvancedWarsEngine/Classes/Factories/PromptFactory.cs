@@ -1,4 +1,6 @@
-﻿namespace AdvancedWarsEngine.Classes
+﻿using System.Diagnostics;
+
+namespace AdvancedWarsEngine.Classes
 {
     class PromptFactory : IAbstractFactory
     {
@@ -9,7 +11,7 @@
 
             // Check if the value is the location of an image
             bool isImage = (value.Contains(".png") || value.Contains(".gif"));
-
+            
             // Create the Prompt
             switch (isImage)
             {

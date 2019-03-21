@@ -40,6 +40,7 @@ namespace AdvancedWarsEngine
         private Cursor cursor;                  //Holds information about the cursor
         private Prompt crosshair;               //Holds information of the crosshair
         private Prompt selectedTileIndicator;   //Holds information about the selected crosshair
+        private Pathing pathing;
 
         //Holds the factoryProducer
         FactoryProducer factoryProducer;
@@ -52,7 +53,7 @@ namespace AdvancedWarsEngine
 
             InitializeComponent();
             
-            WindowState = WindowState.Maximized;
+            WindowState = WindowState.Normal;
             WindowStyle = WindowStyle.None;
 
             //Bind the keyup/down to the window's keyup/down
@@ -114,6 +115,9 @@ namespace AdvancedWarsEngine
 
             //Allow the player's gameobject to act
             player.AllowedAllToAct();
+
+            // Create a Pathing class
+            pathing = new Pathing(world.Map);
 
             RunAsync();
         }
@@ -412,15 +416,72 @@ namespace AdvancedWarsEngine
                 selectedFromLeft = world.Map.Tiles.GetLength(1) - 1;
             }
 
+            
             Tile pressedOnTile = world.Map.GetTile(selectedFromTop, selectedFromLeft);
             crosshair.FromTop = world.Map.Size * selectedFromTop;
             crosshair.FromLeft = world.Map.Size * selectedFromLeft;
+
+            #region CreateArrowPrompts
+                Tile selectedTile = world.Map.GetTile((int)(selectedTileIndicator.FromTop/16), (int)(selectedTileIndicator.FromLeft/16));
+            
+                if (selectedTile.OccupiedUnit != null && pathing.ColourOverlay.Count != 0)
+                {
+                    // Remove already existing Arrows
+                    List<GameObject> arrowPrompts = pathing.ArrowPrompts;
+                    foreach (GameObject gameObject in arrowPrompts)
+                    {
+                        gameObjects.Remove(gameObject);
+                    }
+
+                    Target start = new Target((selectedTileIndicator.FromTop / 16), ((selectedTileIndicator.FromLeft / 16)));
+                    Target end = new Target(crosshair.FromTop / 16, crosshair.FromLeft /16);
+
+                    
+                    if (start.GetFromTop() != end.GetFromTop() || start.GetFromLeft() != end.GetFromLeft())
+                    {
+                        // Create a promptFactory
+                        IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
+
+                        // Get the Arrows as prompt
+                        List<GameObject> prompts = pathing.CreateArrows(start, end, selectedTile.OccupiedUnit, promptFactory);
+
+                        if (prompts != null)
+                        {
+                            // Add the prompts to the gameObjectsList
+                            foreach (GameObject gameObject in prompts)
+                            {
+                                // Debug.WriteLine("ArrowPrompt Coords: " + gameObject.FromTop / 16 + "   " + gameObject.FromLeft / 16);
+                                gameObjects.Add(gameObject);
+                            }
+                        }
+                    }
+                }
+            #endregion
 
             if (player.IsControllable)
             {
                 if (IsKeyPressed("LeftMouseButton"))
                 {
                     world.Map.DeselectAll(); //To make sure there is only one tile selected
+
+                    #region removePathingPrompts
+                    // Remove colourOverlay
+                    List<GameObject> colourOverlay = pathing.ColourOverlay;
+                    foreach (GameObject gameObject in colourOverlay)
+                    {
+                        gameObjects.Remove(gameObject);
+                    }
+
+                    // Clear the list in the pathing class
+                    pathing.EmptyColorOverlay();
+
+                    // Remove already existing Arrows
+                    List<GameObject> arrowPrompts = pathing.ArrowPrompts;
+                    foreach (GameObject gameObject in arrowPrompts)
+                    {
+                        gameObjects.Remove(gameObject);
+                    }
+                    #endregion
 
                     pressedOnTile.Selected = true;
 
@@ -431,6 +492,24 @@ namespace AdvancedWarsEngine
 
                         selectedTileIndicator.FromLeft = selectedFromLeft * world.Map.Size;
                         selectedTileIndicator.FromTop = selectedFromTop * world.Map.Size;
+
+                        #region setColourOverlay
+
+                        // Set the start Target
+                        Target start = new Target((player.SelectedUnit.Target.GetFromTop() / 16), (player.SelectedUnit.Target.GetFromLeft() / 16));
+
+                        // Create a promptFactory
+                        IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
+
+                        // Get the Arrows as prompt
+                        List<GameObject> colorOverlay = pathing.SetColorOverlay(player.SelectedUnit, start, promptFactory, player);
+
+                        // Add the prompts to the gameObjectsList
+                        foreach (GameObject gameObject in colorOverlay)
+                        {
+                            gameObjects.Add(gameObject);
+                        }
+                        #endregion
                     }
                     else if (pressedOnTile.OccupiedUnit != null || pressedOnTile.OccupiedStructure != null)
                     {   //Clicked a unit the current player doest own.
@@ -454,6 +533,7 @@ namespace AdvancedWarsEngine
                                     // The selectedUnit attacks the Unit on the selectedTile
                                     float dmgValue = player.SelectedUnit.Attack(enemyGameObject, pressedOnTile);
 
+                                    #region CreateDmgNumbers
                                     // Create a promptFactory
                                     IAbstractFactory promtFactory = factoryProducer.GetFactory("PromptFactory");
 
@@ -469,6 +549,8 @@ namespace AdvancedWarsEngine
                                     {
 
                                     }
+                                    #endregion
+
                                     // End the turn for this Unit and deselect it
                                     player.SelectedUnit.IsAllowedToAct = false;
                                     player.SelectedUnit = null;
@@ -486,6 +568,7 @@ namespace AdvancedWarsEngine
                     {
                         if (player.SelectedUnit != null) //Current player has a unit selected
                         {
+                           
                             if (player.SelectedUnit.CanTarget(player.SelectedUnit.Target.GetFromLeft() / 16, player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop))
                             {
 
