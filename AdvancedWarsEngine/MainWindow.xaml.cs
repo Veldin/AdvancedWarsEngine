@@ -64,7 +64,7 @@ namespace AdvancedWarsEngine
             factoryProducer = new FactoryProducer();
             IAbstractFactory factory = factoryProducer.GetFactory("UnitFactory");
 
-            world = new World(factoryProducer, "plainlevel");
+            world = new World(factoryProducer, "lavalevel");
 
             camera = new Camera(world.Map.Tiles.GetLength(0),world.Map.Tiles.GetLength(1));
 
