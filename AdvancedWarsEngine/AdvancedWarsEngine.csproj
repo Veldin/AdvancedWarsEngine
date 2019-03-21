@@ -110,6 +110,7 @@
     <Compile Include="Classes\Behaviors\IDefenceBehavior.cs" />
     <Compile Include="Classes\GameObjects\Cursor.cs" />
     <Compile Include="Classes\FactoryProducer.cs" />
+    <Compile Include="Classes\Pathing.cs" />
     <Compile Include="Classes\Textures.cs" />
     <Compile Include="Classes\GameObject.cs" />
     <Compile Include="Classes\World\Map.cs" />
