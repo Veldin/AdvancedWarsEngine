@@ -51,7 +51,6 @@ namespace AdvancedWarsEngine.Classes
                 case "Road":
                     break;
             }
-
             return true;
         }
     }
