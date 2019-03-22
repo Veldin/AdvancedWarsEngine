@@ -14,16 +14,14 @@ namespace AdvancedWarsEngine.Classes
         private List<GameObject>    arrowPrompts;               // This list keeps track of the last created arrowPrompts which is necessary for the removal thereof
         private List<Tile>          allowedTiles;               // This list keeps track of which tiles the Unit is allowed to stand on
         private List<List<Tile>>    paths;                      // This list keeps track of all possible paths
-        private Map                 map;                        // This is the map on which the paths are created
 
-        public Pathing(Map map)
+        public Pathing()
         {
             // Initalize everything
             colourOverlay   = new List<GameObject>();
             arrowPrompts    = new List<GameObject>();
             allowedTiles    = new List<Tile>();
             paths           = new List<List<Tile>>();
-            this.map        = map;
         }
 
         /***************************************************************
@@ -59,11 +57,11 @@ namespace AdvancedWarsEngine.Classes
         /// <param name="factory"> A PromptFactory</param>
         /// <param name="player"> The player that owns the Unit</param>
         /// <returns> Returns a list of prompts which is the color overlay</returns>
-        public List<GameObject> SetColorOverlay(Unit unit, Target unitLocation, IAbstractFactory factory, Player player)
+        public List<GameObject> SetColorOverlay(Unit unit, Target unitLocation, IAbstractFactory factory, Player player, Map map)
         {
             // Create the pathes necessary for this function
             Target end = new Target(0, 0);
-            CreatePaths(unitLocation, end, unit);
+            CreatePaths(unitLocation, end, unit, map);
 
             // Clear the list paths because it is not necessary for this function and breaks other functions if not cleared
             paths.Clear();
@@ -131,10 +129,10 @@ namespace AdvancedWarsEngine.Classes
         /// <param name="unit"> The Unit wherefore the arrows are created</param>
         /// <param name="promptFactory"> The factory that creates the prompts </param>
         /// <returns> Returns a list of prompts which are the arrow images</returns>
-        public List<GameObject> CreateArrows( Target start, Target end, Unit unit, IAbstractFactory promptFactory)
+        public List<GameObject> CreateArrows( Target start, Target end, Unit unit, IAbstractFactory promptFactory, Map map)
         {
             // Get the path
-            List<Tile> path = GetPath(start, end, unit);
+            List<Tile> path = GetPath(start, end, unit, map);
 
             // If there is no path found return
             if (path == null) { return null; }
@@ -230,8 +228,8 @@ namespace AdvancedWarsEngine.Classes
                 if (prevVer < 0 && nextHor < 0) { return "Sprites/Arrows/ArrowHeadTopToRight.gif"; } // ArrowHeadTopToRight
                 if (prevVer < 0 && nextHor > 0) { return "Sprites/Arrows/ArrowHeadTopToLeft.gif"; } // ArrowHeadTopToLeft
                 if (prevVer > 0 && nextVer > 0) { return "Sprites/Arrows/ArrowHeadTop.gif"; }
-                if (prevVer < 0 && nextHor < 0) { return "Sprites/Arrows/ArrowHeadBottomToRight.gif"; } // ArrowHeadBottomToRight
-                if (prevVer < 0 && nextHor > 0) { return "Sprites/Arrows/ArrowHeadBottomToLeft.gif"; } // ArrowHeadBottomToLeft
+                if (prevVer > 0 && nextHor < 0) { return "Sprites/Arrows/ArrowHeadBottomToRight.gif"; } // ArrowHeadBottomToRight
+                if (prevVer > 0 && nextHor > 0) { return "Sprites/Arrows/ArrowHeadBottomToLeft.gif"; } // ArrowHeadBottomToLeft
             } else
             {
                 if (prevHor == 0 && nextHor == 0) { return "Sprites/Arrows/ArrowTopToBottom.gif"; }
@@ -243,7 +241,7 @@ namespace AdvancedWarsEngine.Classes
             }
 
             // If the right image location is not found return this one
-            return "Sprites/Arrows/ArrowHeadRight.gif";
+            return "Sprites/Arrows/ArrowHeadBottomToLeft.gif";
         }
 
         /// <summary>
@@ -254,7 +252,7 @@ namespace AdvancedWarsEngine.Classes
         /// <param name="end"> The Target of the destination of the Unit</param>
         /// <param name="unit"> The Unit wherefore the path is created</param>
         /// <param name="path"> A list used for the recursive function to track it's path</param>
-        private void CreatePaths(Target start, Target end, Unit unit, List<Tile> path = null)
+        private void CreatePaths(Target start, Target end, Unit unit, Map map, List<Tile> path = null)
         {
             // Get the x and y value of the start Target
             int x = (int) (start.GetFromLeft() );
@@ -325,7 +323,7 @@ namespace AdvancedWarsEngine.Classes
                 } // Find the next tile in the possible path
                 else
                 {
-                    CreatePaths(tileTarget, end, unit, tmpPath);
+                    CreatePaths(tileTarget, end, unit, map, tmpPath);
                 }
             }
         }
@@ -338,13 +336,13 @@ namespace AdvancedWarsEngine.Classes
         /// <param name="end"> The Target of the destination of the Unit</param>
         /// <param name="unit"> The Unit wherefore the path is created</param>
         /// <returns> Returns a list of Tiles which is the shortes way to get from A to B</returns>
-        private List<Tile> GetPath(Target start, Target end, Unit unit)
+        private List<Tile> GetPath(Target start, Target end, Unit unit, Map map)
         {
             // Clear the previous made paths
             paths.Clear();
 
             // Create the pathes
-            CreatePaths(start, end, unit, null);
+            CreatePaths(start, end, unit, map, null);
 
             // Set some variables
             int tilesDistance = -1;
