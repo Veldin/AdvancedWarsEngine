@@ -1,4 +1,5 @@
 ﻿using AdvancedWarsEngine.Classes.Enums;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace AdvancedWarsEngine.Classes
@@ -23,12 +24,11 @@ namespace AdvancedWarsEngine.Classes
         public Unit(float width, float height, float fromTop, float fromLeft, string sprite, IRangeBehavior rangeBehavior, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior, ITileBehavior tileBehavior, EUnitType unitType)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            this.rangeBehavior      = rangeBehavior;
-            this.attackBehavior     = attackBehavior;
-            this.defenceBehavior    = defenceBehavior;
-            this.tileBehavior       = tileBehavior;
-            this.unitType           = unitType;
-
+            this.rangeBehavior = rangeBehavior;
+            this.attackBehavior = attackBehavior;
+            this.defenceBehavior = defenceBehavior;
+            this.tileBehavior = tileBehavior;
+            this.unitType = unitType;
         }
 
         /**********************************************************************
@@ -54,6 +54,12 @@ namespace AdvancedWarsEngine.Classes
 
                 // Calculate the damageValue
                 float damageValue = attackBehavior.Attack(this, unit) - unit.Defence(tile);
+
+                // Make sure the Unit doesn't heal
+                if (damageValue < 0)
+                {
+                    damageValue = 0;
+                }
 
                 // Deal the damage to the enemy unit by decreasing it's health
                 unit.AddHealth(-damageValue);
@@ -134,9 +140,52 @@ namespace AdvancedWarsEngine.Classes
             return rangeBehavior.Range(this, fromFromLeft, fromFromTop, tile, targetFromLeft, targetFromTop);
         }
 
-        public void AutoMove()
+        public Tile AutoMove(World world)
         {
-            //DO SOMETHING
+            bool found = false;
+            Tile tempTile = null;
+            for (int x = world.Map.Tiles.GetLength(0); x >= 0 ; x--)
+            {
+                for (int y = world.Map.Tiles.GetLength(1); y >= 0; y--)
+                {
+                    if (world.Map.Tiles[x, y].OccupiedUnit != this && !found)
+                    {
+                        tempTile = world.Map.Tiles[x, y];
+                        found = true;
+                    }
+                    if (world.Map.Tiles[x, y].OccupiedUnit == this)
+                    {
+                        List<Tile> locations = new List<Tile>
+                        {
+                            world.Map.GetTile(x - 1, y),            //left
+                            world.Map.GetTile(x -1, y -1),          //topleft
+                            world.Map.GetTile(x, y -1),             //top
+                            world.Map.GetTile(x + 1, y - 1),        //topright
+                            world.Map.GetTile(x + 1, y),            //right
+                            world.Map.GetTile(x + 1, y + 1),        //bottomright
+                            world.Map.GetTile(x, y + 1),            //bottom
+                            world.Map.GetTile(x - 1, y + 1),        //bottomleft
+                            world.Map.GetTile(x- 2, y),             //mostleft
+                            world.Map.GetTile(x, y -2),             //mosttop
+                            world.Map.GetTile(x + 2, y),            //right
+                            world.Map.GetTile(x, y + 2)             //right
+                        };
+                        foreach (Tile location in locations)
+                        {
+                            if (!world.Player.InGameObjects(location.OccupiedUnit) && location.OccupiedUnit != null)
+                            {
+                                return location;
+                            }
+                            if (!world.Player.InGameObjects(location.OccupiedStructure) && location.OccupiedStructure != null)
+                            {
+                                return location;
+                            }
+                        }
+                        return tempTile;
+                    }
+                }
+            }
+            return null;
         }
 
         /// <summary>

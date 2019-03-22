@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,28 +15,24 @@ namespace AdvancedWarsEngine
     public partial class MainWindow : Window
     {
         //For timekeeping (we need to know when the last frame happend when the next frame happens and the delta between)
-        private long delta;     //The lenght in time the last frame lasted (so we can use it to calculate speeds of things without slowing down due to low fps)
-        private long now;       //This is the time of the frame. (To calculate the delta)
-        private long then;      //This is the time of the previous frame. (To calculate the delta)
+        private long delta;                         //The lenght in time the last frame lasted (so we can use it to calculate speeds of things without slowing down due to low fps)
+        private long now;                           //This is the time of the frame. (To calculate the delta)
+        private long then;                          //This is the time of the previous frame. (To calculate the delta)
 
         private Camera camera;
         private World world;
 
         private List<GameObject> gameObjects;
+        private HashSet<string> pressedKeys;        //Holds string interpertation of all keys that are pressed right now
 
-        //The max fps we want to run at
-        private float fps;  //The set FPS limit
-        private float interval; //Interfal that gets calculated based on the fps
+        private float fps;                          //The set FPS limit
+        private float interval;                     //Interval that gets calculated based on the fps
 
-        //The brush used to fill in the background
-        private SolidColorBrush backgroundBrush;
+        private SolidColorBrush backgroundBrush;    //The brush used to fill in the background
 
-        //Holds string interpertation of all keys that are pressed right now
-        private HashSet<string> pressedKeys;
-
-        private Cursor cursor;                  //Holds information about the cursor
-        private Prompt crosshair;               //Holds information of the crosshair
-        private Prompt selectedTileIndicator;   //Holds information about the selected crosshair
+        private Cursor cursor;                      //Holds information about the cursor
+        private Prompt crosshair;                   //Holds information of the crosshair
+        private Prompt selectedTileIndicator;       //Holds information about the selected crosshair
         private Pathing pathing;
 
         //Holds the factoryProducer
@@ -50,9 +45,9 @@ namespace AdvancedWarsEngine
             backgroundBrush = new SolidColorBrush(Color.FromArgb(255, 24, 40, 80));
 
             InitializeComponent();
-            
-            //WindowState = WindowState.Maximized;
-            //WindowStyle = WindowStyle.None;
+
+            WindowState = WindowState.Maximized;
+            WindowStyle = WindowStyle.None;
 
             //Bind the keyup/down to the window's keyup/down
             GetWindow(this).KeyUp += KeyUp;
@@ -66,7 +61,7 @@ namespace AdvancedWarsEngine
 
             world = new World(factoryProducer, "plainlevel");
 
-            camera = new Camera(world.Map.Tiles.GetLength(0),world.Map.Tiles.GetLength(1));
+            camera = new Camera(world.Map.Tiles.GetLength(0), world.Map.Tiles.GetLength(1));
 
             gameObjects = new List<GameObject>();
 
@@ -90,6 +85,7 @@ namespace AdvancedWarsEngine
             interval = 1000 / fps;
             then = Stopwatch.GetTimestamp();
 
+
             // Create a Pathing class
             pathing = new Pathing();
 
@@ -101,14 +97,12 @@ namespace AdvancedWarsEngine
             now = Stopwatch.GetTimestamp();
             delta = (now - then) / 1000; //Defide by 1000 to get the delta in MS
 
-  
             then = now; //Remember when this frame was.
             lock (this)
             {
                 Logic(delta); //Run the logic of the simulation.
                 Draw();
             }
-
             Task.Delay((int)interval);
 
             //Task.Yield();  //Force this task to complete asynchronously (This way the main thread is not blocked by this task calling itself.
@@ -169,15 +163,20 @@ namespace AdvancedWarsEngine
         {
             foreach (GameObject gameObject in loopList)
             {
+
                 if (gameObject is Structure)
                 {
                     Rectangle rect = gameObject.rectangle;
+
 
                     rect.Width = gameObject.Width;
                     rect.Height = gameObject.Height;
 
                     Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
                     Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                    //Set the background
+                    Rectangle BgRect = world.Map.rectangle;
 
                     if (Double.IsNaN(gameObject.FromLeft) || Double.IsNaN(gameObject.FromTop))
                     {
@@ -265,6 +264,7 @@ namespace AdvancedWarsEngine
             }
         }
 
+
         private void DrawPrompts(ArrayList loopList)
         {
             //Draw the gameobjects in the loop list exept for the Prompts
@@ -293,21 +293,24 @@ namespace AdvancedWarsEngine
                         {
                             TestCanvas.Children.Add(textBlock);
                         }
-
+                        // Move the prompt a little bit up if isAscending is true
+                        if (prompt.IsAscending)
+                        {
+                            prompt.FromTop -= 0.02f;
+                        }
+                    }
+                    else
+                    {
                         // Move the prompt a little bit up if isAscending is true
                         if (prompt.IsAscending)
                         {
                             prompt.FromTop -= 0.02f;
                         }
 
-                    }
-                    else
-                    {
                         Rectangle rect = gameObject.rectangle;
 
                         rect.Width = gameObject.Width;
                         rect.Height = gameObject.Height;
-
 
                         Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
                         Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
@@ -332,16 +335,12 @@ namespace AdvancedWarsEngine
                             {
                                 gameObject.FromTop = 0;
                             }
-
-
                         }
-
-                        Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                        Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
 
                         //Draw the rect if the rect isnt in yet
                         if (!TestCanvas.Children.Contains(rect))
                         {
+                            prompt.IncreaseCurrentDuration(delta);
                             TestCanvas.Children.Add(rect);
                         }
                     }
@@ -379,9 +378,8 @@ namespace AdvancedWarsEngine
                     TestCanvas.Children.Clear();    //Remove all recs from the canvas, start clean every loop
                     TestCanvas.Background = backgroundBrush;
 
-
-                    //Set the background
                     Rectangle BgRect = world.Map.rectangle;
+
 
                     Canvas.SetLeft(BgRect, 0 + camera.GetLeftOffSet());
                     Canvas.SetTop(BgRect, 0 + camera.GetTopOffSet());
@@ -395,16 +393,13 @@ namespace AdvancedWarsEngine
                     DrawStructures(loopList);
                     DrawUnits(loopList);
                     DrawPrompts(loopList);
-
                     DrawCursor(loopList);
 
-
-
+                    
                 });
             }
             catch
             {
-
             }
         }
 
@@ -445,7 +440,6 @@ namespace AdvancedWarsEngine
             }
             catch
             {
-
             }
 
             //Key input
@@ -497,48 +491,47 @@ namespace AdvancedWarsEngine
                 selectedFromLeft = world.Map.Tiles.GetLength(1) - 1;
             }
 
-            
             Tile pressedOnTile = world.Map.GetTile(selectedFromTop, selectedFromLeft);
+            Tile selectedTile = world.Map.GetTile((int)(selectedTileIndicator.FromTop / 16), (int)(selectedTileIndicator.FromLeft / 16));
+
             crosshair.FromTop = world.Map.Size * selectedFromTop;
             crosshair.FromLeft = world.Map.Size * selectedFromLeft;
 
-
-            #region CreateArrowPrompts
-                Tile selectedTile = world.Map.GetTile((int)(selectedTileIndicator.FromTop/16), (int)(selectedTileIndicator.FromLeft/16));
-            
-                if (selectedTile.OccupiedUnit != null && pathing.ColourOverlay.Count != 0)
+            if (selectedTile.OccupiedUnit != null && pathing.ColourOverlay.Count != 0)
+            {
+                //Remove already existing Arrows
+                List<GameObject> arrowPrompts = pathing.ArrowPrompts;
+                foreach (GameObject gameObject in arrowPrompts)
                 {
-                    // Remove already existing Arrows
-                    List<GameObject> arrowPrompts = pathing.ArrowPrompts;
-                    foreach (GameObject gameObject in arrowPrompts)
+                    gameObjects.Remove(gameObject);
+                }
+
+                Target start = new Target((selectedTileIndicator.FromTop / 16), ((selectedTileIndicator.FromLeft / 16)));
+                Target end = new Target(crosshair.FromTop / 16, crosshair.FromLeft / 16);
+
+                if (start.GetFromTop() != end.GetFromTop() || start.GetFromLeft() != end.GetFromLeft())
+                {
+                    //Create a promptFactory
+                    IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
+
+                    // Get the Arrows as prompt
+                    List<GameObject> prompts = pathing.CreateArrows(start, end, selectedTile.OccupiedUnit, promptFactory, world.Player, world.Map);
+
+
+                    //Add the prompts to the gameObjectsList
+                    if (prompts != null)
                     {
-                        gameObjects.Remove(gameObject);
-                    }
-
-                    Target start = new Target((selectedTileIndicator.FromTop / 16), ((selectedTileIndicator.FromLeft / 16)));
-                    Target end = new Target(crosshair.FromTop / 16, crosshair.FromLeft /16);
-
-                    
-                    if (start.GetFromTop() != end.GetFromTop() || start.GetFromLeft() != end.GetFromLeft())
-                    {
-                        // Create a promptFactory
-                        IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
-
-                        // Get the Arrows as prompt
-                        List<GameObject> prompts = pathing.CreateArrows(start, end, selectedTile.OccupiedUnit, promptFactory, world.Player, world.Map);
-
-                        if (prompts != null)
+                        foreach (GameObject gameObject in prompts)
                         {
-                            // Add the prompts to the gameObjectsList
-                            foreach (GameObject gameObject in prompts)
+                            if (gameObject != null)
                             {
-                                // Debug.WriteLine("ArrowPrompt Coords: " + gameObject.FromTop / 16 + "   " + gameObject.FromLeft / 16);
                                 gameObjects.Add(gameObject);
                             }
                         }
                     }
+
                 }
-            #endregion
+            }
 
             if (world.Player.IsControllable)
             {
@@ -546,24 +539,22 @@ namespace AdvancedWarsEngine
                 {
                     world.Map.DeselectAll(); //To make sure there is only one tile selected
 
-                    #region removePathingPrompts
-                    // Remove colourOverlay
+                    //Remove colourOverlay
                     List<GameObject> colourOverlay = pathing.ColourOverlay;
                     foreach (GameObject gameObject in colourOverlay)
                     {
                         gameObjects.Remove(gameObject);
                     }
 
-                    // Clear the list in the pathing class
+                    //Clear the list in the pathing class
                     pathing.EmptyColorOverlay();
 
-                    // Remove already existing Arrows
+                    //Remove already existing Arrows
                     List<GameObject> arrowPrompts = pathing.ArrowPrompts;
                     foreach (GameObject gameObject in arrowPrompts)
                     {
                         gameObjects.Remove(gameObject);
                     }
-                    #endregion
 
                     pressedOnTile.Selected = true;
 
@@ -575,23 +566,20 @@ namespace AdvancedWarsEngine
                         selectedTileIndicator.FromLeft = selectedFromLeft * world.Map.Size;
                         selectedTileIndicator.FromTop = selectedFromTop * world.Map.Size;
 
-                        #region setColourOverlay
-
-                        // Set the start Target
+                        //Set the start Target
                         Target start = new Target((world.Player.SelectedUnit.Target.GetFromTop() / 16), (world.Player.SelectedUnit.Target.GetFromLeft() / 16));
 
-                        // Create a promptFactory
+                        //Create a promptFactory
                         IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
 
-                        // Get the Arrows as prompt
+                        //Get the Arrows as prompt
                         List<GameObject> colorOverlay = pathing.SetColorOverlay(world.Player.SelectedUnit, start, promptFactory, world.Player, world.Map);
 
-                        // Add the prompts to the gameObjectsList
+                        //Add the prompts to the gameObjectsList
                         foreach (GameObject gameObject in colorOverlay)
                         {
                             gameObjects.Add(gameObject);
                         }
-                        #endregion
                     }
                     else if (pressedOnTile.OccupiedUnit != null || pressedOnTile.OccupiedStructure != null)
                     {   //Clicked a unit the current world.Player doest own.
@@ -601,25 +589,22 @@ namespace AdvancedWarsEngine
                             {
                                 if (world.Player.SelectedUnit.CanTarget(world.Player.SelectedUnit.Target.GetFromLeft() / 16, world.Player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop))
                                 {
-                                    // Define a GameObject
-                                    GameObject enemyGameObject;
-                                    // Try to get the Unit from the selected tile
-                                    enemyGameObject = pressedOnTile.OccupiedUnit;
+                                    GameObject enemyGameObject;                    //Define a GameObject
+                                    enemyGameObject = pressedOnTile.OccupiedUnit;  //Try to get the Unit from the selected tile
 
-                                    // If there is no Unit try to select the structure
+                                    //If there is no Unit try to select the structure
                                     if (enemyGameObject == null)
                                     {
                                         enemyGameObject = pressedOnTile.OccupiedStructure;
                                     }
 
-                                    // The selectedUnit attacks the Unit on the selectedTile
+                                    //The selectedUnit attacks the Unit on the selectedTile
                                     float dmgValue = world.Player.SelectedUnit.Attack(enemyGameObject, pressedOnTile);
 
-                                    #region CreateDmgNumbers
-                                    // Create a promptFactory
+                                    //Create a promptFactory
                                     IAbstractFactory promtFactory = factoryProducer.GetFactory("PromptFactory");
 
-                                    // Display the damageValue in a prompt
+                                    //Display the damageValue in a prompt
                                     try
                                     {
                                         Application.Current.Dispatcher.Invoke(delegate
@@ -629,35 +614,30 @@ namespace AdvancedWarsEngine
                                     }
                                     catch
                                     {
-
                                     }
-                                    #endregion
 
-                                    // End the turn for this Unit and deselect it
+                                    //End the turn for this Unit and deselect it
                                     world.Player.SelectedUnit.IsAllowedToAct = false;
                                     world.Player.SelectedUnit = null;
 
-                                    // Remove the selectedTileIndicator from sight
-
+                                    //Remove the selectedTileIndicator from sight
                                     selectedTileIndicator.FromLeft = -1000;
                                     selectedTileIndicator.FromTop = -1000;
                                 }
                             }
                         }
-
                     }
                     else
                     {
                         if (world.Player.SelectedUnit != null) //Current world.Player has a unit selected
                         {
-
                             //Check if the selected unit is allowed to act and if it can target
                             if (
-                                world.Player.SelectedUnit.CanTarget(world.Player.SelectedUnit.Target.GetFromLeft() / 16, world.Player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop)
+                                world.Player.SelectedUnit.CanTarget(
+                                    world.Player.SelectedUnit.Target.GetFromLeft() / 16, world.Player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop)
                                 && world.Player.SelectedUnit.IsAllowedToAct
                             )
                             {
-
                                 world.Player.SelectedUnit.IsAllowedToAct = false;
 
                                 lock (world.Map.Tiles)
@@ -669,12 +649,12 @@ namespace AdvancedWarsEngine
                                         {
                                             lock (world.Player.SelectedUnit)
                                             {
-                                                if(world.Map.GetTile(fromLeft,fromTop).OccupiedUnit != null &&
+                                                if (world.Map.GetTile(fromLeft, fromTop).OccupiedUnit != null &&
                                                     world.Map.GetTile(fromLeft, fromTop).OccupiedUnit == world.Player.SelectedUnit
                                                 )
                                                 {
                                                     world.Map.GetTile(fromLeft, fromTop).OccupiedUnit = null;
-                                            
+
                                                     fromLeft = world.Map.Tiles.GetLength(0);    //Get out of the outer loop
                                                     break;                                      //Get out of the inner loop
                                                 }
@@ -699,14 +679,11 @@ namespace AdvancedWarsEngine
                         {
                             //Do nothing
                         }
-                       
                     }
                 }
             }
 
-            /*
-             * Selects the next world.Player.
-             */
+            //Selects the next world.Player.
             if (world.Player.HasAllowedUnits())
             {
                 //Do nothing, because the world.Player can still act with a unit
@@ -723,6 +700,30 @@ namespace AdvancedWarsEngine
                 // Create the prompt to shows whos turn it is
                 CreateTurnPrompt();
 
+                // Check if the player is defeated
+                if (CheckDefeat(world.Player))
+                {
+                    CreateDefeatPrompt(true);
+                }
+
+
+                Player nextPlayer = world.Player.NextPlayer;
+                while (true)
+                {
+                    if (world.Player == nextPlayer)
+                    {
+                        CreateDefeatPrompt(false);
+                        break;
+                    }
+
+                    if (!nextPlayer.IsDefeated)
+                    {
+                        break;
+                    }
+
+                    nextPlayer = nextPlayer.NextPlayer;
+                }
+                
                 world.Player.AllowedAllToAct();
 
                 //Hide the tile indicator
@@ -751,9 +752,8 @@ namespace AdvancedWarsEngine
                         }
 
                         //Use two sprites to have an animation
-
                         string spriteNow;
-                        String spriteLast;
+                        string spriteLast;
                         switch (factoryNeedle.ProductionCooldown)
                         {
                             case 1:
@@ -832,15 +832,12 @@ namespace AdvancedWarsEngine
                 }
             }
 
-            /*
-             * Remove references in map to destroyed units
-             */
-
+            //Remove references in map to destroyed units
             for (int fromLeft = 0; fromLeft < world.Map.Tiles.GetLength(0); fromLeft += 1)
             {
                 for (int fromTop = 0; fromTop < world.Map.Tiles.GetLength(1); fromTop += 1)
                 {
-                    if(world.Map.GetTile(fromLeft,fromTop).OccupiedUnit != null &&
+                    if (world.Map.GetTile(fromLeft, fromTop).OccupiedUnit != null &&
                         world.Map.GetTile(fromLeft, fromTop).OccupiedUnit.destroyed
                     )
                     {
@@ -849,9 +846,7 @@ namespace AdvancedWarsEngine
                 }
             }
 
-             /*
-             * set destroyed on true for units
-             */
+            //Set destroyed on true for units
             foreach (GameObject gameObject in loopList)
             {
                 if (gameObject is Unit)
@@ -864,9 +859,7 @@ namespace AdvancedWarsEngine
                 }
             }
 
-            /*
-             * Destroy destroyed gameobjects.
-             */
+            //Destroy destroyed gameobjects.
             foreach (GameObject gameObject in loopList)
             {
                 if (gameObject.destroyed)
@@ -876,7 +869,7 @@ namespace AdvancedWarsEngine
                     {
                         for (int fromTop = 0; fromTop < world.Map.Tiles.GetLength(1); fromTop += 1)
                         {
-                            if(world.Map.GetTile(fromLeft,fromTop).OccupiedUnit != null &&
+                            if (world.Map.GetTile(fromLeft, fromTop).OccupiedUnit != null &&
                                 world.Map.GetTile(fromLeft, fromTop).OccupiedUnit == gameObject
                             )
                             {
@@ -895,7 +888,6 @@ namespace AdvancedWarsEngine
                         i--;
                     }
 
-
                     //If a gameObject is marked to be destroyed remove it from the list and remove them from the canvas
                     gameObjects.Remove(gameObject);
                     Application.Current.Dispatcher.Invoke(delegate
@@ -908,7 +900,6 @@ namespace AdvancedWarsEngine
             pressedKeys.Remove("LeftMouseButton");
         }
 
-
         /* 
         * Add the given key in the pressedKeys collection.
         * The argument is the given key represented as a string.
@@ -918,27 +909,21 @@ namespace AdvancedWarsEngine
             pressedKeys.Add(args.Key.ToString());
         }
 
-        /* 
-         * Remove the given key in the pressedKeys collection.
-         * The argument is the given key represented as a string.
-         */
+        /* Remove the given key in the pressedKeys collection.
+         * The argument is the given key represented as a string. */
         public new void KeyUp(object sender, KeyEventArgs args)
         {
             pressedKeys.Remove(args.Key.ToString());
         }
-        
-        /* 
-        * Add the left mouse button key in the pressedKeys collection.
-        */
+
+        // Add the left mouse button key in the pressedKeys collection.
         private new void MouseDown(object sender, MouseButtonEventArgs e)
         {
             pressedKeys.Add("LeftMouseButton");
         }
 
-        /* 
-         * Returns wheater the given key exists within the pressedKeys collection.
-         * The argument is the given key represented as a string.
-         */
+        /* Returns wheater the given key exists within the pressedKeys collection.
+         * The argument is the given key represented as a string. */
         public bool IsKeyPressed(string virtualKey)
         {
             return pressedKeys.Contains(virtualKey);
@@ -963,8 +948,10 @@ namespace AdvancedWarsEngine
                 spriteLocation = "Sprites/computerTurn.gif";
             }
 
+
+
             // Create the prompt and cast it to a prompt
-            GameObject turnGameObject = promptFactory.GetGameObject(spriteLocation, 50, 16, 0, 0);
+            GameObject turnGameObject = promptFactory.GetGameObject(spriteLocation, 50, 16, camera.GetTopOffSet(), camera.GetLeftOffSet());
             Prompt turnPrompt = turnGameObject as Prompt;
 
             // Give the prompt a maxDuration and set isUsingDuration on true
@@ -973,6 +960,72 @@ namespace AdvancedWarsEngine
 
             // Add the prompt to the gameObjects list
             gameObjects.Add(turnPrompt);
+        }
+
+        /// <summary>
+        /// Checks if the Player is defeated by checking if the player still has structures
+        /// </summary>
+        /// <param name="player"> The player of which the defeat is checked</param>
+        /// <returns> Returns if the player is defeated</returns>
+        private bool CheckDefeat(Player player)
+        {
+            // Checks if the player is already marked as defeated
+            if (player.IsDefeated)
+            {
+                return true;
+            }
+
+            // Get the list of gameObjects that the player has
+            List<GameObject> playersGameObjects = world.Player.GetGameObjects();
+
+            // Check if the player still has structures
+            bool hasStructures = false;
+            foreach (GameObject gameObject in playersGameObjects)
+            {
+                if (gameObject is Structure)
+                {
+                    hasStructures = true;
+                    break;
+                }
+            }
+
+            // If the player has no structues, mark the player as defeated
+            if (!hasStructures)
+            {
+                player.IsDefeated = true;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Creates victory of defeat prompts
+        /// </summary>
+        /// <param name="isDefeated"> If is defeated create defeat promps else create victory prompts</param>
+        private void CreateDefeatPrompt(bool isDefeated)
+        {
+            string spriteLocation = "";
+            if (isDefeated)
+            {
+                spriteLocation = "Sprites/defeat.gif";
+            }
+            else
+            {
+                spriteLocation = "Sprites/victory.gif";
+            }
+
+            // Create the defeat prompt
+            IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
+            GameObject defeat = promptFactory.GetGameObject(spriteLocation, 50, 16, camera.GetTopOffSet(), camera.GetLeftOffSet() + 60);
+            Prompt defeatPrompt = defeat as Prompt;
+
+            // Give the prompt a maxDuration and set isUsingDuration on true
+            defeatPrompt.MaxDuration = 4000;
+            defeatPrompt.IsUsingDuration = true;
+
+            // Add the prompt to the gameObjects list
+            gameObjects.Add(defeatPrompt);
         }
     }
 }
