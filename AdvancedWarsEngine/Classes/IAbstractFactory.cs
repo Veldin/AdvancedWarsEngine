@@ -2,6 +2,6 @@
 {
     interface IAbstractFactory
     {
-        GameObject GetGameObject(string value, float width, float height, float fromTop, float fromLeft);
+        GameObject GetGameObject(string type, float width, float height, float fromTop, float fromLeft, string value = "");
     }
 }

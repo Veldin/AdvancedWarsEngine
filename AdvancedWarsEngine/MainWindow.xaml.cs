@@ -171,8 +171,12 @@ namespace AdvancedWarsEngine
                                 {
                                     TestCanvas.Children.Add(textBlock);
                                 }
-                                //Move the prompt a little bit up
-                                prompt.FromTop -= 0.02f;
+
+                                // Move the prompt a little bit up if isAscending is true
+                                if (prompt.IsAscending)
+                                {
+                                    prompt.FromTop -= 0.02f;
+                                }
                             }
                             else
                             {
@@ -376,10 +380,9 @@ namespace AdvancedWarsEngine
                     //Create a promptFactory
                     IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
 
-                    //Get the Arrows as prompt
-                    List<GameObject> prompts = pathing.CreateArrows(start, end, selectedTile.OccupiedUnit, promptFactory, world.Map);
+                    // Get the Arrows as prompt
+                    List<GameObject> prompts = pathing.CreateArrows(start, end, selectedTile.OccupiedUnit, promptFactory, world.Player, world.Map);
 
-                    if (prompts != null)
                     {
                         //Add the prompts to the gameObjectsList
                         foreach (GameObject gameObject in prompts)
@@ -553,6 +556,34 @@ namespace AdvancedWarsEngine
 
                 //The turn of this world.Player has ended. Select the next world.Player, and allow all units to act
                 world.Player = world.Player.NextPlayer;
+
+                // Create the prompt to shows whos turn it is
+                CreateTurnPrompt();
+
+                // Check if the player is defeated
+                if (CheckDefeat(world.Player))
+                {
+                    CreateDefeatPrompt(true);
+                }
+
+
+                Player nextPlayer = world.Player.NextPlayer;
+                while (true)
+                {
+                    if (world.Player == nextPlayer)
+                    {
+                        CreateDefeatPrompt(false);
+                        break;
+                    }
+
+                    if (!nextPlayer.IsDefeated)
+                    {
+                        break;
+                    }
+
+                    nextPlayer = nextPlayer.NextPlayer;
+                }
+                
                 world.Player.AllowedAllToAct();
 
                 //Hide the tile indicator
@@ -739,6 +770,105 @@ namespace AdvancedWarsEngine
         public bool IsKeyPressed(string virtualKey)
         {
             return pressedKeys.Contains(virtualKey);
+        }
+
+        /// <summary>
+        /// This function creates a prompt that shows whos turn it is
+        /// </summary>
+        private void CreateTurnPrompt()
+        {
+            // Create a promptFactory
+            IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
+
+            // Get the correct sprite location
+            string spriteLocation;
+            if (world.Player.IsControllable)
+            {
+                spriteLocation = "Sprites/playerTurn.gif";
+            }
+            else
+            {
+                spriteLocation = "Sprites/computerTurn.gif";
+            }
+
+
+
+            // Create the prompt and cast it to a prompt
+            GameObject turnGameObject = promptFactory.GetGameObject(spriteLocation, 50, 16, camera.GetTopOffSet(), camera.GetLeftOffSet());
+            Prompt turnPrompt = turnGameObject as Prompt;
+
+            // Give the prompt a maxDuration and set isUsingDuration on true
+            turnPrompt.MaxDuration = 4000;
+            turnPrompt.IsUsingDuration = true;
+
+            // Add the prompt to the gameObjects list
+            gameObjects.Add(turnPrompt);
+        }
+
+        /// <summary>
+        /// Checks if the Player is defeated by checking if the player still has structures
+        /// </summary>
+        /// <param name="player"> The player of which the defeat is checked</param>
+        /// <returns> Returns if the player is defeated</returns>
+        private bool CheckDefeat(Player player)
+        {
+            // Checks if the player is already marked as defeated
+            if (player.IsDefeated)
+            {
+                return true;
+            }
+
+            // Get the list of gameObjects that the player has
+            List<GameObject> playersGameObjects = world.Player.GetGameObjects();
+
+            // Check if the player still has structures
+            bool hasStructures = false;
+            foreach (GameObject gameObject in playersGameObjects)
+            {
+                if (gameObject is Structure)
+                {
+                    hasStructures = true;
+                    break;
+                }
+            }
+
+            // If the player has no structues, mark the player as defeated
+            if (!hasStructures)
+            {
+                player.IsDefeated = true;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Creates victory of defeat prompts
+        /// </summary>
+        /// <param name="isDefeated"> If is defeated create defeat promps else create victory prompts</param>
+        private void CreateDefeatPrompt(bool isDefeated)
+        {
+            string spriteLocation = "";
+            if (isDefeated)
+            {
+                spriteLocation = "Sprites/defeat.gif";
+            }
+            else
+            {
+                spriteLocation = "Sprites/victory.gif";
+            }
+
+            // Create the defeat prompt
+            IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
+            GameObject defeat = promptFactory.GetGameObject(spriteLocation, 50, 16, camera.GetTopOffSet(), camera.GetLeftOffSet() + 60);
+            Prompt defeatPrompt = defeat as Prompt;
+
+            // Give the prompt a maxDuration and set isUsingDuration on true
+            defeatPrompt.MaxDuration = 4000;
+            defeatPrompt.IsUsingDuration = true;
+
+            // Add the prompt to the gameObjects list
+            gameObjects.Add(defeatPrompt);
         }
     }
 }

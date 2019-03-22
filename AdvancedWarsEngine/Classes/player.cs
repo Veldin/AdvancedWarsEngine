@@ -7,6 +7,7 @@ namespace AdvancedWarsEngine.Classes
         private bool isControllable;                      // Checks if this player can be controlled by an actual person
         private List<GameObject> gameObjects;               // All the gameObject that are owned by this player
         private Player nextPlayer;                        // This is the who gets the turn when this players turn ends
+        private bool isDefeated;                            // Checks if the players is already defeated
 
         //Holds the selected unit.
         private Unit selectedUnit;                        //Holds the currently selected unit
@@ -17,6 +18,7 @@ namespace AdvancedWarsEngine.Classes
         public Player(bool isControllable = false, string colour = "green")
         {
             this.isControllable = isControllable;
+            isDefeated = false;
             this.colour = colour;
             gameObjects = new List<GameObject>();
         }
@@ -25,6 +27,12 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return isControllable; }
             set { isControllable = value; }
+        }
+
+        public bool IsDefeated
+        {
+            get { return isDefeated; }
+            set { isDefeated = value; }
         }
 
         public Unit SelectedUnit
