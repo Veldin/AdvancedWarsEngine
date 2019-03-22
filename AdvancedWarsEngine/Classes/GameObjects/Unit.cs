@@ -55,6 +55,12 @@ namespace AdvancedWarsEngine.Classes
                 // Calculate the damageValue
                 float damageValue = attackBehavior.Attack(this, unit) - unit.Defence(tile);
 
+                // Make sure the Unit doesn't heal
+                if (damageValue < 0)
+                {
+                    damageValue = 0;
+                }
+
                 // Deal the damage to the enemy unit by decreasing it's health
                 unit.AddHealth(-damageValue);
 
