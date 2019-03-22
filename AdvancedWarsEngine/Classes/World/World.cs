@@ -36,13 +36,13 @@ namespace AdvancedWarsEngine.Classes
                     IAbstractFactory factory = factoryProducer.GetFactory("UnitFactory");
 
                     //Adding the units to the first player
-                    Unit testUnit = (Unit)factory.GetGameObject("AA_Infantry", 16, 16, 0, 0);
+                    Unit testUnit = (Unit)factory.GetGameObject("AA_Infantry", 16, 16, 0, 0, firstPlayer.Colour);
                     testUnit.Target = new Target(6 * 16, 9 * 16);
                     map.GetTile(6, 9).OccupiedUnit = testUnit;
                     firstPlayer.AddGameObject(testUnit);
 
                     //Adding the units to the first player
-                    Unit testUnit2 = (Unit)factory.GetGameObject("AI_Vehicle", 16, 16, 32, 32);
+                    Unit testUnit2 = (Unit)factory.GetGameObject("AI_Vehicle", 16, 16, 32, 32, secondPlayer.Colour);
                     testUnit2.Target = new Target(7 * 16, 9 * 16);
                     map.GetTile(7, 9).OccupiedUnit = testUnit2;
                     secondPlayer.AddGameObject(testUnit2); 
@@ -50,7 +50,7 @@ namespace AdvancedWarsEngine.Classes
                     //Change factory to produce structures
                     factory = factoryProducer.GetFactory("StructureFactory");
 
-                    Structure structure = (Structure)factory.GetGameObject("Barracks", 16, 16, 9 * 16, 9 * 16);
+                    Structure structure = (Structure)factory.GetGameObject("Barracks", 16, 16, 9 * 16, 9 * 16, firstPlayer.Colour);
                     map.GetTile(9, 9).OccupiedStructure = structure;
                     firstPlayer.AddGameObject(structure);
 
