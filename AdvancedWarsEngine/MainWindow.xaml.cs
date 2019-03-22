@@ -94,7 +94,7 @@ namespace AdvancedWarsEngine
             //world.Player.AllowedAllToAct();
 
             // Create a Pathing class
-            pathing = new Pathing(world.Map);
+            pathing = new Pathing();
 
             RunAsync();
         }
@@ -421,7 +421,7 @@ namespace AdvancedWarsEngine
                         IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
 
                         // Get the Arrows as prompt
-                        List<GameObject> prompts = pathing.CreateArrows(start, end, selectedTile.OccupiedUnit, promptFactory);
+                        List<GameObject> prompts = pathing.CreateArrows(start, end, selectedTile.OccupiedUnit, promptFactory, world.Map);
 
                         if (prompts != null)
                         {
@@ -480,7 +480,7 @@ namespace AdvancedWarsEngine
                         IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
 
                         // Get the Arrows as prompt
-                        List<GameObject> colorOverlay = pathing.SetColorOverlay(world.Player.SelectedUnit, start, promptFactory, world.Player);
+                        List<GameObject> colorOverlay = pathing.SetColorOverlay(world.Player.SelectedUnit, start, promptFactory, world.Player, world.Map);
 
                         // Add the prompts to the gameObjectsList
                         foreach (GameObject gameObject in colorOverlay)
