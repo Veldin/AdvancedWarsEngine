@@ -345,7 +345,7 @@ namespace AdvancedWarsEngine.Classes
         /// <param name="end"> The Target of the destination of the Unit</param>
         /// <param name="unit"> The Unit wherefore the path is created</param>
         /// <returns> Returns a list of Tiles which is the shortes way to get from A to B</returns>
-        private List<Tile> GetPath(Target start, Target end, Unit unit, Map map, Player player)
+        public List<Tile> GetPath(Target start, Target end, Unit unit, Map map, Player player)
         {
             // Clear the previous made paths
             paths.Clear();

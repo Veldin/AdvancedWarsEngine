@@ -551,50 +551,7 @@ namespace AdvancedWarsEngine
                     {
                         if (world.Player.SelectedUnit != null) //Current world.Player has a unit selected
                         {
-
-                            //Check if the selected unit is allowed to act and if it can target
-                            if (
-                                world.Player.SelectedUnit.CanTarget(world.Player.SelectedUnit.Target.GetFromLeft() / 16, world.Player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop)
-                                && world.Player.SelectedUnit.IsAllowedToAct
-                            )
-                            {
-
-                                world.Player.SelectedUnit.IsAllowedToAct = false;
-
-                                lock (world.Map.Tiles)
-                                {
-                                    //If you can move, remove the reference to the tile the unit is in now
-                                    for (int fromLeft = 0; fromLeft < world.Map.Tiles.GetLength(0); fromLeft += 1)
-                                    {
-                                        for (int fromTop = 0; fromTop < world.Map.Tiles.GetLength(1); fromTop += 1)
-                                        {
-                                            lock (world.Player.SelectedUnit)
-                                            {
-                                                if(world.Map.GetTile(fromLeft,fromTop).OccupiedUnit != null &&
-                                                    world.Map.GetTile(fromLeft, fromTop).OccupiedUnit == world.Player.SelectedUnit
-                                                )
-                                                {
-                                                    world.Map.GetTile(fromLeft, fromTop).OccupiedUnit = null;
-                                            
-                                                    fromLeft = world.Map.Tiles.GetLength(0);    //Get out of the outer loop
-                                                    break;                                      //Get out of the inner loop
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    //Put the unit in the new tile
-                                    pressedOnTile.OccupiedUnit = world.Player.SelectedUnit;
-                                    world.Player.SelectedUnit.Target = new Target(selectedFromTop * 16, selectedFromLeft * 16);
-
-                                    world.Player.SelectedUnit.IsAllowedToAct = false;
-                                }
-                                Debug.WriteLine("In range");
-                            }
-                            else
-                            {
-                                Debug.WriteLine("Out of range");
-                            }
+                            Move();
                         }
                         else
                         {
@@ -953,6 +910,56 @@ namespace AdvancedWarsEngine
 
             // Add the prompt to the gameObjects list
             gameObjects.Add(defeatPrompt);
+        }
+
+        /// <summary>
+        /// This function moves the selected Unit to the crosshair if allowed
+        /// </summary>
+        /// <returns> Returns if the move was succesfull</returns>
+        private bool Move()
+        {
+            //Check if the selected unit is allowed to act and if it can target
+            if (world.Player.SelectedUnit.IsAllowedToAct)
+            {
+                // Set the target in tiles
+                Target tmp = new Target(world.Player.SelectedUnit.Target.GetFromTop() / 16, world.Player.SelectedUnit.Target.GetFromLeft() / 16);
+
+                Target pressedTileTarget = new Target(crosshair.FromTop / 16, crosshair.FromLeft / 16);
+                Tile pressedTile = world.Map.GetTile((int)pressedTileTarget.GetFromTop(), (int)pressedTileTarget.GetFromLeft());
+
+                // Get the path
+                List<Tile> path = pathing.GetPath(tmp, pressedTileTarget, world.Player.SelectedUnit, world.Map, world.Player);
+
+                // If the path is null the target is not allowed 
+                if (path == null)
+                {
+                    return false;
+                }
+
+                // Get the map from world
+                Map map = world.Map;
+                
+                // Remember the old tile
+                Tile oldTile = map.GetTile((int)world.Player.SelectedUnit.Target.GetFromTop() / 16, (int)world.Player.SelectedUnit.Target.GetFromLeft() / 16);    
+
+                // Remove unit form the old tile and set it on the new tile
+                Tile newTile = path[path.Count -1];
+                oldTile.OccupiedUnit = null;
+                newTile.OccupiedUnit = world.Player.SelectedUnit;
+
+                // Get the new target in units
+                Target newTargetInTiles = map.GetTileCoords(newTile);
+                Target newTarget = new Target(newTargetInTiles.GetFromTop() * 16, newTargetInTiles.GetFromLeft() * 16);
+
+                // Give the Unit the new target
+                world.Player.SelectedUnit.Target = newTarget;
+
+                // Set allowedToAct on false because it has moved
+                world.Player.SelectedUnit.IsAllowedToAct = false;
+
+                return true;
+            }
+            return false;
         }
     }
 }
