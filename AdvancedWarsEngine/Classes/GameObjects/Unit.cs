@@ -23,12 +23,11 @@ namespace AdvancedWarsEngine.Classes
         public Unit(float width, float height, float fromTop, float fromLeft, string sprite, IRangeBehavior rangeBehavior, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior, ITileBehavior tileBehavior, EUnitType unitType)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            this.rangeBehavior      = rangeBehavior;
-            this.attackBehavior     = attackBehavior;
-            this.defenceBehavior    = defenceBehavior;
-            this.tileBehavior       = tileBehavior;
-            this.unitType           = unitType;
-
+            this.rangeBehavior = rangeBehavior;
+            this.attackBehavior = attackBehavior;
+            this.defenceBehavior = defenceBehavior;
+            this.tileBehavior = tileBehavior;
+            this.unitType = unitType;
         }
 
         /**********************************************************************
