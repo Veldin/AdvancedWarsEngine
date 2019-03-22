@@ -53,10 +53,33 @@ namespace AdvancedWarsEngine.Classes
             gameObjects.Add(gameObject);
         }
 
+        // Returns the whole list gameObjects
         public List<GameObject> GetGameObjects()
         {
-            // Returns the whole list gameObjects
+            List<GameObject> gameObjects = new List<GameObject>();
+
+
+
             return gameObjects;
+        }
+
+        /* 
+        * Returns all the structures in the gameObject list
+        * Optional argument to only return structures of a certain player
+        */
+        public List<Structure> GetStructures()
+        {
+            List<Structure> list = new List<Structure>();
+
+            foreach (GameObject gameObject in gameObjects)
+            {
+                if (gameObject is Structure)
+                {
+                    list.Add(gameObject as Structure);
+                }
+            }
+
+            return list;
         }
 
         public void AllowedAllToAct()

@@ -51,6 +51,7 @@ namespace AdvancedWarsEngine.Classes
                     factory = factoryProducer.GetFactory("StructureFactory");
 
                     Structure structure = (Structure)factory.GetGameObject("Barracks", 16, 16, 9 * 16, 9 * 16, firstPlayer.Colour);
+                    structure.Target = new Target(9 * 16, 9 * 16);
                     map.GetTile(9, 9).OccupiedStructure = structure;
                     firstPlayer.AddGameObject(structure);
 

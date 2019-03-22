@@ -25,6 +25,16 @@
             get { return produceBehavior; }
         }
 
+
+        public string getProduced()
+        {
+            if (produceBehavior == null)
+            {
+                return null;
+            }
+            return produceBehavior.Produce();
+        }
+
         public void AddCapturePoints(float value)
         {
             // Decrease the capturePoints by the given value
