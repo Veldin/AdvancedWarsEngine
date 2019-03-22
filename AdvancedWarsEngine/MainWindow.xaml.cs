@@ -51,8 +51,8 @@ namespace AdvancedWarsEngine
 
             InitializeComponent();
             
-            WindowState = WindowState.Normal;
-            WindowStyle = WindowStyle.None;
+            //WindowState = WindowState.Maximized;
+            //WindowStyle = WindowStyle.None;
 
             //Bind the keyup/down to the window's keyup/down
             GetWindow(this).KeyUp += KeyUp;
@@ -90,9 +90,6 @@ namespace AdvancedWarsEngine
             interval = 1000 / fps;
             then = Stopwatch.GetTimestamp();
 
-            //Allow the world.Player's gameobject to act
-            //world.Player.AllowedAllToAct();
-
             // Create a Pathing class
             pathing = new Pathing();
 
@@ -116,6 +113,242 @@ namespace AdvancedWarsEngine
 
             //Task.Yield();  //Force this task to complete asynchronously (This way the main thread is not blocked by this task calling itself.
             Task.Run(() => RunAsync());  //Schedule new Run() task
+        }
+
+        private void DrawUnits(ArrayList loopList)
+        {
+            foreach (GameObject gameObject in loopList)
+            {
+                if (gameObject is Unit)
+                {
+                    Rectangle rect = gameObject.rectangle;
+
+                    rect.Width = gameObject.Width;
+                    rect.Height = gameObject.Height;
+
+                    Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                    if (Double.IsNaN(gameObject.FromLeft) || Double.IsNaN(gameObject.FromTop))
+                    {
+
+                        if (gameObject.Target != null)
+                        {
+                            gameObject.FromLeft = gameObject.Target.GetFromLeft();
+                        }
+                        else
+                        {
+                            gameObject.FromLeft = 0;
+                        }
+
+                        if (gameObject.Target != null)
+                        {
+                            gameObject.FromTop = gameObject.Target.GetFromLeft();
+                        }
+                        else
+                        {
+                            gameObject.FromTop = 0;
+                        }
+
+
+                    }
+
+                    Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                    //Draw the rect if the rect isnt in yet
+                    if (!TestCanvas.Children.Contains(rect))
+                    {
+                        TestCanvas.Children.Add(rect);
+                    }
+                }
+            }
+        }
+
+        private void DrawStructures(ArrayList loopList)
+        {
+            foreach (GameObject gameObject in loopList)
+            {
+                if (gameObject is Structure)
+                {
+                    Rectangle rect = gameObject.rectangle;
+
+                    rect.Width = gameObject.Width;
+                    rect.Height = gameObject.Height;
+
+                    Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                    if (Double.IsNaN(gameObject.FromLeft) || Double.IsNaN(gameObject.FromTop))
+                    {
+
+                        if (gameObject.Target != null)
+                        {
+                            gameObject.FromLeft = gameObject.Target.GetFromLeft();
+                        }
+                        else
+                        {
+                            gameObject.FromLeft = 0;
+                        }
+
+                        if (gameObject.Target != null)
+                        {
+                            gameObject.FromTop = gameObject.Target.GetFromLeft();
+                        }
+                        else
+                        {
+                            gameObject.FromTop = 0;
+                        }
+
+
+                    }
+
+                    Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                    //Draw the rect if the rect isnt in yet
+                    if (!TestCanvas.Children.Contains(rect))
+                    {
+                        TestCanvas.Children.Add(rect);
+                    }
+                }
+            }
+        }
+
+        private void DrawCursor(ArrayList loopList)
+        {
+            foreach (GameObject gameObject in loopList)
+            {
+                if (gameObject is Cursor)
+                {
+                    Rectangle rect = gameObject.rectangle;
+
+                    rect.Width = gameObject.Width;
+                    rect.Height = gameObject.Height;
+
+                    Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                    if (Double.IsNaN(gameObject.FromLeft) || Double.IsNaN(gameObject.FromTop))
+                    {
+
+                        if (gameObject.Target != null)
+                        {
+                            gameObject.FromLeft = gameObject.Target.GetFromLeft();
+                        }
+                        else
+                        {
+                            gameObject.FromLeft = 0;
+                        }
+
+                        if (gameObject.Target != null)
+                        {
+                            gameObject.FromTop = gameObject.Target.GetFromLeft();
+                        }
+                        else
+                        {
+                            gameObject.FromTop = 0;
+                        }
+
+
+                    }
+
+                    Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                    //Draw the rect if the rect isnt in yet
+                    if (!TestCanvas.Children.Contains(rect))
+                    {
+                        TestCanvas.Children.Add(rect);
+                    }
+                }
+            }
+        }
+
+        private void DrawPrompts(ArrayList loopList)
+        {
+            //Draw the gameobjects in the loop list exept for the Prompts
+            foreach (GameObject gameObject in loopList)
+            {
+                // Don't draw the prompts just yet. These will be drawn later so it's on top of other gameObjects
+                if (gameObject is Prompt)
+                {
+                    // Cast the gameObject to a Prompt
+                    Prompt prompt = gameObject as Prompt;
+
+                    // Checks if the prompt has a TextBlock
+                    if (prompt.TextBlock != null)
+                    {
+                        // Get the textBlock from the prompt
+                        TextBlock textBlock = prompt.TextBlock;
+
+                        // Set the width and the height of the textBlock
+                        textBlock.Width = gameObject.Width;
+                        textBlock.Height = gameObject.Height;
+
+                        Canvas.SetLeft(textBlock, gameObject.FromLeft + camera.GetLeftOffSet());
+                        Canvas.SetTop(textBlock, gameObject.FromTop + camera.GetTopOffSet());
+
+                        if (!TestCanvas.Children.Contains(textBlock))
+                        {
+                            TestCanvas.Children.Add(textBlock);
+                        }
+
+                        // Move the prompt a little bit up if isAscending is true
+                        if (prompt.IsAscending)
+                        {
+                            prompt.FromTop -= 0.02f;
+                        }
+
+                    }
+                    else
+                    {
+                        Rectangle rect = gameObject.rectangle;
+
+                        rect.Width = gameObject.Width;
+                        rect.Height = gameObject.Height;
+
+
+                        Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                        Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                        if (Double.IsNaN(gameObject.FromLeft) || Double.IsNaN(gameObject.FromTop))
+                        {
+
+                            if (gameObject.Target != null)
+                            {
+                                gameObject.FromLeft = gameObject.Target.GetFromLeft();
+                            }
+                            else
+                            {
+                                gameObject.FromLeft = 0;
+                            }
+
+                            if (gameObject.Target != null)
+                            {
+                                gameObject.FromTop = gameObject.Target.GetFromLeft();
+                            }
+                            else
+                            {
+                                gameObject.FromTop = 0;
+                            }
+
+
+                        }
+
+                        Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                        Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+
+                        //Draw the rect if the rect isnt in yet
+                        if (!TestCanvas.Children.Contains(rect))
+                        {
+                            TestCanvas.Children.Add(rect);
+                        }
+                    }
+
+                    prompt.IncreaseCurrentDuration(delta);
+                }
+            }
         }
 
         private void Draw()
@@ -159,148 +392,14 @@ namespace AdvancedWarsEngine
                     }
 
                     //Draw the gameobjects in the loop list exept for the Prompts
-                    foreach (GameObject gameObject in loopList)
-                    {
+                    DrawStructures(loopList);
+                    DrawUnits(loopList);
+                    DrawPrompts(loopList);
+
+                    DrawCursor(loopList);
 
 
-                        // Don't draw the prompts just yet. These will be drawn later so it's on top of other gameObjects
-                        if (gameObject is Prompt)
-                        {
-                            // Cast the gameObject to a Prompt
-                            Prompt prompt = gameObject as Prompt;
 
-                            // Checks if the prompt has a TextBlock
-                            if (prompt.TextBlock != null)
-                            {
-                                // Get the textBlock from the prompt
-                                TextBlock textBlock = prompt.TextBlock;
-
-                                // Set the width and the height of the textBlock
-                                textBlock.Width = gameObject.Width;
-                                textBlock.Height = gameObject.Height;
-
-                                Canvas.SetLeft(textBlock, gameObject.FromLeft + camera.GetLeftOffSet());
-                                Canvas.SetTop(textBlock, gameObject.FromTop + camera.GetTopOffSet());
-
-                                if (!TestCanvas.Children.Contains(textBlock))
-                                {
-                                    TestCanvas.Children.Add(textBlock);
-                                }
-
-                                // Move the prompt a little bit up if isAscending is true
-                                if (prompt.IsAscending)
-                                {                               
-                                    prompt.FromTop -= 0.02f;
-                                }
-                                
-                            }
-                            else
-                            {
-                                Rectangle rect = gameObject.rectangle;
-
-                                rect.Width = gameObject.Width;
-                                rect.Height = gameObject.Height;
-
-
-                                Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                                Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
-
-                                if (Double.IsNaN(gameObject.FromLeft) || Double.IsNaN(gameObject.FromTop))
-                                {
-
-                                    if (gameObject.Target != null)
-                                    {
-                                        gameObject.FromLeft = gameObject.Target.GetFromLeft();
-                                    }
-                                    else
-                                    {
-                                        gameObject.FromLeft = 0;
-                                    }
-
-                                    if (gameObject.Target != null)
-                                    {
-                                        gameObject.FromTop = gameObject.Target.GetFromLeft();
-                                    }
-                                    else
-                                    {
-                                        gameObject.FromTop = 0;
-                                    }
-
-
-                                    foreach (GameObject gameObject2 in loopList)
-                                    {
-                                        Debug.WriteLine("lel");
-                                        Debug.WriteLine(loopList.Count);
-                                        Debug.WriteLine(gameObject2);
-                                    }
-
-                                }
-
-                                Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                                Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
-
-                                //Draw the rect if the rect isnt in yet
-                                if (!TestCanvas.Children.Contains(rect))
-                                {
-                                    TestCanvas.Children.Add(rect);
-                                }
-                            }
-
-                            prompt.IncreaseCurrentDuration(delta);
-                        }
-                        else //gameobject is not a prompt
-                        {
-                            Rectangle rect = gameObject.rectangle;
-
-                            rect.Width = gameObject.Width;
-                            rect.Height = gameObject.Height;
-
-                            Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                            Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
-
-                            if (Double.IsNaN(gameObject.FromLeft) || Double.IsNaN(gameObject.FromTop))
-                            {
-
-                                if (gameObject.Target != null)
-                                {
-                                    gameObject.FromLeft = gameObject.Target.GetFromLeft();
-                                }
-                                else
-                                {
-                                    gameObject.FromLeft = 0;
-                                }
-
-                                if (gameObject.Target != null)
-                                {
-                                    gameObject.FromTop = gameObject.Target.GetFromLeft();
-                                }
-                                else
-                                {
-                                    gameObject.FromTop = 0;
-                                }
-
-
-                                foreach (GameObject gameObject2 in loopList)
-                                {
-                                    Debug.WriteLine("lel");
-                                    Debug.WriteLine(loopList.Count);
-                                    Debug.WriteLine(gameObject2);
-                                }
-
-                            }
-
-                            Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                            Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
-
-                            //Draw the rect if the rect isnt in yet
-                            if (!TestCanvas.Children.Contains(rect))
-                            {
-                                TestCanvas.Children.Add(rect);
-                            }
-                        }
-
-                        
-                    }
                 });
             }
             catch
@@ -621,8 +720,6 @@ namespace AdvancedWarsEngine
                 //The turn of this world.Player has ended. Select the next world.Player, and allow all units to act
                 world.Player = world.Player.NextPlayer;
 
-                Debug.WriteLine(world.Player.Colour);
-
                 // Create the prompt to shows whos turn it is
                 CreateTurnPrompt();
 
@@ -641,9 +738,9 @@ namespace AdvancedWarsEngine
                     selectedTileIndicator.FromTop = -99999;
                 }
 
-
                 //Check all structures and reduce the production cooldown.
-                foreach (GameObject gameObject in world.Player.GetGameObjects())
+                List<Structure> GetStructures = world.Player.GetStructures();
+                foreach (GameObject gameObject in GetStructures)
                 {
                     if (gameObject is Structure)
                     {
@@ -710,9 +807,22 @@ namespace AdvancedWarsEngine
                         gameObjects.Add(timerNow);
                         gameObjects.Add(timerLast);
 
-
                         if (factoryNeedle.ProductionCooldown == 0)
                         {
+                            Tile tileOfFactory = world.Map.GetTileFromGameobject(factoryNeedle);
+                            if (tileOfFactory != null && tileOfFactory.OccupiedUnit == null)
+                            {
+                                factory = factoryProducer.GetFactory("UnitFactory");
+                                GameObject spawn = factory.GetGameObject(factoryNeedle.getProduced(), 16, 16, factoryNeedle.FromTop, factoryNeedle.FromLeft, world.Player.Colour);
+
+                                spawn.Target = new Target(factoryNeedle.Target.GetFromLeft(), factoryNeedle.Target.GetFromTop());
+
+                                tileOfFactory.OccupiedUnit = spawn as Unit;
+
+                                gameObjects.Add(spawn as GameObject);
+                                world.Player.AddGameObject(spawn);
+                            }
+
                             factoryNeedle.ProductionCooldown = 8;
                         }
 
@@ -797,7 +907,8 @@ namespace AdvancedWarsEngine
             //Unpres the left mouse button (As there is no event that fires the mouse up)
             pressedKeys.Remove("LeftMouseButton");
         }
-        
+
+
         /* 
         * Add the given key in the pressedKeys collection.
         * The argument is the given key represented as a string.
