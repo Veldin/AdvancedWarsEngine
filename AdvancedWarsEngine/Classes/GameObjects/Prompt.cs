@@ -11,6 +11,7 @@ namespace AdvancedWarsEngine.Classes
         private float currentDuration;
         protected TextBlock textBlock;
         protected bool isUsingDuration;
+        protected bool isAscending;
 
         public Prompt(float width, float height, float fromTop, float fromLeft, string text, float maxDuration)
             : base(width, height, fromTop, fromLeft)
@@ -19,6 +20,7 @@ namespace AdvancedWarsEngine.Classes
             isUsingDuration = true;
             this.maxDuration = maxDuration;
             currentDuration = 0;
+            isAscending = true;
 
             // Create the brushes for the text and background
             SolidColorBrush backgroundBrush = new SolidColorBrush(Colors.Transparent);
@@ -43,6 +45,7 @@ namespace AdvancedWarsEngine.Classes
         {
             currentDuration = 0;
             isUsingDuration = false;
+            isAscending = false;
         }
 
         public void IncreaseCurrentDuration(float time)
@@ -82,6 +85,12 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return isUsingDuration; }
             set { isUsingDuration = value; }
+        }
+
+        public bool IsAscending
+        {
+            get { return isAscending; }
+            set { isAscending = value; }
         }
     }
 }

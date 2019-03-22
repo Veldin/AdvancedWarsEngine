@@ -61,7 +61,7 @@ namespace AdvancedWarsEngine.Classes
         {
             // Create the pathes necessary for this function
             Target end = new Target(0, 0);
-            CreatePaths(unitLocation, end, unit, map);
+            CreatePaths(unitLocation, end, unit, map, player);
 
             // Clear the list paths because it is not necessary for this function and breaks other functions if not cleared
             paths.Clear();
@@ -129,10 +129,10 @@ namespace AdvancedWarsEngine.Classes
         /// <param name="unit"> The Unit wherefore the arrows are created</param>
         /// <param name="promptFactory"> The factory that creates the prompts </param>
         /// <returns> Returns a list of prompts which are the arrow images</returns>
-        public List<GameObject> CreateArrows( Target start, Target end, Unit unit, IAbstractFactory promptFactory, Map map)
+        public List<GameObject> CreateArrows( Target start, Target end, Unit unit, IAbstractFactory promptFactory, Player player, Map map)
         {
             // Get the path
-            List<Tile> path = GetPath(start, end, unit, map);
+            List<Tile> path = GetPath(start, end, unit, map, player);
 
             // If there is no path found return
             if (path == null) { return null; }
@@ -252,7 +252,7 @@ namespace AdvancedWarsEngine.Classes
         /// <param name="end"> The Target of the destination of the Unit</param>
         /// <param name="unit"> The Unit wherefore the path is created</param>
         /// <param name="path"> A list used for the recursive function to track it's path</param>
-        private void CreatePaths(Target start, Target end, Unit unit, Map map, List<Tile> path = null)
+        private void CreatePaths(Target start, Target end, Unit unit, Map map, Player player, List<Tile> path = null)
         {
             // Get the x and y value of the start Target
             int x = (int) (start.GetFromLeft() );
@@ -286,6 +286,15 @@ namespace AdvancedWarsEngine.Classes
                 if (!allowedTiles.Contains(tile))
                 {
                     allowedTiles.Add(tile);
+                }
+
+                // If there is a Unit on the tile which the player doesn't own, continue.
+                if (tile.OccupiedUnit != null)
+                {
+                    if (!player.InGameObjects(tile.OccupiedUnit))
+                    {
+                        continue;
+                    }
                 }
 
                 // Add a new tmpPath
@@ -323,7 +332,7 @@ namespace AdvancedWarsEngine.Classes
                 } // Find the next tile in the possible path
                 else
                 {
-                    CreatePaths(tileTarget, end, unit, map, tmpPath);
+                    CreatePaths(tileTarget, end, unit, map, player, tmpPath);
                 }
             }
         }
@@ -336,13 +345,13 @@ namespace AdvancedWarsEngine.Classes
         /// <param name="end"> The Target of the destination of the Unit</param>
         /// <param name="unit"> The Unit wherefore the path is created</param>
         /// <returns> Returns a list of Tiles which is the shortes way to get from A to B</returns>
-        private List<Tile> GetPath(Target start, Target end, Unit unit, Map map)
+        private List<Tile> GetPath(Target start, Target end, Unit unit, Map map, Player player)
         {
             // Clear the previous made paths
             paths.Clear();
 
             // Create the pathes
-            CreatePaths(start, end, unit, map, null);
+            CreatePaths(start, end, unit, map, player, null);
 
             // Set some variables
             int tilesDistance = -1;

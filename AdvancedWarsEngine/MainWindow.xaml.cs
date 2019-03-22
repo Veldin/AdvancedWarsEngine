@@ -51,7 +51,7 @@ namespace AdvancedWarsEngine
 
             InitializeComponent();
             
-            WindowState = WindowState.Maximized;
+            WindowState = WindowState.Normal;
             WindowStyle = WindowStyle.None;
 
             //Bind the keyup/down to the window's keyup/down
@@ -186,8 +186,13 @@ namespace AdvancedWarsEngine
                                 {
                                     TestCanvas.Children.Add(textBlock);
                                 }
-                                // Move the prompt a little bit up
-                                prompt.FromTop -= 0.02f;
+
+                                // Move the prompt a little bit up if isAscending is true
+                                if (prompt.IsAscending)
+                                {                               
+                                    prompt.FromTop -= 0.02f;
+                                }
+                                
                             }
                             else
                             {
@@ -421,7 +426,7 @@ namespace AdvancedWarsEngine
                         IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
 
                         // Get the Arrows as prompt
-                        List<GameObject> prompts = pathing.CreateArrows(start, end, selectedTile.OccupiedUnit, promptFactory, world.Map);
+                        List<GameObject> prompts = pathing.CreateArrows(start, end, selectedTile.OccupiedUnit, promptFactory, world.Player, world.Map);
 
                         if (prompts != null)
                         {
@@ -617,6 +622,9 @@ namespace AdvancedWarsEngine
                 world.Player = world.Player.NextPlayer;
 
                 Debug.WriteLine(world.Player.Colour);
+
+                // Create the prompt to shows whos turn it is
+                CreateTurnPrompt();
 
                 world.Player.AllowedAllToAct();
 
@@ -823,6 +831,37 @@ namespace AdvancedWarsEngine
         public bool IsKeyPressed(string virtualKey)
         {
             return pressedKeys.Contains(virtualKey);
+        }
+
+        /// <summary>
+        /// This function creates a prompt that shows whos turn it is
+        /// </summary>
+        private void CreateTurnPrompt()
+        {
+            // Create a promptFactory
+            IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
+
+            // Get the correct sprite location
+            string spriteLocation;
+            if (world.Player.IsControllable)
+            {
+                spriteLocation = "Sprites/playerTurn.gif";
+            }
+            else
+            {
+                spriteLocation = "Sprites/computerTurn.gif";
+            }
+
+            // Create the prompt and cast it to a prompt
+            GameObject turnGameObject = promptFactory.GetGameObject(spriteLocation, 50, 16, 0, 0);
+            Prompt turnPrompt = turnGameObject as Prompt;
+
+            // Give the prompt a maxDuration and set isUsingDuration on true
+            turnPrompt.MaxDuration = 4000;
+            turnPrompt.IsUsingDuration = true;
+
+            // Add the prompt to the gameObjects list
+            gameObjects.Add(turnPrompt);
         }
     }
 }
