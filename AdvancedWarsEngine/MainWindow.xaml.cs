@@ -831,6 +831,13 @@ namespace AdvancedWarsEngine
                             {
                                 world.Map.GetTile(fromLeft, fromTop).OccupiedUnit = null;
                             }
+
+                            if (world.Map.GetTile(fromLeft, fromTop).OccupiedStructure != null &&
+                                world.Map.GetTile(fromLeft, fromTop).OccupiedStructure == gameObject
+                            )
+                            {
+                                world.Map.GetTile(fromLeft, fromTop).OccupiedStructure = null;
+                            }
                         }
                     }
 
