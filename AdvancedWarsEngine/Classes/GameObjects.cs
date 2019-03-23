@@ -77,7 +77,10 @@ namespace AdvancedWarsEngine.Classes
         {
             foreach (GameObject gameObject in gameObjects)
             {
-                gameObject.OnTick(gameObjects, delta);
+                if (!(gameObject is null))
+                {
+                    gameObject.OnTick(gameObjects, delta);
+                }
             }
         }
 
@@ -96,6 +99,11 @@ namespace AdvancedWarsEngine.Classes
         public int Count()
         {
             return gameObjects.Count();
+        }
+
+        public void Clear()
+        {
+            gameObjects.Clear();
         }
 
         public void AddRange(List<GameObject> list)

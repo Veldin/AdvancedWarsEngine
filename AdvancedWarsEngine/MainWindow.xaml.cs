@@ -56,15 +56,11 @@ namespace AdvancedWarsEngine
             GetWindow(this).MouseDown += MouseDown;
             GetWindow(this).MouseUp += MouseDown;
 
-            factoryProducer = new FactoryProducer();
-            IAbstractFactory factory = factoryProducer.GetFactory("UnitFactory");
-
-            world = new World(factoryProducer, "plainlevel");
-
-            camera = new Camera(world.Map.Tiles.GetLength(0), world.Map.Tiles.GetLength(1));
-
             gameObjects = new GameObjects();
 
+            loadWorld("plainlevel");
+
+            camera = new Camera(world.Map.Tiles.GetLength(0), world.Map.Tiles.GetLength(1));
 
             Cursor = Cursors.None; //Hide the default Cursor
             cursor = new Cursor(12, 12, 300, 300, "Sprites/Cursors/defaultCursor.gif"); //Create the default cursor to use
@@ -78,15 +74,10 @@ namespace AdvancedWarsEngine
             selectedTileIndicator = new Prompt(16, 16, 0, 0, "Sprites/TileSelectors/TileSelectorGreen.gif");
             gameObjects.Add(selectedTileIndicator);
 
-
-            //Add all the gameObjects from the world to the main gameplay loop.
-            gameObjects.AddRange(world.GetGameObjects());
-
             //Desired max fps
             fps = 90; //Desired max fps.
             interval = 1000 / fps;
             then = Stopwatch.GetTimestamp();
-
 
             // Create a Pathing class
             pathing = new Pathing();
@@ -617,7 +608,10 @@ namespace AdvancedWarsEngine
                                     IAbstractFactory promtFactory = factoryProducer.GetFactory("PromptFactory");
 
                                     //Display the damageValue in a prompt
-                                    gameObjects.Add(promtFactory.GetGameObject(dmgValue.ToString(), 50, 20, enemyGameObject.FromTop, enemyGameObject.FromLeft));
+                                    Application.Current.Dispatcher.Invoke(delegate
+                                    {
+                                        gameObjects.Add(promtFactory.GetGameObject(dmgValue.ToString(), 50, 20, enemyGameObject.FromTop, enemyGameObject.FromLeft));
+                                    }); 
 
                                     //End the turn for this Unit and deselect it
                                     world.Player.SelectedUnit.IsAllowedToAct = false;
@@ -860,6 +854,21 @@ namespace AdvancedWarsEngine
             }
             //Unpres the left mouse button (As there is no event that fires the mouse up)
             pressedKeys.Remove("LeftMouseButton");
+        }
+
+        /* 
+        * Sets the world variable.
+        * Add the gameobjects from the world to the main list.
+        */
+        public void loadWorld(string worldString)
+        {
+            factoryProducer = new FactoryProducer();
+            IAbstractFactory factory = factoryProducer.GetFactory("UnitFactory");
+
+            world = new World(factoryProducer, worldString);
+
+            //Add all the gameObjects from the world to the main gameplay loop.
+            gameObjects.AddRange(world.GetGameObjects());
         }
 
         /* 
