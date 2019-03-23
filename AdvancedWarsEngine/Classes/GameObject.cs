@@ -7,7 +7,7 @@ using System.Windows.Shapes;
 
 namespace AdvancedWarsEngine.Classes
 {
-    abstract class GameObject
+    public abstract class GameObject
     {
         protected bool isAllowedToAct;
         protected float width;

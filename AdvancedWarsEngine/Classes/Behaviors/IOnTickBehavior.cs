@@ -2,7 +2,7 @@
 
 namespace AdvancedWarsEngine.Classes
 {
-    interface IOnTickBehavior
+    public interface IOnTickBehavior
     {
         bool OnTick(GameObject gameobject, List<GameObject> gameObjects, float delta);
     }

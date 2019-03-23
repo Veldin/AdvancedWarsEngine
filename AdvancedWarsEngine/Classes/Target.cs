@@ -1,6 +1,6 @@
 ﻿namespace AdvancedWarsEngine.Classes
 {
-    class Target
+    public class Target
     {
         private float fromTop;
         private float fromLeft;

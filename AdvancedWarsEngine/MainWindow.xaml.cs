@@ -22,7 +22,7 @@ namespace AdvancedWarsEngine
         private Camera camera;
         private World world;
 
-        private List<GameObject> gameObjects;
+        private GameObjects gameObjects;
         private HashSet<string> pressedKeys;        //Holds string interpertation of all keys that are pressed right now
 
         private float fps;                          //The set FPS limit
@@ -46,8 +46,8 @@ namespace AdvancedWarsEngine
 
             InitializeComponent();
 
-            WindowState = WindowState.Maximized;
-            WindowStyle = WindowStyle.None;
+            //WindowState = WindowState.Maximized;
+            //WindowStyle = WindowStyle.None;
 
             //Bind the keyup/down to the window's keyup/down
             GetWindow(this).KeyUp += KeyUp;
@@ -63,7 +63,8 @@ namespace AdvancedWarsEngine
 
             camera = new Camera(world.Map.Tiles.GetLength(0), world.Map.Tiles.GetLength(1));
 
-            gameObjects = new List<GameObject>();
+            gameObjects = new GameObjects();
+
 
             Cursor = Cursors.None; //Hide the default Cursor
             cursor = new Cursor(12, 12, 300, 300, "Sprites/Cursors/defaultCursor.gif"); //Create the default cursor to use
@@ -76,6 +77,7 @@ namespace AdvancedWarsEngine
             //Create the default cursor to use
             selectedTileIndicator = new Prompt(16, 16, 0, 0, "Sprites/TileSelectors/TileSelectorGreen.gif");
             gameObjects.Add(selectedTileIndicator);
+
 
             //Add all the gameObjects from the world to the main gameplay loop.
             gameObjects.AddRange(world.GetGameObjects());
@@ -360,7 +362,7 @@ namespace AdvancedWarsEngine
                 try
                 {
                     //Try to duplicate the arraylist.
-                    loopList = new ArrayList(gameObjects);
+                    loopList = new ArrayList(gameObjects.list);
                 }
                 catch
                 {
@@ -405,15 +407,15 @@ namespace AdvancedWarsEngine
 
         private void Logic(long delta)
         {
-            //Create a new arraylist used to hold the gameobjects for this loop.
-            //The copy is made so it does the ontick methods on all the objects even the onces destroyed in the proces.
-            ArrayList loopList;
+
+            //Create a new instance of GameObjects used to hold the gameobjects for this loop.
+            GameObjects loopList;
             lock (gameObjects) //lock the gameobjects for duplication
             {
                 try
                 {
                     //Try to duplicate the arraylist.
-                    loopList = new ArrayList(gameObjects);
+                    loopList = new GameObjects(gameObjects.list);
                 }
                 catch
                 {
@@ -423,10 +425,7 @@ namespace AdvancedWarsEngine
             }
 
             //For every gameobject in the room
-            foreach (GameObject gameObject in loopList)
-            {
-                gameObject.OnTick(gameObjects, delta);
-            }
+            loopList.OnTick(gameObjects.list, delta);
 
             //Set the new curser location
             try
@@ -440,6 +439,8 @@ namespace AdvancedWarsEngine
             }
             catch
             {
+                //THe application disatcher could not be invoked.
+                // (The app is probably killed)
             }
 
             //Key input
@@ -462,6 +463,7 @@ namespace AdvancedWarsEngine
             {
                 camera.AddFromLeft((float)-0.1);
             }
+
             if (IsKeyPressed("Space"))
             {
                 camera.MoveTo(selectedTileIndicator);
@@ -558,8 +560,18 @@ namespace AdvancedWarsEngine
 
                     pressedOnTile.Selected = true;
 
+                    //If you select a unit, check if the current world.Players owns that unit and check if its not allowed to move
+                    if (world.Player.InGameObjects(pressedOnTile.OccupiedUnit) && !pressedOnTile.OccupiedUnit.IsAllowedToAct)
+                    {
+                        //Create a promptFactory then create a Prompt
+                        Prompt disabledMark = (Prompt)factoryProducer.GetFactory("PromptFactory").GetGameObject("Sprites/Timer/timer4.gif", 12, 12, pressedOnTile.OccupiedUnit.FromTop - 6, pressedOnTile.OccupiedUnit.FromLeft - 6);
+                        disabledMark.IsUsingDuration = true;
+                        disabledMark.MaxDuration = 9000;
+
+                        gameObjects.Add(disabledMark);
+                    }
                     //If you select a unit, check if the current world.Players owns that unit
-                    if (world.Player.InGameObjects(pressedOnTile.OccupiedUnit))
+                    else if (world.Player.InGameObjects(pressedOnTile.OccupiedUnit))
                     {
                         world.Player.SelectedUnit = pressedOnTile.OccupiedUnit;
 
@@ -605,16 +617,7 @@ namespace AdvancedWarsEngine
                                     IAbstractFactory promtFactory = factoryProducer.GetFactory("PromptFactory");
 
                                     //Display the damageValue in a prompt
-                                    try
-                                    {
-                                        Application.Current.Dispatcher.Invoke(delegate
-                                        {
-                                            gameObjects.Add(promtFactory.GetGameObject(dmgValue.ToString(), 50, 20, enemyGameObject.FromTop, enemyGameObject.FromLeft));
-                                        });
-                                    }
-                                    catch
-                                    {
-                                    }
+                                    gameObjects.Add(promtFactory.GetGameObject(dmgValue.ToString(), 50, 20, enemyGameObject.FromTop, enemyGameObject.FromLeft));
 
                                     //End the turn for this Unit and deselect it
                                     world.Player.SelectedUnit.IsAllowedToAct = false;
@@ -774,6 +777,7 @@ namespace AdvancedWarsEngine
                                 GameObject spawn = factory.GetGameObject(factoryNeedle.getProduced(), 16, 16, factoryNeedle.FromTop, factoryNeedle.FromLeft, world.Player.Colour);
 
                                 spawn.Target = new Target(factoryNeedle.Target.GetFromLeft(), factoryNeedle.Target.GetFromTop());
+                                spawn.IsAllowedToAct = true;
 
                                 tileOfFactory.OccupiedUnit = spawn as Unit;
 
@@ -805,7 +809,7 @@ namespace AdvancedWarsEngine
             }
 
             //Set destroyed on true for units
-            foreach (GameObject gameObject in loopList)
+            foreach (GameObject gameObject in loopList.list)
             {
                 if (gameObject is Unit)
                 {
@@ -818,7 +822,7 @@ namespace AdvancedWarsEngine
             }
 
             //Destroy destroyed gameobjects.
-            foreach (GameObject gameObject in loopList)
+            foreach (GameObject gameObject in loopList.list)
             {
                 if (gameObject.destroyed)
                 {
@@ -990,6 +994,7 @@ namespace AdvancedWarsEngine
         /// <returns> Returns if the move was succesfull</returns>
         private bool Move()
         {
+
             //Check if the selected unit is allowed to act and if it can target
             if (world.Player.SelectedUnit.IsAllowedToAct)
             {

@@ -107,6 +107,7 @@
     <Compile Include="Classes\Behaviors\TileBehaviors\VehicleTileBehavior.cs" />
     <Compile Include="Classes\Behaviors\TileBehaviors\InfantryTileBehavior.cs" />
     <Compile Include="Classes\Enums\EUnitType.cs" />
+    <Compile Include="Classes\GameObjects.cs" />
     <Compile Include="Classes\IAbstractFactory.cs" />
     <Compile Include="Classes\Behaviors\IOnTickBehavior.cs" />
     <Compile Include="Classes\Camera.cs" />
