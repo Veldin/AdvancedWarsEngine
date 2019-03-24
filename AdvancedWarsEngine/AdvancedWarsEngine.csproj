@@ -97,6 +97,7 @@
     <Compile Include="Classes\Behaviors\DefenceBehaviors\InfantryDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\ITileBehavior.cs" />
     <Compile Include="Classes\Behaviors\OnTickBehaviors\DefaultOnTickBehavior.cs" />
+    <Compile Include="Classes\Behaviors\ProduceBehaviors\HQProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\RangeBehaviors\LowRangeBehavior.cs" />
     <Compile Include="Classes\Behaviors\IProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />
@@ -341,6 +342,28 @@
     <Resource Include="Sprites\Maps\Level1.png" />
     <Resource Include="Sprites\Maps\Level2.png" />
     <Resource Include="Sprites\Maps\Level3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Structures\blueBarracks.png" />
+    <Resource Include="Sprites\Structures\blueFactory.png" />
+    <Resource Include="Sprites\Structures\blueHQ.png" />
+    <Resource Include="Sprites\Structures\redBarracks.png" />
+    <Resource Include="Sprites\Structures\redFactory.png" />
+    <Resource Include="Sprites\Structures\redHQ.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Structures\blueAirport.png" />
+    <Resource Include="Sprites\Structures\greenAirport.png" />
+    <Resource Include="Sprites\Structures\greenBarracks.png" />
+    <Resource Include="Sprites\Structures\greenFactory.png" />
+    <Resource Include="Sprites\Structures\greenHQ.png" />
+    <Resource Include="Sprites\Structures\redAirport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\Structures\yellowAirport.png" />
+    <Resource Include="Sprites\Structures\yellowBarracks.png" />
+    <Resource Include="Sprites\Structures\yellowFactory.png" />
+    <Resource Include="Sprites\Structures\yellowHQ.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

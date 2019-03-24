@@ -25,7 +25,7 @@
                     produceBehavior = new AirportProduceBehavior();
 
                     // Create the Structure with the created behaviors
-                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AV_Air.png", produceBehavior);
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "Airport.png", produceBehavior);
                     break;
 
                 case "Barracks":
@@ -33,7 +33,15 @@
                     produceBehavior = new BarracksProduceBehavior();
 
                     // Create the Structure with the created behaviors
-                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AV_Infantry.png", produceBehavior);
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "Barracks.png", produceBehavior);
+                    break;
+
+                case "HQ":
+                    // Create the behaviors
+                    produceBehavior = new HQProduceBehavior();
+
+                    // Create the Structure with the created behaviors
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "HQ.png", produceBehavior);
                     break;
 
                 case "Factory":
@@ -41,7 +49,7 @@
                     produceBehavior = new WorkshopProduceBehavior();
 
                     // Create the Structure with the created behaviors
-                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AV_Vehicle.png", produceBehavior);
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "Factory.png", produceBehavior);
                     break;
             }
 
