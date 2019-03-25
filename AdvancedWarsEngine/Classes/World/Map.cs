@@ -118,13 +118,13 @@ namespace AdvancedWarsEngine.Classes
 
         public Tile GetTileFromGameobject(GameObject search)
         {
-            for (int fromLeft = 0; fromLeft < tiles.GetLength(0); fromLeft++)
+            for (int fromLeft = 0; fromLeft < tiles.GetLength(1); fromLeft++)
             {
-                for (int fromTop = 0; fromTop < tiles.GetLength(1); fromTop++)
+                for (int fromTop = 0; fromTop < tiles.GetLength(0); fromTop++)
                 {
-                    if (tiles[fromLeft, fromTop].OccupiedUnit == search || tiles[fromLeft, fromTop].OccupiedStructure == search)
+                    if (tiles[fromTop, fromLeft].OccupiedUnit == search || tiles[fromTop, fromLeft].OccupiedStructure == search)
                     {
-                        return tiles[fromLeft, fromTop];
+                        return tiles[fromTop, fromLeft];
                     }
                 }
             }

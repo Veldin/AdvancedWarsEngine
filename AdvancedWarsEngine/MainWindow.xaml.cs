@@ -770,7 +770,7 @@ namespace AdvancedWarsEngine
                                 factory = factoryProducer.GetFactory("UnitFactory");
                                 GameObject spawn = factory.GetGameObject(factoryNeedle.getProduced(), 16, 16, factoryNeedle.FromTop, factoryNeedle.FromLeft, world.Player.Colour);
 
-                                spawn.Target = new Target(factoryNeedle.Target.GetFromLeft(), factoryNeedle.Target.GetFromTop());
+                                spawn.Target = new Target(factoryNeedle.Target.GetFromTop(), factoryNeedle.Target.GetFromLeft());
                                 spawn.IsAllowedToAct = true;
 
                                 tileOfFactory.OccupiedUnit = spawn as Unit;

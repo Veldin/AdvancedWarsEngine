@@ -6,7 +6,7 @@ namespace AdvancedWarsEngine.Classes
     {
         public string Produce()
         {
-            string[] units = { "AI_Vehicle", "AV_Vehicle", "AA_Vehicle" };
+            string[] units = { "AV_Vehicle", "AV_Vehicle", "AA_Vehicle" };
 
             Random rand = new Random();
             int random = rand.Next(0, 2);
