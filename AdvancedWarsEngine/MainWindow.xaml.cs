@@ -22,7 +22,7 @@ namespace AdvancedWarsEngine
         private Camera camera;
         private World world;
 
-        private GameObjects gameObjects;
+        private GameObjectList gameObjects;
         private HashSet<string> pressedKeys;        //Holds string interpertation of all keys that are pressed right now
 
         private float fps;                          //The set FPS limit
@@ -56,7 +56,7 @@ namespace AdvancedWarsEngine
             GetWindow(this).MouseDown += MouseDown;
             GetWindow(this).MouseUp += MouseDown;
 
-            gameObjects = new GameObjects();
+            gameObjects = new GameObjectList();
 
             loadWorld("plainlevel");
 
@@ -400,13 +400,13 @@ namespace AdvancedWarsEngine
         {
 
             //Create a new instance of GameObjects used to hold the gameobjects for this loop.
-            GameObjects loopList;
+            GameObjectList loopList;
             lock (gameObjects) //lock the gameobjects for duplication
             {
                 try
                 {
                     //Try to duplicate the arraylist.
-                    loopList = new GameObjects(gameObjects.list);
+                    loopList = new GameObjectList(gameObjects.list);
                 }
                 catch
                 {
