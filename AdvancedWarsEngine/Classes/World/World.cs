@@ -192,13 +192,13 @@ namespace AdvancedWarsEngine.Classes
                     //Change factory to produce structures
                     factory = factoryProducer.GetFactory("StructureFactory");
 
-                    SpawnStructure(firstPlayer, factory, "HQ", 16, 16, 11, 9, firstPlayer.Colour);
+                    //SpawnStructure(firstPlayer, factory, "HQ", 16, 16, 11, 9, firstPlayer.Colour);
                     SpawnStructure(firstPlayer, factory, "Barracks", 16, 16, 10, 8, firstPlayer.Colour);
                     SpawnStructure(firstPlayer, factory, "Factory", 16, 16, 11, 8, firstPlayer.Colour);
                     SpawnStructure(firstPlayer, factory, "Factory", 16, 16, 12, 9, firstPlayer.Colour);
                     SpawnStructure(firstPlayer, factory, "Barracks", 16, 16, 12, 10, firstPlayer.Colour);
 
-                    SpawnStructure(secondPlayer, factory, "HQ", 16, 16, 7, 19, secondPlayer.Colour);
+                    //SpawnStructure(secondPlayer, factory, "HQ", 16, 16, 7, 19, secondPlayer.Colour);
                     SpawnStructure(secondPlayer, factory, "Barracks", 16, 16, 6, 18, secondPlayer.Colour);
                     SpawnStructure(secondPlayer, factory, "Factory", 16, 16, 6, 20, secondPlayer.Colour);
                     SpawnStructure(secondPlayer, factory, "Factory", 16, 16, 7, 20, secondPlayer.Colour);

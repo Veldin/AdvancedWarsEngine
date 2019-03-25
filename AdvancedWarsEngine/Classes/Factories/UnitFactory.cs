@@ -1,4 +1,5 @@
 ﻿using AdvancedWarsEngine.Classes.Enums;
+using System.Diagnostics;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -26,7 +27,7 @@ namespace AdvancedWarsEngine.Classes
             IDefenceBehavior defenceBehavior;                                   // The defenceBehavior of the Unit
             ITileBehavior tileBehavior;                                         // The tileBehavior of the Unit
             IOnTickBehavior onTickBehavior = new DefaultOnTickBehavior();       // The default onTick of the Unit
-            GameObject unit = null;                                             // The GameObject is the Unit that will be returned
+            Unit unit = null;                                             // The GameObject is the Unit that will be returned
 
             // Check which Unit should be created and create it
             switch (type)
