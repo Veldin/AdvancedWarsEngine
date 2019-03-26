@@ -13,9 +13,9 @@
             }
 
             // Define some local variables
-            IProduceBehavior produceBehavior;   // The produceBehavior of the Structure
-            IOnTickBehavior onTickBehavior =    new DefaultOnTickBehavior();       // The default onTick of the Unit
-            GameObject structure = null;        // The GameObject is the Structure that will be returned
+            IProduceBehavior produceBehavior;                                   // The produceBehavior of the Structure
+            IOnTickBehavior onTickBehavior = new DefaultOnTickBehavior();       // The default onTick of the Unit
+            GameObject structure = null;                                        // The GameObject is the Structure that will be returned
 
             // Check which Structure shoud be created and returned
             switch (type)
@@ -25,7 +25,7 @@
                     produceBehavior = new AirportProduceBehavior();
 
                     // Create the Structure with the created behaviors
-                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "Airport.png", produceBehavior);
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Airport.gif", produceBehavior);
                     break;
 
                 case "Barracks":
@@ -33,7 +33,7 @@
                     produceBehavior = new BarracksProduceBehavior();
 
                     // Create the Structure with the created behaviors
-                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "Barracks.png", produceBehavior);
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Barracks.gif", produceBehavior);
                     break;
 
                 case "HQ":
@@ -41,7 +41,7 @@
                     produceBehavior = new HQProduceBehavior();
 
                     // Create the Structure with the created behaviors
-                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "HQ.png", produceBehavior);
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_HQ.gif", produceBehavior);
                     break;
 
                 case "Factory":
@@ -49,7 +49,7 @@
                     produceBehavior = new WorkshopProduceBehavior();
 
                     // Create the Structure with the created behaviors
-                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "Factory.png", produceBehavior);
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Workshop.gif", produceBehavior);
                     break;
             }
 

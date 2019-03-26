@@ -136,8 +136,6 @@ namespace AdvancedWarsEngine
                         {
                             gameObject.FromTop = 0;
                         }
-
-
                     }
 
                     Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
@@ -160,8 +158,7 @@ namespace AdvancedWarsEngine
                 if (gameObject is Structure)
                 {
                     Rectangle rect = gameObject.rectangle;
-
-
+                    
                     rect.Width = gameObject.Width;
                     rect.Height = gameObject.Height;
 
@@ -171,7 +168,7 @@ namespace AdvancedWarsEngine
                     //Set the background
                     Rectangle BgRect = world.Map.rectangle;
 
-                    if (Double.IsNaN(gameObject.FromLeft) || Double.IsNaN(gameObject.FromTop))
+                    if (double.IsNaN(gameObject.FromLeft) || double.IsNaN(gameObject.FromTop))
                     {
 
                         if (gameObject.Target != null)
@@ -191,8 +188,6 @@ namespace AdvancedWarsEngine
                         {
                             gameObject.FromTop = 0;
                         }
-
-
                     }
 
                     Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
