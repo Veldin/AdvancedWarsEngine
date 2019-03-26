@@ -8,16 +8,16 @@ using System.Windows.Media;
 
 namespace AdvancedWarsEngine.Classes
 {
-    public class GameObjects
+    public class GameObjectList
     {
         private List<GameObject> gameObjects;
 
-        public GameObjects()
+        public GameObjectList()
         {
             gameObjects = new List<GameObject>();
         }
 
-        public GameObjects(List<GameObject> list)
+        public GameObjectList(List<GameObject> list)
         {
             gameObjects = new List<GameObject>();
             foreach (GameObject needle in list)

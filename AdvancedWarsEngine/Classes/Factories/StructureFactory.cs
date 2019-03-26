@@ -26,6 +26,7 @@
 
                     // Create the Structure with the created behaviors
                     structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Airport.gif", produceBehavior);
+                    (structure as Structure).ProductionCooldownMax = 8;
                     break;
 
                 case "Barracks":
@@ -34,6 +35,7 @@
 
                     // Create the Structure with the created behaviors
                     structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Barracks.gif", produceBehavior);
+                    (structure as Structure).ProductionCooldownMax = 5;
                     break;
 
                 case "HQ":
@@ -50,6 +52,7 @@
 
                     // Create the Structure with the created behaviors
                     structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Workshop.gif", produceBehavior);
+                    (structure as Structure).ProductionCooldownMax = 7;
                     break;
             }
 

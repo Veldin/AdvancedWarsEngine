@@ -123,8 +123,10 @@ namespace AdvancedWarsEngine.Classes
                 for (int fromTop = 0; fromTop < tiles.GetLength(1); fromTop++)
                 {
                     if (tiles[fromLeft, fromTop].OccupiedUnit == search || tiles[fromLeft, fromTop].OccupiedStructure == search)
+
                     {
                         return tiles[fromLeft, fromTop];
+
                     }
                 }
             }

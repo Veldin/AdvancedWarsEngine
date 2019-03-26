@@ -5,12 +5,15 @@
         protected float capturePoints;
         protected IProduceBehavior produceBehavior;
 
-        private int productionCooldown; 
+        private int productionCooldown;
+        private int productionCooldownMax;
+
 
         public Structure(float width, float height, float fromTop, float fromLeft, string sprite, IProduceBehavior produceBehavior)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            productionCooldown = 5;
+            productionCooldownMax = 8;
+            productionCooldown = productionCooldownMax;
             capturePoints = 100;
             this.produceBehavior = produceBehavior;
         }
@@ -51,6 +54,16 @@
         {
             get { return productionCooldown; }
             set { productionCooldown = value; }
+        }
+
+        public int ProductionCooldownMax
+        {
+            get { return productionCooldownMax; }
+            set {
+                if (productionCooldown > value) {
+                    productionCooldown = value; };
+                productionCooldownMax = value;
+            }
         }
     }
 }
