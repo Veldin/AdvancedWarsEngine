@@ -448,7 +448,6 @@ namespace AdvancedWarsEngine
                 camera.MoveTo(selectedTileIndicator);
             }
 
-
             if (IsKeyPressed("Return"))
             {
                 if (world.Player.IsControllable)
@@ -563,31 +562,31 @@ namespace AdvancedWarsEngine
                     {
                         world.Player.SelectedUnit = pressedOnTile.OccupiedUnit;
 
-                        Target test = world.Map.GetTileCoords(world.Player.SelectedUnit.AutoMove(world));
+                        //Target test = world.Map.GetTileCoords(world.Player.SelectedUnit.AutoMove(world));
 
-                        Debug.WriteLine(test.GetFromLeft());
-                        Debug.WriteLine(test.GetFromTop());
+                        //Debug.WriteLine(test.GetFromLeft());
+                        //Debug.WriteLine(test.GetFromTop());
                         Debug.WriteLine("");
 
-                        Move(test);
+                        //Move(test);
 
-                        //selectedTileIndicator.FromLeft = selectedFromLeft * world.Map.Size;
-                        //selectedTileIndicator.FromTop = selectedFromTop * world.Map.Size;
+                        selectedTileIndicator.FromLeft = selectedFromLeft * world.Map.Size;
+                        selectedTileIndicator.FromTop = selectedFromTop * world.Map.Size;
 
-                        ////Set the start Target
-                        //Target start = new Target((world.Player.SelectedUnit.Target.GetFromTop() / 16), (world.Player.SelectedUnit.Target.GetFromLeft() / 16));
+                        //Set the start Target
+                        Target start = new Target((world.Player.SelectedUnit.Target.GetFromTop() / 16), (world.Player.SelectedUnit.Target.GetFromLeft() / 16));
 
-                        ////Create a promptFactory
-                        //IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
+                        //Create a promptFactory
+                        IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
 
-                        ////Get the Arrows as prompt
-                        //List<GameObject> colorOverlay = pathing.SetColorOverlay(world.Player.SelectedUnit, start, promptFactory, world.Player, world.Map);
+                        //Get the Arrows as prompt
+                        List<GameObject> colorOverlay = pathing.SetColorOverlay(world.Player.SelectedUnit, start, promptFactory, world.Player, world.Map);
 
-                        ////Add the prompts to the gameObjectsList
-                        //foreach (GameObject gameObject in colorOverlay)
-                        //{
-                        //    gameObjects.Add(gameObject);
-                        //}
+                        //Add the prompts to the gameObjectsList
+                        foreach (GameObject gameObject in colorOverlay)
+                        {
+                            gameObjects.Add(gameObject);
+                        }
                     }
                     else if (pressedOnTile.OccupiedUnit != null || pressedOnTile.OccupiedStructure != null)
                     {   //Clicked a unit the current world.Player doest own.
