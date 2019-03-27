@@ -343,5 +343,8 @@
     <Resource Include="Sprites\Structures\Yellow_HQ.gif" />
     <Resource Include="Sprites\Structures\Yellow_Workshop.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\unitDisabled.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
