@@ -470,6 +470,36 @@ namespace AdvancedWarsEngine
                 }
             }
 
+            if (IsKeyPressed("V"))
+            {
+                Debug.WriteLine("The selected unit is deselected");
+
+                // Deselect the selected Unit
+                world.Player.DeselectUnit();
+
+                // Set the SelectedTileIndictor outside the map
+                selectedTileIndicator.FromTop = -100;
+                selectedTileIndicator.FromLeft = -100;
+
+                //***********************Remove Pathing Prompts
+                //Remove colourOverlay
+                List<GameObject> colourOverlay = pathing.ColourOverlay;
+                foreach (GameObject gameObject in colourOverlay)
+                {
+                    gameObjects.Remove(gameObject);
+                }
+
+                //Clear the list in the pathing class
+                pathing.EmptyColorOverlay();
+
+                //Remove already existing Arrows
+                List<GameObject> arrowPrompts = pathing.ArrowPrompts;
+                foreach (GameObject gameObject in arrowPrompts)
+                {
+                    gameObjects.Remove(gameObject);
+                }
+            }
+
             //Get the tile at the location and put the crosshair on that location
             int selectedFromTop = (int)(cursor.FromTop / world.Map.Size);
             int selectedFromLeft = (int)(cursor.FromLeft / world.Map.Size);

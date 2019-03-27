@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -10,7 +11,7 @@ namespace AdvancedWarsEngine.Classes
         private bool isDefeated;                            // Checks if the players is already defeated
 
         //Holds the selected unit.
-        private Unit selectedUnit;                        //Holds the currently selected unit
+        private List<Unit> selectedUnit;                        //Holds the currently selected unit
         private Structure selectedStructure;              //Holds the currently selected structure
 
         private string colour;
@@ -21,6 +22,7 @@ namespace AdvancedWarsEngine.Classes
             isDefeated = false;
             this.colour = colour;
             gameObjects = new List<GameObject>();
+            selectedUnit = new List<Unit>();
         }
 
         public bool IsControllable
@@ -37,8 +39,24 @@ namespace AdvancedWarsEngine.Classes
 
         public Unit SelectedUnit
         {
-            get { return selectedUnit; }
-            set { selectedUnit = value; }
+            get {
+                if (selectedUnit.Count == 1)
+                {
+                    return selectedUnit[0];
+                } else if (selectedUnit.Count == 0)
+                {
+                    return null;
+                } else
+                {
+                    selectedUnit.Clear();
+                    Debug.WriteLine("Player had multiple units selected. All units are deselected.");
+                    return null;
+                }
+            }
+            set {
+                selectedUnit.Clear();
+                selectedUnit.Add(value);
+            }
         }
 
         public Structure SelectedStructure
@@ -126,6 +144,11 @@ namespace AdvancedWarsEngine.Classes
         {
             // Deletes a GameObject from the list gameObjects
             gameObjects.Remove(gameObject);
+        }
+
+        public void DeselectUnit()
+        {
+            selectedUnit.Clear();
         }
 
         public Player NextPlayer
