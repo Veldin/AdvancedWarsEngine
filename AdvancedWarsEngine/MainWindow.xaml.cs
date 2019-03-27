@@ -58,7 +58,7 @@ namespace AdvancedWarsEngine
 
             gameObjects = new GameObjectList();
 
-            LoadWorld("lavalevel");
+            LoadWorld("plainlevel");
 
             camera = new Camera(world.Map.Tiles.GetLength(0), world.Map.Tiles.GetLength(1));
 
