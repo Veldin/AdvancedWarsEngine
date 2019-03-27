@@ -84,7 +84,7 @@ namespace AdvancedWarsEngine
             pathing = new Pathing();
 
             //Testing the stopwatch
-            
+
             /*
             long test;
             test = Stopwatch.GetTimestamp();
@@ -94,7 +94,8 @@ namespace AdvancedWarsEngine
                 Debug.WriteLine(Stopwatch.GetTimestamp() - test);
                 test = Stopwatch.GetTimestamp();
             }*/
-            
+
+            RunAsync();
 
         }
 
