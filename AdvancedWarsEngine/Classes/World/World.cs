@@ -179,8 +179,8 @@ namespace AdvancedWarsEngine.Classes
                     
                     //Adding the units to the first player
                     Unit testUnit = (Unit)factory.GetGameObject("AA_Infantry", 16, 16, 0, 0, firstPlayer.Colour);
-                    testUnit.Target = new Target(6 * 16, 9 * 16);
-                    map.GetTile(6, 9).OccupiedUnit = testUnit;
+                    testUnit.Target = new Target(6 * 16, 12 * 16);
+                    map.GetTile(6, 12).OccupiedUnit = testUnit;
                     firstPlayer.AddGameObject(testUnit);
 
                     //Adding the units to the second player

@@ -20,16 +20,16 @@ namespace AdvancedWarsEngine.Classes
         public GameObjectList(List<GameObject> list)
         {
             gameObjects = new List<GameObject>();
-            foreach (GameObject needle in list)
+            foreach (GameObject gameObject in list)
             {
-                gameObjects.Add(needle);
+                gameObjects.Add(gameObject);
             }
         }
 
-        public List<GameObject> list
+        public List<GameObject> List
         {
             get { return gameObjects; }
-            set { gameObjects = value; }
+            protected set { gameObjects = value; }
         }
 
         //Implement gameObject functions

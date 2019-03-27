@@ -14,6 +14,8 @@ namespace AdvancedWarsEngine.Classes
         protected IDefenceBehavior defenceBehavior;     // The defenceBehavior calculates the defenceValue
         protected ITileBehavior tileBehavior;           // The tileBehavior checks if the unit is allowed on the given tile
         protected EUnitType unitType;                   // The unitType specifice the type of this Unit for example infantry or vehicle
+        private bool found = false;
+        private Tile tempTile = null;
 
         public Unit(float width, float height, float fromTop, float fromLeft)
             : base(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/Green_AV_Vehicle2.gif")
@@ -142,18 +144,16 @@ namespace AdvancedWarsEngine.Classes
 
         public Tile AutoMove(World world)
         {
-            bool found = false;
-            Tile tempTile = null;
-            for (int x = world.Map.Tiles.GetLength(0); x >= 0 ; x--)
+            for (int x = world.Map.Tiles.GetLength(0) - 1; x >= 0; x--)
             {
-                for (int y = world.Map.Tiles.GetLength(1); y >= 0; y--)
+                for (int y = world.Map.Tiles.GetLength(1) - 1; y >= 0; y--)
                 {
-                    if (world.Map.Tiles[x, y].OccupiedUnit != this && !found)
+                    if (world.Map.Tiles[x, y].OccupiedUnit != this && !found && world.Map.Tiles[x, y].OccupiedUnit != null)
                     {
-                        tempTile = world.Map.Tiles[x, y];
+                        tempTile = world.Map.Tiles[x, y] as Tile;
                         found = true;
                     }
-                    if (world.Map.Tiles[x, y].OccupiedUnit == this)
+                    if (world.Map.Tiles[x, y].OccupiedUnit == this && found == true)
                     {
                         List<Tile> locations = new List<Tile>
                         {
@@ -174,18 +174,21 @@ namespace AdvancedWarsEngine.Classes
                         {
                             if (!world.Player.InGameObjects(location.OccupiedUnit) && location.OccupiedUnit != null)
                             {
+                                found = false;
                                 return location;
                             }
                             if (!world.Player.InGameObjects(location.OccupiedStructure) && location.OccupiedStructure != null)
                             {
+                                found = false;
                                 return location;
                             }
                         }
+                        found = false;
                         return tempTile;
                     }
                 }
             }
-            return null;
+            return AutoMove(world);
         }
 
         /// <summary>

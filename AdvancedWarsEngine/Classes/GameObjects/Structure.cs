@@ -29,7 +29,7 @@
         }
 
 
-        public string getProduced()
+        public string GetProduced()
         {
             if (produceBehavior == null)
             {
