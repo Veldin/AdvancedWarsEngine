@@ -58,7 +58,7 @@ namespace AdvancedWarsEngine
 
             gameObjects = new GameObjectList();
 
-            LoadWorld("plainlevel");
+            LoadWorld("lavalevel");
 
             camera = new Camera(world.Map.Tiles.GetLength(0), world.Map.Tiles.GetLength(1));
 
@@ -663,7 +663,6 @@ namespace AdvancedWarsEngine
                 {
                     CreateDefeatPrompt(true);
                 }
-
 
                 Player nextPlayer = world.Player.NextPlayer;
                 while (true)
