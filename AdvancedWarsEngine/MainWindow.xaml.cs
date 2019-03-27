@@ -715,7 +715,6 @@ namespace AdvancedWarsEngine
                     //CreateDefeatPrompt(true);
                 }
 
-
                 Player nextPlayer = world.Player.NextPlayer;
                 while (true)
                 {

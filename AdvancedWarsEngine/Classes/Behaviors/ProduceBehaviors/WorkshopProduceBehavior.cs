@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -9,7 +10,7 @@ namespace AdvancedWarsEngine.Classes
             string[] units = { "AV_Vehicle", "AV_Vehicle", "AA_Vehicle" };
 
             Random rand = new Random();
-            int random = rand.Next(0, 2);
+            int random = rand.Next(0, units.Count());
             return units[random];
         }
     }

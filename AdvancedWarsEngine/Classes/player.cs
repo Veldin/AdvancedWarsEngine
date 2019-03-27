@@ -68,15 +68,12 @@ namespace AdvancedWarsEngine.Classes
         public void AddGameObject(GameObject gameObject)
         {
             // Adds a GameObject to the list gameObjects 
-            gameObjects.Add(gameObject);
+            gameObjects.Add(gameObject);    
         }
 
         // Returns the whole list gameObjects
         public List<GameObject> GetGameObjects()
         {
-            List<GameObject> gameObjects = new List<GameObject>();
-
-
 
             return gameObjects;
         }

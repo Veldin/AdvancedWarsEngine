@@ -1,4 +1,6 @@
-﻿namespace AdvancedWarsEngine.Classes
+﻿using System.Diagnostics;
+
+namespace AdvancedWarsEngine.Classes
 {
     class StructureFactory : IAbstractFactory
     {
@@ -16,6 +18,8 @@
             IProduceBehavior produceBehavior;                                   // The produceBehavior of the Structure
             IOnTickBehavior onTickBehavior = new DefaultOnTickBehavior();       // The default onTick of the Unit
             GameObject structure = null;                                        // The GameObject is the Structure that will be returned
+
+            Debug.WriteLine(type);
 
             // Check which Structure shoud be created and returned
             switch (type)
@@ -36,15 +40,6 @@
                     // Create the Structure with the created behaviors
                     structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Barracks.gif", produceBehavior);
                     (structure as Structure).ProductionCooldownMax = 5;
-                    structure.HightOffset = 16 / 2;
-                    break;
-
-                case "HQ":
-                    // Create the behaviors
-                    produceBehavior = new HQProduceBehavior();
-
-                    // Create the Structure with the created behaviors
-                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_HQ.gif", produceBehavior);
                     structure.HightOffset = 16 / 2;
                     break;
 

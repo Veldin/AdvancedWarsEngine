@@ -30,6 +30,7 @@ namespace AdvancedWarsEngine.Classes
             Unit unit = null;                                                   // The GameObject is the Unit that will be returned
 
             // Check which Unit should be created and create it
+            Debug.WriteLine(type);
             switch (type)
             {
                 case "AA_Infantry":     // Anti-Air Infantry
@@ -131,6 +132,8 @@ namespace AdvancedWarsEngine.Classes
                     unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AA_Air.png", rangeBehavior, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Air);
                     break;
             }
+
+
 
             //Set the onTickBehavior
             unit.OnTickBehavior = onTickBehavior;
