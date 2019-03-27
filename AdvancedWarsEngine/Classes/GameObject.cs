@@ -14,6 +14,9 @@ namespace AdvancedWarsEngine.Classes
         protected float height;
         protected float fromTop;
         protected float fromLeft;
+
+        protected float hightOffset;
+
         protected Target target;
 
         protected IOnTickBehavior onTickBehavior;
@@ -34,6 +37,8 @@ namespace AdvancedWarsEngine.Classes
             this.height = height;
             this.fromLeft = fromLeft;
             this.fromTop = fromTop;
+
+            this.hightOffset = 0;
 
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
@@ -86,6 +91,12 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return location; }
             set { location = value; }
+        }
+
+        public float HightOffset
+        {
+            get { return hightOffset; }
+            set { hightOffset = value; }
         }
 
         public IOnTickBehavior OnTickBehavior
