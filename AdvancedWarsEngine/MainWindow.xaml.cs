@@ -160,10 +160,7 @@ namespace AdvancedWarsEngine
                     Rectangle rect = gameObject.rectangle;
 
                     rect.Width = gameObject.Width;
-                    rect.Height = gameObject.Height;
-
-                    Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+                    rect.Height = gameObject.Height + gameObject.HightOffset;
 
                     //Set the background
                     Rectangle BgRect = world.Map.rectangle;
@@ -191,7 +188,7 @@ namespace AdvancedWarsEngine
                     }
 
                     Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                    Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+                    Canvas.SetTop(rect, (gameObject.FromTop - gameObject.HightOffset) + camera.GetTopOffSet());
 
                     //Draw the rect if the rect isnt in yet
                     if (!TestCanvas.Children.Contains(rect))
@@ -449,6 +446,15 @@ namespace AdvancedWarsEngine
             if (IsKeyPressed("Space"))
             {
                 camera.MoveTo(selectedTileIndicator);
+            }
+
+
+            if (IsKeyPressed("Return"))
+            {
+                if (world.Player.IsControllable)
+                {
+                    world.Player.AllowedNoneToAct();
+                }
             }
 
             //Get the tile at the location and put the crosshair on that location
