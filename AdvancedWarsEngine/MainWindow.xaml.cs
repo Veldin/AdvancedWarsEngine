@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -82,7 +83,19 @@ namespace AdvancedWarsEngine
             // Create a Pathing class
             pathing = new Pathing();
 
-            RunAsync();
+            //Testing the stopwatch
+            
+            /*
+            long test;
+            test = Stopwatch.GetTimestamp();
+            while (true)
+            {
+                Thread.Sleep(1000);
+                Debug.WriteLine(Stopwatch.GetTimestamp() - test);
+                test = Stopwatch.GetTimestamp();
+            }*/
+            
+
         }
 
         public void RunAsync()
