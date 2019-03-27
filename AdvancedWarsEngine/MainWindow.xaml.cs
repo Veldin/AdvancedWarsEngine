@@ -551,7 +551,7 @@ namespace AdvancedWarsEngine
                     if (world.Player.InGameObjects(pressedOnTile.OccupiedUnit) && !pressedOnTile.OccupiedUnit.IsAllowedToAct)
                     {
                         //Create a promptFactory then create a Prompt
-                        Prompt disabledMark = (Prompt)factoryProducer.GetFactory("PromptFactory").GetGameObject("Sprites/Timer/timer4.gif", 12, 12, pressedOnTile.OccupiedUnit.FromTop - 6, pressedOnTile.OccupiedUnit.FromLeft - 6);
+                        Prompt disabledMark = (Prompt)factoryProducer.GetFactory("PromptFactory").GetGameObject("Sprites/unitDisabled.gif", 6, 6, pressedOnTile.OccupiedUnit.FromTop - 3, pressedOnTile.OccupiedUnit.FromLeft - 3);
                         disabledMark.IsUsingDuration = true;
                         disabledMark.MaxDuration = 9000;
 
@@ -569,7 +569,6 @@ namespace AdvancedWarsEngine
                         Debug.WriteLine("");
 
                         //Move(test);
-
                         selectedTileIndicator.FromLeft = selectedFromLeft * world.Map.Size;
                         selectedTileIndicator.FromTop = selectedFromTop * world.Map.Size;
 
