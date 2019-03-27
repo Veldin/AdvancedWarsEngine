@@ -269,8 +269,15 @@ namespace AdvancedWarsEngine
                         textBlock.Width = gameObject.Width;
                         textBlock.Height = gameObject.Height;
 
-                        Canvas.SetLeft(textBlock, gameObject.FromLeft + camera.GetLeftOffSet());
-                        Canvas.SetTop(textBlock, gameObject.FromTop + camera.GetTopOffSet());
+                        if (prompt.IsFollowingCamera)
+                        {
+                            Canvas.SetLeft(textBlock, gameObject.FromLeft + camera.GetLeftOffSet());
+                            Canvas.SetTop(textBlock, gameObject.FromTop + camera.GetTopOffSet());
+                        } else
+                        {
+                            Canvas.SetLeft(textBlock, gameObject.FromLeft + camera.GetLeftOffSet());
+                            Canvas.SetTop(textBlock, gameObject.FromTop + camera.GetTopOffSet());
+                        }
 
                         if (!TestCanvas.Children.Contains(textBlock))
                         {
@@ -294,9 +301,16 @@ namespace AdvancedWarsEngine
 
                         rect.Width = gameObject.Width;
                         rect.Height = gameObject.Height;
-
-                        Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
-                        Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+                        
+                        if (prompt.IsFollowingCamera)
+                        {
+                            Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                            Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+                        } else
+                        {
+                            Canvas.SetLeft(rect, gameObject.FromLeft + camera.GetLeftOffSet());
+                            Canvas.SetTop(rect, gameObject.FromTop + camera.GetTopOffSet());
+                        }
 
                         if (double.IsNaN(gameObject.FromLeft) || double.IsNaN(gameObject.FromTop))
                         {
@@ -566,9 +580,10 @@ namespace AdvancedWarsEngine
 
                         //Debug.WriteLine(test.GetFromLeft());
                         //Debug.WriteLine(test.GetFromTop());
-                        Debug.WriteLine("");
+                        //Debug.WriteLine("");
 
-                        //Move(test);
+                        Move(world.Player.SelectedUnit.Target);
+
                         selectedTileIndicator.FromLeft = selectedFromLeft * world.Map.Size;
                         selectedTileIndicator.FromTop = selectedFromTop * world.Map.Size;
 
@@ -584,6 +599,12 @@ namespace AdvancedWarsEngine
                         //Add the prompts to the gameObjectsList
                         foreach (GameObject gameObject in colorOverlay)
                         {
+                            // Dont give the tile where the unit stand on a colorOverlay
+                            if (gameObject.FromTop == start.GetFromTop() * 16 && gameObject.FromLeft == start.GetFromLeft() * 16)
+                            {
+                                continue;
+                            }
+
                             gameObjects.Add(gameObject);
                         }
                     }
@@ -661,7 +682,7 @@ namespace AdvancedWarsEngine
                 // Check if the player is defeated
                 if (CheckDefeat(world.Player))
                 {
-                    CreateDefeatPrompt(true);
+                    //CreateDefeatPrompt(true);
                 }
 
                 Player nextPlayer = world.Player.NextPlayer;
@@ -669,7 +690,7 @@ namespace AdvancedWarsEngine
                 {
                     if (world.Player == nextPlayer)
                     {
-                        CreateDefeatPrompt(false);
+                      //  CreateDefeatPrompt(false);
                         break;
                     }
 
@@ -926,12 +947,13 @@ namespace AdvancedWarsEngine
             }
 
             // Create the prompt and cast it to a prompt
-            GameObject turnGameObject = promptFactory.GetGameObject(spriteLocation, 50, 16, camera.GetTopOffSet(), camera.GetLeftOffSet());
+            GameObject turnGameObject = promptFactory.GetGameObject(spriteLocation, 50, 16, 0, 0);
             Prompt turnPrompt = turnGameObject as Prompt;
 
             // Give the prompt a maxDuration and set isUsingDuration on true
-            turnPrompt.MaxDuration = 4000;
+            turnPrompt.MaxDuration = 10000;
             turnPrompt.IsUsingDuration = true;
+            turnPrompt.IsFollowingCamera = true;
 
             // Add the prompt to the gameObjects list
             gameObjects.Add(turnPrompt);
@@ -1003,17 +1025,25 @@ namespace AdvancedWarsEngine
         }
 
         /// <summary>
-        /// This function moves the selected Unit to the crosshair if allowed
+        ///  This function moves the selected Unit to given tile/target if allowed
         /// </summary>
-        /// <returns> Returns if the move was succesfull</returns>
+        /// <param name="target"> the target where the unit moves to</param>
+        /// <returns></returns>
         private bool Move(Target target)
         {
+            // Check if there is a player selected
+            if (world.Player.SelectedUnit == null)
+            {
+                return false;
+            }
+
             //Check if the selected unit is allowed to act and if it can target
             if (world.Player.SelectedUnit.IsAllowedToAct)
             {
-                // Set the target in tiles
+                // Set the target of the place of the unit in tiles
                 Target tmp = new Target(world.Player.SelectedUnit.Target.GetFromTop() / 16, world.Player.SelectedUnit.Target.GetFromLeft() / 16);
 
+                // If target is null set the crosshair as target
                 Target pressedTileTarget;
                 if (target == null)
                 {
@@ -1023,6 +1053,8 @@ namespace AdvancedWarsEngine
                 {
                     pressedTileTarget = target;
                 }
+
+                // Get the tile of the destination
                 Tile pressedTile = world.Map.GetTile((int)pressedTileTarget.GetFromTop(), (int)pressedTileTarget.GetFromLeft());
 
                 // Get the path

@@ -12,6 +12,7 @@ namespace AdvancedWarsEngine.Classes
         protected TextBlock textBlock;
         protected bool isUsingDuration;
         protected bool isAscending;
+        protected bool isFollowingCamera;
 
         public Prompt(float width, float height, float fromTop, float fromLeft, string text, float maxDuration)
             : base(width, height, fromTop, fromLeft)
@@ -91,6 +92,12 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return isAscending; }
             set { isAscending = value; }
+        }
+
+        public bool IsFollowingCamera
+        {
+            get { return isFollowingCamera; }
+            set { isFollowingCamera = value; }
         }
     }
 }
