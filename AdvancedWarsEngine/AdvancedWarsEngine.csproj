@@ -97,9 +97,7 @@
     <Compile Include="Classes\Behaviors\DefenceBehaviors\InfantryDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\ITileBehavior.cs" />
     <Compile Include="Classes\Behaviors\OnTickBehaviors\DefaultOnTickBehavior.cs" />
-    <Compile Include="Classes\Behaviors\RangeBehaviors\LowRangeBehavior.cs" />
     <Compile Include="Classes\Behaviors\IProduceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\AirportProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\BarracksProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\WorkshopProduceBehavior.cs" />

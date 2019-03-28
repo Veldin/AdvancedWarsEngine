@@ -646,7 +646,7 @@ namespace AdvancedWarsEngine
                         {
                             if (world.Player.SelectedUnit.IsAllowedToAct)
                             {
-                                if (world.Player.SelectedUnit.CanTarget(world.Player.SelectedUnit.Target.GetFromLeft() / 16, world.Player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop))
+                                if (world.Player.SelectedUnit.CanTarget(world.Player.SelectedUnit.Target.GetFromLeft() / 16, world.Player.SelectedUnit.Target.GetFromTop() / 16, pressedOnTile, selectedFromLeft, selectedFromTop, world.Player))
                                 {
                                     GameObject enemyGameObject;                    //Define a GameObject
                                     enemyGameObject = pressedOnTile.OccupiedUnit;  //Try to get the Unit from the selected tile

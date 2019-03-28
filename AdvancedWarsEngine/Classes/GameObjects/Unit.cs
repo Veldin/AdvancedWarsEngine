@@ -1,4 +1,5 @@
 ﻿using AdvancedWarsEngine.Classes.Enums;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -9,7 +10,6 @@ namespace AdvancedWarsEngine.Classes
         protected float health = 100;                   // The health of the Unit
         protected float movementSpeed = 100;            // The movement speed of the Unit (for animations)
         protected int movementRange = 2;                // The amount of tiles the Unit can move
-        protected IRangeBehavior rangeBehavior;         // The rangeBehavior calculates the range of the Unit
         protected IAttackBehavior attackBehavior;       // The attackBehavior calculates the dammageValue
         protected IDefenceBehavior defenceBehavior;     // The defenceBehavior calculates the defenceValue
         protected ITileBehavior tileBehavior;           // The tileBehavior checks if the unit is allowed on the given tile
@@ -23,10 +23,10 @@ namespace AdvancedWarsEngine.Classes
             unitType = EUnitType.Vehicle;
         }
 
-        public Unit(float width, float height, float fromTop, float fromLeft, string sprite, IRangeBehavior rangeBehavior, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior, ITileBehavior tileBehavior, EUnitType unitType)
+        public Unit(float width, float height, float fromTop, float fromLeft, string sprite, int movementRange, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior, ITileBehavior tileBehavior, EUnitType unitType)
             : base(width, height, fromTop, fromLeft, sprite)
         {
-            this.rangeBehavior = rangeBehavior;
+            this.movementRange = movementRange;
             this.attackBehavior = attackBehavior;
             this.defenceBehavior = defenceBehavior;
             this.tileBehavior = tileBehavior;
@@ -127,19 +127,39 @@ namespace AdvancedWarsEngine.Classes
             return health;
         }
 
-        /**********************************************************************
-         * This function checks if the requested action is allowed and returns a bool
-         * ARGUMENTS:
-         * fromFromLeft:    The fromLeft from the tile from where the requested action takes place.
-         * fromFromTop:     The fromTop from the tile from where the requested action takes place.
-         * tile:            The Tile where the requested action takes place.
-         * targetFromLeft:  The fromLeft from the tile where the requested action takes place to.
-         * targetFromTop:   The fromTop from the tile where the requested action takes place to.
-         * ********************************************************************/
-        public bool CanTarget(float fromFromLeft, float fromFromTop, Tile tile, float targetFromLeft, float targetFromTop)
+        /// <summary>
+        /// This function checks if a Units attack is allowed and returns a bool
+        /// </summary>
+        /// <param name="fromLeft">The fromLeft from the tile from where the requested action takes place.</param>
+        /// <param name="fromTop">he fromTop from the tile from where the requested action takes place.</param>
+        /// <param name="tile">The Tile where the requested action takes place</param>
+        /// <param name="targetFromLeft">The fromLeft from the tile where the requested action takes place to</param>
+        /// <param name="targetFromTop">The fromTop from the tile where the requested action takes place to</param>
+        /// <param name="player">The player of whom the Unit belongs to</param>
+        /// <returns>Returns a bool if the attack is allowed</returns>
+        public bool CanTarget(float fromLeft, float fromTop, Tile tile, float targetFromLeft, float targetFromTop, Player player)
         {
-            // The rangeBehavior will check if the requested action is allowed and return true or false
-            return rangeBehavior.Range(this, fromFromLeft, fromFromTop, tile, targetFromLeft, targetFromTop);
+            // Calculate the movement that will be made
+            float horizontalMovement = fromLeft - targetFromLeft;
+            float verticalMovement = fromTop - targetFromTop;
+
+            // Calculate the absolute distance
+            float distance = Math.Abs(horizontalMovement) + Math.Abs(verticalMovement);
+
+            // If the distance is bigger than the maxMoveDistance, return false.
+            if (distance > MovementRange)
+            {
+                return false;
+            }
+
+            // If there is a enemy Unit or enemy Structure on the tile, return true
+            if (tile.OccupiedUnit != null && player.InGameObjects(tile.OccupiedUnit) == false || 
+                tile.OccupiedStructure != null && !player.InGameObjects(tile.OccupiedUnit) == false)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public Tile AutoMove(World world)
