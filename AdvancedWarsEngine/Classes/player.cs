@@ -11,7 +11,7 @@ namespace AdvancedWarsEngine.Classes
         private bool isDefeated;                            // Checks if the players is already defeated
 
         //Holds the selected unit.
-        private List<Unit> selectedUnit;                        //Holds the currently selected unit
+        private List<Unit> selectedUnit;                        //Holds the currently selected unit. It's a list because its easier with deselecting
         private Structure selectedStructure;              //Holds the currently selected structure
 
         private string colour;
@@ -37,6 +37,10 @@ namespace AdvancedWarsEngine.Classes
             set { isDefeated = value; }
         }
 
+        /// <summary>
+        /// This is the getter and setter of the selectedUnit list. It can only hold one unit.
+        /// It's a list because it can be cleared without setting the Unit to null
+        /// </summary>
         public Unit SelectedUnit
         {
             get {
@@ -143,6 +147,9 @@ namespace AdvancedWarsEngine.Classes
             gameObjects.Remove(gameObject);
         }
 
+        /// <summary>
+        /// Deselect the selectedUnit by clearing the list
+        /// </summary>
         public void DeselectUnit()
         {
             selectedUnit.Clear();

@@ -83,18 +83,6 @@ namespace AdvancedWarsEngine
             // Create a Pathing class
             pathing = new Pathing();
 
-            //Testing the stopwatch
-
-            /*
-            long test;
-            test = Stopwatch.GetTimestamp();
-            while (true)
-            {
-                Thread.Sleep(1000);
-                Debug.WriteLine(Stopwatch.GetTimestamp() - test);
-                test = Stopwatch.GetTimestamp();
-            }*/
-
             RunAsync();
 
         }
@@ -1118,7 +1106,6 @@ namespace AdvancedWarsEngine
 
                 // Remove unit form the old tile and set it on the new tile
                 Tile newTile = path[path.Count - 1];
-                Debug.WriteLine(newTile);
                 oldTile.OccupiedUnit = null;
                 newTile.OccupiedUnit = world.Player.SelectedUnit;
 
@@ -1128,6 +1115,10 @@ namespace AdvancedWarsEngine
 
                 // Give the Unit the new target
                 world.Player.SelectedUnit.Target = newTarget;
+
+                // Set the selectedTileIndicator out of view
+                selectedTileIndicator.FromTop = -100;
+                selectedTileIndicator.FromLeft = -100;
 
                 // Set allowedToAct on false because it has moved
                 world.Player.SelectedUnit.IsAllowedToAct = false;
