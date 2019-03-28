@@ -32,6 +32,7 @@ namespace AdvancedWarsEngine.Classes
         public void EmptyColorOverlay()
         {
             ColourOverlay.Clear();
+            allowedTiles.Clear();
         }
 
         /// <summary>
@@ -165,6 +166,44 @@ namespace AdvancedWarsEngine.Classes
             }
 
             return ArrowPrompts;
+        }
+
+        /// <summary>
+        /// This function calculates the shortest path of for a Unit to get from A to B.
+        /// This function is also necessary for the creation of the colorOverlay and the arrowPrompts
+        /// </summary>
+        /// <param name="start"> The Target where the Unit starts</param>
+        /// <param name="end"> The Target of the destination of the Unit</param>
+        /// <param name="unit"> The Unit wherefore the path is created</param>
+        /// <returns> Returns a list of Tiles which is the shortes way to get from A to B</returns>
+        public List<Tile> GetPath(Target start, Target end, Unit unit, Map map, Player player)
+        {
+            // Clear the previous made paths
+            paths.Clear();
+
+            // Create the pathes
+            CreatePaths(start, end, unit, map, player, null);
+
+            // Set some variables
+            int tilesDistance = -1;
+            List<Tile> finalPath = null;
+
+            // Pick the shortest path
+            foreach (List<Tile> tmp in paths)
+            {
+                // If no distance and path is set, set them
+                if (tilesDistance == -1)
+                {
+                    tilesDistance = tmp.Count;
+                    finalPath = tmp;
+                } // if the path is shorter than the currently selected replace the old one with the shorter one
+                else if (tmp.Count < tilesDistance)
+                {
+                    tilesDistance = tmp.Count;
+                    finalPath = tmp;
+                }
+            }
+            return finalPath;
         }
 
         /***************************************************************
@@ -325,42 +364,6 @@ namespace AdvancedWarsEngine.Classes
             }
         }
 
-        /// <summary>
-        /// This function calculates the shortest path of for a Unit to get from A to B.
-        /// This function is also necessary for the creation of the colorOverlay and the arrowPrompts
-        /// </summary>
-        /// <param name="start"> The Target where the Unit starts</param>
-        /// <param name="end"> The Target of the destination of the Unit</param>
-        /// <param name="unit"> The Unit wherefore the path is created</param>
-        /// <returns> Returns a list of Tiles which is the shortes way to get from A to B</returns>
-        public List<Tile> GetPath(Target start, Target end, Unit unit, Map map, Player player)
-        {
-            // Clear the previous made paths
-            paths.Clear();
 
-            // Create the pathes
-            CreatePaths(start, end, unit, map, player, null);
-
-            // Set some variables
-            int tilesDistance = -1;
-            List<Tile> finalPath = null;
-
-            // Pick the shortest path
-            foreach (List<Tile> tmp in paths)
-            {
-                // If no distance and path is set, set them
-                if (tilesDistance == -1)
-                {
-                    tilesDistance = tmp.Count;
-                    finalPath = tmp;
-                } // if the path is shorter than the currently selected replace the old one with the shorter one
-                else if (tmp.Count < tilesDistance)
-                {
-                    tilesDistance = tmp.Count;
-                    finalPath = tmp;
-                }
-            }
-            return finalPath;
-        }
     }
 }
