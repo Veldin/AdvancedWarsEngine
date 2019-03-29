@@ -38,6 +38,9 @@ namespace AdvancedWarsEngine
         private Prompt selectedTileIndicator;       //Holds information about the selected crosshair
         private Pathing pathing;
 
+        //Due to a known issue with StopWatch it runs slower on certain cpu architecture.
+        private bool fastmode;
+
         //Holds the factoryProducer
         FactoryProducer factoryProducer;
 
@@ -85,6 +88,22 @@ namespace AdvancedWarsEngine
             // Create a Pathing class
             pathing = new Pathing();
 
+            bool fastmode = false;
+
+            //check
+            long stopWatchTest;
+            stopWatchTest = Stopwatch.GetTimestamp();
+            Thread.Sleep(1000); //Pas a precise second
+            stopWatchTest = Stopwatch.GetTimestamp() - stopWatchTest;
+            long change = stopWatchTest / 10000000;
+
+            //slow pc gives 0
+            //quick pc gives 1
+            if (change < 1)
+            {
+                fastmode = true;
+            }
+
             RunAsync();
 
         }
@@ -97,7 +116,15 @@ namespace AdvancedWarsEngine
             then = now; //Remember when this frame was.
             lock (this)
             {
-                Logic(delta); //Run the logic of the simulation.
+                if (fastmode)
+                {
+                    Logic(delta * (long)1.5); //Run the logic of the simulation.
+
+                }
+                else
+                {
+                    Logic(delta); //Run the logic of the simulation.
+                }
                 Draw();
             }
             Task.Delay((int)interval);
@@ -404,7 +431,6 @@ namespace AdvancedWarsEngine
 
         private void Logic(long delta)
         {
-
             //Create a new instance of GameObjects used to hold the gameobjects for this loop.
             GameObjectList loopList;
             lock (gameObjects) //lock the gameobjects for duplication
@@ -540,6 +566,7 @@ namespace AdvancedWarsEngine
                 List<GameObject> arrowPrompts = pathing.ArrowPrompts;
                 foreach (GameObject gameObject in arrowPrompts)
                 {
+                    //Dont wait till draw phase for objects. (needs to be quicker)
                     gameObjects.Remove(gameObject);
                 }
 
@@ -769,7 +796,7 @@ namespace AdvancedWarsEngine
                             factoryNeedle.ProductionCooldown = factoryNeedle.ProductionCooldown - 1;
                         }
 
-                        //Use two sprites to have an animation
+                        //Use two sprites to have an animation, one with a shorter and longer timeout.
                         string spriteNow;
                         string spriteLast;
                         switch (factoryNeedle.ProductionCooldown)
@@ -825,6 +852,7 @@ namespace AdvancedWarsEngine
                         gameObjects.Add(timerNow);
                         gameObjects.Add(timerLast);
 
+                        //Check if the factory is allowed to produce
                         if (factoryNeedle.ProductionCooldown == 0)
                         {
                             Tile tileOfFactory = world.Map.GetTileFromGameobject(factoryNeedle);
