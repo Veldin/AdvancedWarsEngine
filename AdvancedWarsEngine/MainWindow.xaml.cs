@@ -78,11 +78,7 @@ namespace AdvancedWarsEngine
             // Create a Pathing class
             pathing = new Pathing();
 
-<<<<<<< HEAD
-
             /* Due to stopwatch returning defferent values for other CPU values we created a fast and a slow mode */
-=======
->>>>>>> 2c384e2e406608e80567449ad83064b4ba40a36c
             fastmode = false;
 
             //check
@@ -754,7 +750,7 @@ namespace AdvancedWarsEngine
                 skipTurnCooldown -= delta;
 
                 // Check if the player is defeated
-                if (CheckVictory(world.Player))
+                if (CheckVictory(world.CurrentPlayer))
                 {
                     CreateVictoryPrompt(true);
                 }
@@ -774,9 +770,6 @@ namespace AdvancedWarsEngine
                 // Create the prompt to shows whos turn it is
                 CreateTurnPrompt();
 
-<<<<<<< HEAD
-                Player nextPlayer = world.Player.NextPlayer;
-=======
                 // Check if the player is defeated
                 if (CheckVictory(world.CurrentPlayer))
                 {
@@ -784,7 +777,7 @@ namespace AdvancedWarsEngine
                 }
                 
                 Player nextPlayer = world.CurrentPlayer.NextPlayer;
->>>>>>> 2c384e2e406608e80567449ad83064b4ba40a36c
+
                 while (true)
                 {
                     if (world.CurrentPlayer == nextPlayer)
@@ -969,12 +962,9 @@ namespace AdvancedWarsEngine
                     while (playerNeelde.NextPlayer != null && i > 0)
                     {
                         playerNeelde = playerNeelde.NextPlayer;
-<<<<<<< HEAD
-                        world.Player.DeleteGameObject(gameObject);
-                                
-=======
+
                         world.CurrentPlayer.DeleteGameObject(gameObject);
->>>>>>> 2c384e2e406608e80567449ad83064b4ba40a36c
+
                         i--;
                     }
 
@@ -1106,9 +1096,6 @@ namespace AdvancedWarsEngine
             }
 
             // Get the list of gameObjects that the player has
-<<<<<<< HEAD
-            if(world.Player.GetStructures().Count < 1)
-=======
             List<GameObject> playersGameObjects = world.CurrentPlayer.GetGameObjects();
 
             // Check if the player still has structures
@@ -1124,7 +1111,6 @@ namespace AdvancedWarsEngine
 
             // If the player has no structues, mark the player as defeated
             if (!hasStructures)
->>>>>>> 2c384e2e406608e80567449ad83064b4ba40a36c
             {
                 player.IsDefeated = true;
                 return true;
