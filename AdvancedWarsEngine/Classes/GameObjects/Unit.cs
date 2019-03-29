@@ -54,12 +54,12 @@ namespace AdvancedWarsEngine.Classes
             get { return unitType; }
         }
 
-        /**********************************************************************
-         * This function does the actual attack
-         * ARGUMENTS:
-         * gameObject:  The gameObject that gets attacked
-         * tile:        The Tile where the gameObject that gets attacked stands on.
-         * ********************************************************************/
+        /// <summary>
+        /// This function does the actual attack to a Unit or Structure
+        /// </summary>
+        /// <param name="gameObject">The gameObject that gets attacked</param>
+        /// <param name="tile">The Tile where the gameObject that gets attacked stands on</param>
+        /// <returns></returns>
         public float Attack(GameObject gameObject, Tile tile)
         {
             // If the gameObject is a prompt give some feedback and return.
@@ -168,6 +168,13 @@ namespace AdvancedWarsEngine.Classes
             return false;
         }
 
+        /// <summary>
+        /// This function generates the a move that the uncontrollable players will do when it's their turn
+        /// </summary>
+        /// <param name="world"> The world that currently active is</param>
+        /// <param name="okay">??</param>
+        /// <param name="steps">??</param>
+        /// <returns> The target where the unit is going to move to</returns>
         public Target AutoMove(World world, bool okay, int steps)
         {
             this.steps = steps;

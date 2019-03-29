@@ -84,13 +84,19 @@ namespace AdvancedWarsEngine.Classes
             set { colour = value; }
         }
 
+        /// <summary>
+        /// Adds a GameObject to the list gameObjects 
+        /// </summary>
+        /// <param name="gameObject"> The gameObject that will be added to the list</param>
         public void AddGameObject(GameObject gameObject)
         {
-            // Adds a GameObject to the list gameObjects 
             gameObjects.Add(gameObject);
         }
 
-        // Returns the whole list gameObjects
+        /// <summary>
+        /// Returns the whole list gameObjects that the player owns
+        /// </summary>
+        /// <returns>The list of gameObjects that the player owns</returns>
         public List<GameObject> GetGameObjects()
         {
             return gameObjects;
