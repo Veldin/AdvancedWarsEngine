@@ -39,7 +39,7 @@ namespace AdvancedWarsEngine.Classes
                     tileBehavior = new InfantryTileBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AA_Infantry.png", 2, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Infantry);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AA_Infantry.gif", 2, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Infantry);
                     break;
 
                 case "AV_Infantry":     // Anti-Vehicle Infantry
@@ -49,7 +49,7 @@ namespace AdvancedWarsEngine.Classes
                     tileBehavior = new InfantryTileBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AV_Infantry.png", 2, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Infantry);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AV_Infantry.gif", 2, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Infantry);
                     break;
 
                 case "AI_Infantry":     // Anti-Infantry Infantry
@@ -59,7 +59,7 @@ namespace AdvancedWarsEngine.Classes
                     tileBehavior = new InfantryTileBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AI_Infantry.png", 2, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Infantry);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AI_Infantry.gif", 2, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Infantry);
                     break;
 
                 case "AI_Vehicle":          // Anti_Infantry Vehicle
@@ -69,7 +69,7 @@ namespace AdvancedWarsEngine.Classes
                     tileBehavior = new VehicleTileBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AI_Vehicle.png", 3, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Vehicle);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AI_Vehicle.gif", 3, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Vehicle);
                     break;
 
                 case "AV_Vehicle":          // Anti-Vehicle Vehicle
@@ -79,7 +79,7 @@ namespace AdvancedWarsEngine.Classes
                     tileBehavior = new VehicleTileBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AV_Vehicle.png", 3, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Vehicle);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AV_Vehicle.gif", 3, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Vehicle);
                     break;
 
                 case "AA_Vehicle":          // Anti-Air Vehicle
@@ -89,7 +89,7 @@ namespace AdvancedWarsEngine.Classes
                     tileBehavior = new VehicleTileBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AA_Vehicle.png", 3, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Vehicle);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AA_Vehicle.gif", 3, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Vehicle);
                     break;
 
                 case "AI_Air":              // Anti_Infantry Air
@@ -99,7 +99,7 @@ namespace AdvancedWarsEngine.Classes
                     tileBehavior = new AirTileBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AI_Air.png", 5, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Air);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AI_Air.gif", 5, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Air);
                     break;
 
                 case "AV_Air":              // Anti-Vehicle Air
@@ -109,7 +109,7 @@ namespace AdvancedWarsEngine.Classes
                     tileBehavior = new AirTileBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AV_Air.png", 5, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Air);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AV_Air.gif", 5, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Air);
                     break;
 
                 case "AA_Air":              // Anti-Air Air
@@ -119,12 +119,16 @@ namespace AdvancedWarsEngine.Classes
                     tileBehavior = new AirTileBehavior();
 
                     // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AA_Air.png", 5, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Air);
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AA_Air.gif", 5, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Air);
                     break;
             }
 
-            //Set the onTickBehavior
-            unit.OnTickBehavior = onTickBehavior;
+            // If unit is not set dont try to set the onTickBehavior
+            if (unit != null)
+            {
+                // Set the onTickBehavior
+                unit.OnTickBehavior = onTickBehavior;
+            }
 
             // Return the Unit as GameObject
             return unit;

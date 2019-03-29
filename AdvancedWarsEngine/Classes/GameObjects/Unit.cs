@@ -16,6 +16,7 @@ namespace AdvancedWarsEngine.Classes
         protected EUnitType unitType;                   // The unitType specifice the type of this Unit for example infantry or vehicle
         private bool found = false;
         private Tile tempTile = null;
+        private int steps;
 
         public Unit(float width, float height, float fromTop, float fromLeft)
             : base(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/Green_AV_Vehicle2.gif")
@@ -31,6 +32,26 @@ namespace AdvancedWarsEngine.Classes
             this.defenceBehavior = defenceBehavior;
             this.tileBehavior = tileBehavior;
             this.unitType = unitType;
+        }
+
+        public float Health
+        {
+            get { return health; }
+        }
+
+        public float MovementSpeed
+        {
+            get { return movementSpeed; }
+        }
+
+        public int MovementRange
+        {
+            get { return movementRange; }
+        }
+
+        public EUnitType UnitType
+        {
+            get { return unitType; }
         }
 
         /**********************************************************************
@@ -93,26 +114,6 @@ namespace AdvancedWarsEngine.Classes
             return -1;
         }
 
-        public float MovementSpeed
-        {
-            get { return movementSpeed; }
-        }
-
-        public float Defence(Tile tile)
-        {
-            return defenceBehavior.Defence(this, tile);
-        }
-
-        public float Health
-        {
-            get { return health; }
-        }
-
-        public EUnitType UnitType
-        {
-            get { return unitType; }
-        }
-
         public float AddHealth(float value)
         {
             // Add the heath of this Unit by the given value
@@ -125,6 +126,11 @@ namespace AdvancedWarsEngine.Classes
                 destroyed = true;
             }
             return health;
+        }
+        
+        public float Defence(Tile tile)
+        {
+            return defenceBehavior.Defence(this, tile);
         }
 
         /// <summary>
@@ -162,12 +168,22 @@ namespace AdvancedWarsEngine.Classes
             return false;
         }
 
-        public Tile AutoMove(World world)
+        public Target AutoMove(World world, bool okay, int steps)
         {
+            this.steps = steps;
+            if (steps < 0)
+            {
+                this.steps = 0;
+                steps = 0;
+            }
+            int targetX = 0;
+            int targetY = 0;
             for (int x = world.Map.Tiles.GetLength(0) - 1; x >= 0; x--)
             {
                 for (int y = world.Map.Tiles.GetLength(1) - 1; y >= 0; y--)
                 {
+                    targetX = x;
+                    targetY = y;
                     if (world.Map.Tiles[x, y].OccupiedUnit != this && !found && world.Map.Tiles[x, y].OccupiedUnit != null)
                     {
                         tempTile = world.Map.Tiles[x, y] as Tile;
@@ -177,38 +193,67 @@ namespace AdvancedWarsEngine.Classes
                     {
                         List<Tile> locations = new List<Tile>
                         {
+                            world.Map.GetTile(x - 2, y),            //mostleft
                             world.Map.GetTile(x - 1, y),            //left
-                            world.Map.GetTile(x -1, y -1),          //topleft
+                            world.Map.GetTile(x - 1, y - 1),        //topleft
+                            world.Map.GetTile(x - 1, y + 1),        //bottomleft
                             world.Map.GetTile(x, y -1),             //top
                             world.Map.GetTile(x + 1, y - 1),        //topright
                             world.Map.GetTile(x + 1, y),            //right
                             world.Map.GetTile(x + 1, y + 1),        //bottomright
                             world.Map.GetTile(x, y + 1),            //bottom
-                            world.Map.GetTile(x - 1, y + 1),        //bottomleft
-                            world.Map.GetTile(x- 2, y),             //mostleft
-                            world.Map.GetTile(x, y -2),             //mosttop
-                            world.Map.GetTile(x + 2, y),            //right
-                            world.Map.GetTile(x, y + 2)             //right
+                            world.Map.GetTile(x, y - 2),            //mosttop
+                            world.Map.GetTile(x + 2, y),            //mostright
+                            world.Map.GetTile(x, y + 2)             //mostbottom
                         };
                         foreach (Tile location in locations)
                         {
-                            if (!world.Player.InGameObjects(location.OccupiedUnit) && location.OccupiedUnit != null)
+                            if (!world.CurrentPlayer.InGameObjects(location.OccupiedUnit) && location.OccupiedUnit != null)
                             {
                                 found = false;
-                                return location;
+                                Attack(location.OccupiedUnit, location);
+                                return new Target(x, y);
                             }
-                            if (!world.Player.InGameObjects(location.OccupiedStructure) && location.OccupiedStructure != null)
+                            if (!world.CurrentPlayer.InGameObjects(location.OccupiedStructure) && location.OccupiedStructure != null)
                             {
                                 found = false;
-                                return location;
+                                //Attack(location.OccupiedStructure, location);
+                                return new Target(x, y);
                             }
                         }
+                        while (steps < movementRange)
+                        {
+                            Debug.WriteLine(y - world.Map.GetTileCoords(tempTile).GetFromLeft());
+                            if (y - world.Map.GetTileCoords(tempTile).GetFromLeft() < 0 && okay)
+                            {
+                                //target = new Target(x, y + 1);
+                                targetY += 1;
+                            }
+                            else if (y - world.Map.GetTileCoords(tempTile).GetFromLeft() > 0)
+                            {
+                                //target = new Target(x, y - 1);
+                                targetY -= 1;
+                            }
+                            else if (x - world.Map.GetTileCoords(tempTile).GetFromTop() < 0)
+                            {
+                                //target = new Target(x + 1, y);
+                                targetX += 1;
+                            }
+                            else if (x - world.Map.GetTileCoords(tempTile).GetFromTop() > 0)
+                            {
+                                //target = new Target(x - 1, y);
+                                targetX -= 1;
+                            }
+                            steps++;
+                        }
+
+                        tempTile = null;
                         found = false;
-                        return tempTile;
+                        return new Target(targetX, targetY);
                     }
                 }
             }
-            return AutoMove(world);
+            return AutoMove(world, okay, this.steps);
         }
 
         /// <summary>
@@ -220,11 +265,5 @@ namespace AdvancedWarsEngine.Classes
         {
             return tileBehavior.IsAllowed(tile);
         }
-
-        public int MovementRange
-        {
-            get { return movementRange; }
-        }
-
     }
 }

@@ -9,12 +9,30 @@ namespace AdvancedWarsEngine.Classes
     class Map
     {
         protected Tile[,] tiles;
-
         protected Tile selectedTile;
-
         protected string sprite;
         public Rectangle rectangle;
         protected int size;
+
+        public Map(Tile[,] tiles, string sprite)
+        {
+            this.tiles = tiles;
+            this.sprite = sprite;
+            size = 16;
+
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                BitmapImage newBitmap = new BitmapImage(new Uri("pack://application:,,,/AdvancedWarsEngine;component/" + sprite, UriKind.Absolute));
+
+                rectangle = new Rectangle
+                {
+                    Fill = new ImageBrush { ImageSource = newBitmap },
+
+                    Width = tiles.GetLength(1) * size,
+                    Height = tiles.GetLength(0) * size
+                };
+            }));
+        }
 
         public Tile[,] Tiles
         {
@@ -38,26 +56,6 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return selectedTile; }
             set { selectedTile = value; }
-        }
-
-        public Map(Tile[,] tiles, string sprite)
-        {
-            this.tiles = tiles;
-            this.sprite = sprite;
-            size = 16;
-
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                BitmapImage newBitmap = new BitmapImage(new Uri("pack://application:,,,/AdvancedWarsEngine;component/" + sprite, UriKind.Absolute));
-
-                rectangle = new Rectangle
-                {
-                    Fill = new ImageBrush { ImageSource = newBitmap },
-
-                    Width = tiles.GetLength(1) * size,
-                    Height = tiles.GetLength(0) * size
-                };
-            }));
         }
 
         public Tile GetTile(int x, int y)
@@ -123,10 +121,8 @@ namespace AdvancedWarsEngine.Classes
                 for (int fromTop = 0; fromTop < tiles.GetLength(1); fromTop++)
                 {
                     if (tiles[fromLeft, fromTop].OccupiedUnit == search || tiles[fromLeft, fromTop].OccupiedStructure == search)
-
                     {
                         return tiles[fromLeft, fromTop];
-
                     }
                 }
             }

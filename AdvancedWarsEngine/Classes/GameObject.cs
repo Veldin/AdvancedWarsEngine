@@ -24,14 +24,14 @@ namespace AdvancedWarsEngine.Classes
         public Rectangle rectangle;
         public string assemblyName;
         
-        protected  bool destroyed;
+        protected bool destroyed;
 
         //The sprite location and the CanvasBitmap are stored seperatly
         //This is so the location gets changed more times in a frame the canvasBitmap doesn't have to get loaded more then once a frame.
         //protected CanvasBitmap sprite;
         protected string location;
 
-        public GameObject(float width, float height, float fromTop, float fromLeft, string location = "Sprites/Units/Icons/Infantry/Green_AA_Infantry.png") //todo Change the default location
+        public GameObject(float width, float height, float fromTop, float fromLeft, string location = "Sprites/Units/Icons/Infantry/Green_AA_Infantry.gif") //todo Change the default location
         {
             this.width = width;
             this.height = height;

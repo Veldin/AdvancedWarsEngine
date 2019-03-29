@@ -5,16 +5,15 @@ namespace AdvancedWarsEngine.Classes
 {
     class Player
     {
-        private bool isControllable;                      // Checks if this player can be controlled by an actual person
+        protected bool isControllable;                      // Checks if this player can be controlled by an actual person
         private List<GameObject> gameObjects;               // All the gameObject that are owned by this player
-        private Player nextPlayer;                        // This is the who gets the turn when this players turn ends
-        private bool isDefeated;                            // Checks if the players is already defeated
+        protected Player nextPlayer;                        // This is the who gets the turn when this players turn ends
+        protected bool isDefeated;                          // Checks if the players is already defeated
 
         //Holds the selected unit.
-        private List<Unit> selectedUnit;                        //Holds the currently selected unit. It's a list because its easier with deselecting
-        private Structure selectedStructure;              //Holds the currently selected structure
-
-        private string colour;
+        private List<Unit> selectedUnit;                    //Holds the currently selected unit. It's a list because its easier with deselecting
+        protected Structure selectedStructure;                //Holds the currently selected structure
+        protected string colour;
 
         public Player(bool isControllable = false, string colour = "green")
         {
@@ -31,6 +30,12 @@ namespace AdvancedWarsEngine.Classes
             set { isControllable = value; }
         }
 
+        public Player NextPlayer
+        {
+            get { return nextPlayer; }
+            set { nextPlayer = value; }
+        }
+
         public bool IsDefeated
         {
             get { return isDefeated; }
@@ -43,21 +48,25 @@ namespace AdvancedWarsEngine.Classes
         /// </summary>
         public Unit SelectedUnit
         {
-            get {
+            get
+            {
                 if (selectedUnit.Count == 1)
                 {
                     return selectedUnit[0];
-                } else if (selectedUnit.Count == 0)
+                }
+                else if (selectedUnit.Count == 0)
                 {
                     return null;
-                } else
+                }
+                else
                 {
                     selectedUnit.Clear();
                     Debug.WriteLine("Player had multiple units selected. All units are deselected.");
                     return null;
                 }
             }
-            set {
+            set
+            {
                 selectedUnit.Clear();
                 selectedUnit.Add(value);
             }
@@ -69,16 +78,21 @@ namespace AdvancedWarsEngine.Classes
             set { selectedStructure = value; }
         }
 
+        public string Colour
+        {
+            get { return colour; }
+            set { colour = value; }
+        }
+
         public void AddGameObject(GameObject gameObject)
         {
             // Adds a GameObject to the list gameObjects 
-            gameObjects.Add(gameObject);    
+            gameObjects.Add(gameObject);
         }
 
         // Returns the whole list gameObjects
         public List<GameObject> GetGameObjects()
         {
-
             return gameObjects;
         }
 
@@ -92,16 +106,15 @@ namespace AdvancedWarsEngine.Classes
 
             foreach (GameObject gameObject in gameObjects)
             {
-                if (gameObject is Structure)
+                if (gameObject is Structure && !gameObject.Destroyed)
                 {
                     list.Add(gameObject as Structure);
                 }
             }
-
             return list;
         }
 
-        public void AllowedAllToAct()
+        public void AllowAllToAct()
         {
             foreach (GameObject gameObject in gameObjects)
             {
@@ -109,7 +122,7 @@ namespace AdvancedWarsEngine.Classes
             }
         }
 
-        public void AllowedNoneToAct()
+        public void AllowNoneToAct()
         {
             foreach (GameObject gameObject in gameObjects)
             {
@@ -153,20 +166,6 @@ namespace AdvancedWarsEngine.Classes
         public void DeselectUnit()
         {
             selectedUnit.Clear();
-        }
-
-        public Player NextPlayer
-        {
-            get {
-                return nextPlayer;
-            }
-            set { nextPlayer = value; }
-        }
-
-        public string Colour
-        {
-            get { return colour; }
-            set { colour = value; }
         }
     }
 }
