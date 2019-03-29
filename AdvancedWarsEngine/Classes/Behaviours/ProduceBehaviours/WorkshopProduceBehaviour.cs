@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class WorkshopProduceBehavior : IProduceBehaviour
+    class WorkshopProduceBehaviour : IProduceBehaviour
     {
         public string Produce()
         {

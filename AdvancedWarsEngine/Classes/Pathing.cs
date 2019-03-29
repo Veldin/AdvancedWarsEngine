@@ -282,8 +282,7 @@ namespace AdvancedWarsEngine.Classes
                 if (prevHor < 0 && nextVer > 0 || prevVer < 0 && nextHor > 0) { return "Sprites/Arrows/ArrowLeftToTop.gif"; }
                 if (prevHor > 0 && nextVer > 0 || prevVer < 0 && nextHor < 0) { return "Sprites/Arrows/ArrowTopToRight.gif"; }
             }
-
-            // Pls leave this for debug purpeses Rick
+            //Leave this comment
             //Debug.WriteLine(prevHor + "  " + prevVer + " " + nextHor + " " + nextVer);
 
             // If the right image location is not found return this one

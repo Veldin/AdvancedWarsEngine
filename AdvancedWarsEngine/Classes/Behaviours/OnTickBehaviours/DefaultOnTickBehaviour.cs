@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class DefaultOnTickBehavior : IOnTickBehavior
+    class DefaultOnTickBehaviour : IOnTickBehaviour
     {
         public bool OnTick(GameObject gameobject, List<GameObject> gameObjects, float delta)
         {
