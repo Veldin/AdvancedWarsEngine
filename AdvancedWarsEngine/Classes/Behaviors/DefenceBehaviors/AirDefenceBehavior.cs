@@ -9,7 +9,7 @@
             float defenceValue = baseValue;     // The total defence value which will be returned
 
             // Multiply the defenceValue based on the type of tile it's standing on
-            switch (tile.GetType().Name)     //Todo make enums or something for this
+            switch (tile.GetType().Name)        //Todo make enums or something for this
             {
                 case "Mountain":
                     defenceValue += baseValue * 0.2f;
