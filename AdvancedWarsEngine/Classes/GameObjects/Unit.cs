@@ -153,8 +153,8 @@ namespace AdvancedWarsEngine.Classes
             }
 
             // If there is a enemy Unit or enemy Structure on the tile, return true
-            if (tile.OccupiedUnit != null && player.InGameObjects(tile.OccupiedUnit) == false || 
-                tile.OccupiedStructure != null && !player.InGameObjects(tile.OccupiedUnit) == false)
+            if (tile.OccupiedUnit != null && !player.InGameObjects(tile.OccupiedUnit) || 
+                tile.OccupiedStructure != null && !player.InGameObjects(tile.OccupiedStructure))
             {
                 return true;
             }
