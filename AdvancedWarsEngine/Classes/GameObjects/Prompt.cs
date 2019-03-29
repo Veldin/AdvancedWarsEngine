@@ -9,7 +9,7 @@ namespace AdvancedWarsEngine.Classes
     class Prompt : GameObject
     {
         protected float maxDuration;
-        private float currentDuration;
+        protected float currentDuration;
         protected TextBlock textBlock;
         protected bool isUsingDuration;
         protected bool isAscending;
@@ -58,6 +58,13 @@ namespace AdvancedWarsEngine.Classes
             isAscending = false;
         }
 
+        // Getter and setter for maxDuration
+        public float MaxDuration
+        {
+            get { return maxDuration; }
+            set { maxDuration = value; }
+        }
+
         // Getter for the textBox
         public float CurrentDuration
         {
@@ -68,13 +75,6 @@ namespace AdvancedWarsEngine.Classes
         public TextBlock TextBlock
         {
             get { return textBlock; }
-        }
-
-        // Getter and setter for maxDuration
-        public float MaxDuration
-        {
-            get { return maxDuration; }
-            set { maxDuration = value; }
         }
 
         // Getter and setter for isUsingDuration
@@ -90,6 +90,12 @@ namespace AdvancedWarsEngine.Classes
             set { isAscending = value; }
         }
 
+        public bool IsFollowingCamera
+        {
+            get { return isFollowingCamera; }
+            set { isFollowingCamera = value; }
+        }
+
         public void IncreaseCurrentDuration(float time)
         {
             // Check if the prompt uses a duration
@@ -97,15 +103,6 @@ namespace AdvancedWarsEngine.Classes
 
             // Increase the currentDuration by the given value
             currentDuration += time;
-
-            
-
-        }
-
-        public bool IsFollowingCamera
-        {
-            get { return isFollowingCamera; }
-            set { isFollowingCamera = value; }
         }
     }
 }

@@ -107,7 +107,5 @@ namespace AdvancedWarsEngine.Classes
         {
             gameObjects.AddRange(list);
         }
-
-        
     }
 }
