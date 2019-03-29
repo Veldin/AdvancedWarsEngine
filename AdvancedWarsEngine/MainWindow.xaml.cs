@@ -1056,14 +1056,9 @@ namespace AdvancedWarsEngine
             // Get the correct sprite location
             //TODO: make 4 player support
             string spriteLocation;
-            if (world.CurrentPlayer.IsControllable)
-            {
-                spriteLocation = "/Sprites/TurnBanners/RedPlayer.png";
-            }
-            else
-            {
-                spriteLocation = "/Sprites/TurnBanners/BluePlayer.png";
-            }
+
+            spriteLocation = "/Sprites/TurnBanners/"+ world.CurrentPlayer.Colour + "Player.png";
+
 
             // Create the prompt and cast it to a prompt
             GameObject turnGameObject = promptFactory.GetGameObject(spriteLocation, 50, 16, 0, 0);
