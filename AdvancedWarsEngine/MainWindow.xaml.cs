@@ -31,6 +31,8 @@ namespace AdvancedWarsEngine
 
         private SolidColorBrush backgroundBrush;    //The brush used to fill in the background
 
+        private float skipTurnCooldown;             //Skiping turns cant be done directly at the start of the turn
+
         private Cursor cursor;                      //Holds information about the cursor
         private Prompt crosshair;                   //Holds information of the crosshair
         private Prompt selectedTileIndicator;       //Holds information about the selected crosshair
@@ -466,7 +468,7 @@ namespace AdvancedWarsEngine
 
             if (IsKeyPressed("Return"))
             {
-                if (world.Player.IsControllable)
+                if (world.Player.IsControllable && skipTurnCooldown < 1)
                 {
                     world.Player.AllowedNoneToAct();
                 }
@@ -697,13 +699,19 @@ namespace AdvancedWarsEngine
             //Selects the next world.Player.
             if (world.Player.HasAllowedUnits())
             {
-                //Do nothing, because the world.Player can still act with a unit
+                //Aslong as the player has allowed Units its his turn.
+
+                //Reduce the turn timer
+                skipTurnCooldown -= delta;
             }
             else
             {
                 //Other player has a turn.
                 world.Player.SelectedStructure = null;
                 world.Player.SelectedUnit = null;
+
+                //The first 8000 units of delta the skip turn is disabled
+                skipTurnCooldown = 8000;
 
                 //The turn of this world.Player has ended. Select the next world.Player, and allow all units to act
                 world.Player = world.Player.NextPlayer;
