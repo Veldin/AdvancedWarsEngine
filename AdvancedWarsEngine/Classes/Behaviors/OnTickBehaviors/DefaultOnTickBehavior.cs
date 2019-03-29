@@ -6,8 +6,33 @@ namespace AdvancedWarsEngine.Classes
 {
     class DefaultOnTickBehavior : IOnTickBehavior
     {
-        public bool OnTick(GameObject gameobject, List<GameObject> gameObjects, float delta)
+        public bool OnTick(GameObject gameobject, List<GameObject> gameObjects, float delta, Camera Camera)
         {
+            /* Default Unit behavior*/
+            if (gameobject is Prompt)
+            {
+                Prompt prompt = gameobject as Prompt;
+
+                if (prompt.IsUsingDuration)
+                {
+                    prompt.IncreaseCurrentDuration(delta);
+                }
+
+
+                if (prompt.CurrentDuration > prompt.MaxDuration && prompt.IsUsingDuration)
+                {
+                    prompt.Destroyed = true;
+                }
+
+                if (prompt.IsAscending)
+                {
+                    prompt.AddFromTop(-0.002f * delta);
+                }
+
+
+            }
+
+            /* Default Unit behavior*/
             if (gameobject is Unit && gameobject.Target != null)
             {
                 Unit unit = gameobject as Unit;

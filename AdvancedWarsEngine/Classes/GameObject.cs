@@ -165,14 +165,14 @@ namespace AdvancedWarsEngine.Classes
 
         //Any object can edit the gameObjects of the game while the logic is running.
         //And Also get the delta for timed events.
-        public bool OnTick(List<GameObject> gameObjects, float delta)
+        public bool OnTick(List<GameObject> gameObjects, float delta, Camera camera)
         {
 
             if (onTickBehavior == null)
             {
                 return false;
             }
-            return onTickBehavior.OnTick(this, gameObjects, delta);
+            return onTickBehavior.OnTick(this, gameObjects, delta, camera);
             
         }
 

@@ -1,6 +1,6 @@
 namespace AdvancedWarsEngine.Classes
 {
-    class Camera
+    public class Camera
     {
         private float fromTop;
         private float fromLeft;

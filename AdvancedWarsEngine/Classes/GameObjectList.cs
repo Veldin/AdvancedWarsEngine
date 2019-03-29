@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AdvancedWarsEngine.Classes
@@ -68,13 +69,14 @@ namespace AdvancedWarsEngine.Classes
             }
         }
 
-        public void OnTick(List<GameObject> gameObjects, float delta)
+
+        public void OnTick(List<GameObject> list, long delta, Camera camera)
         {
             foreach (GameObject gameObject in gameObjects)
             {
                 if (!(gameObject is null))
                 {
-                    gameObject.OnTick(gameObjects, delta);
+                    gameObject.OnTick( gameObjects, delta, camera);
                 }
             }
         }
@@ -105,5 +107,7 @@ namespace AdvancedWarsEngine.Classes
         {
             gameObjects.AddRange(list);
         }
+
+        
     }
 }

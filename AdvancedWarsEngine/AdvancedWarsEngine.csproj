@@ -97,6 +97,7 @@
     <Compile Include="Classes\Behaviors\DefenceBehaviors\InfantryDefenceBehavior.cs" />
     <Compile Include="Classes\Behaviors\ITileBehavior.cs" />
     <Compile Include="Classes\Behaviors\OnTickBehaviors\DefaultOnTickBehavior.cs" />
+    <Compile Include="Classes\Behaviors\OnTickBehaviors\FollowCameraBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\HQProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\IProduceBehaviour.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\AirportProduceBehavior.cs" />

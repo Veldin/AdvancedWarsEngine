@@ -7,12 +7,11 @@
         private int productionCooldownMax;
         private int productionCooldown;
 
-
-
         public Structure(float width, float height, float fromTop, float fromLeft, string sprite, IProduceBehaviour produceBehaviour)
             : base(width, height, fromTop, fromLeft, sprite)
         {
             productionCooldownMax = 8;
+            ProductionCooldown = 8;
 
             productionCooldown = productionCooldownMax;
             capturePoints = 1;

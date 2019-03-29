@@ -29,7 +29,6 @@ namespace AdvancedWarsEngine.Classes
             Unit unit = null;                                                   // The GameObject is the Unit that will be returned
 
             // Check which Unit should be created and create it
-            Debug.WriteLine(type);
             switch (type)
             {
                 case "AA_Infantry":     // Anti-Air Infantry

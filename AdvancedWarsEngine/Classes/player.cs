@@ -61,7 +61,6 @@ namespace AdvancedWarsEngine.Classes
                 else
                 {
                     selectedUnit.Clear();
-                    Debug.WriteLine("Player had multiple units selected. All units are deselected.");
                     return null;
                 }
             }

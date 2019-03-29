@@ -20,7 +20,7 @@ namespace AdvancedWarsEngine
         private long now;                           //This is the time of the frame. (To calculate the delta)
         private long then;                          //This is the time of the previous frame. (To calculate the delta)
 
-        private Camera camera;
+        public Camera camera;
         private World world;
 
         private GameObjectList gameObjects;
@@ -40,6 +40,8 @@ namespace AdvancedWarsEngine
 
         //Due to a known issue with StopWatch it runs slower on certain cpu architecture.
         private bool fastmode;                      //If true game is sped up
+
+        private bool canSpawnVictoryScreen;
 
         //Holds the factoryProducer
         FactoryProducer factoryProducer;
@@ -78,6 +80,8 @@ namespace AdvancedWarsEngine
             // Create a Pathing class
             pathing = new Pathing();
 
+            canSpawnVictoryScreen = true;
+
             /* Due to stopwatch returning defferent values for other CPU values we created a fast and a slow mode */
             fastmode = false;
 
@@ -91,10 +95,6 @@ namespace AdvancedWarsEngine
             //slow pc gives 0
             //quick pc gives 1
             if (change < 1){fastmode = true;}
-
-            Debug.WriteLine(fastmode);
-
-            Debug.WriteLine(fastmode);
 
             RunAsync();
 
@@ -285,6 +285,8 @@ namespace AdvancedWarsEngine
                     // Checks if the prompt has a TextBlock
                     if (prompt.TextBlock != null)
                     {
+
+                        
                         // Get the textBlock from the prompt
                         TextBlock textBlock = prompt.TextBlock;
 
@@ -292,15 +294,8 @@ namespace AdvancedWarsEngine
                         textBlock.Width = gameObject.Width;
                         textBlock.Height = gameObject.Height;
 
-                        if (prompt.IsFollowingCamera)
-                        {
-                            Canvas.SetLeft(textBlock, gameObject.FromLeft + camera.GetLeftOffSet());
-                            Canvas.SetTop(textBlock, gameObject.FromTop + camera.GetTopOffSet());
-                        } else
-                        {
-                            Canvas.SetLeft(textBlock, gameObject.FromLeft + camera.GetLeftOffSet());
-                            Canvas.SetTop(textBlock, gameObject.FromTop + camera.GetTopOffSet());
-                        }
+                        Canvas.SetLeft(textBlock, gameObject.FromLeft + camera.GetLeftOffSet());
+                        Canvas.SetTop(textBlock, gameObject.FromTop + camera.GetTopOffSet());
 
                         if (!TestCanvas.Children.Contains(textBlock))
                         {
@@ -309,7 +304,7 @@ namespace AdvancedWarsEngine
                         // Move the prompt a little bit up if isAscending is true
                         if (prompt.IsAscending)
                         {
-                            prompt.FromTop -= 0.02f;
+                            //prompt.FromTop -= 0.02f;
                         }
                     }
                     else
@@ -440,7 +435,7 @@ namespace AdvancedWarsEngine
             }
 
             //For every gameobject in the room
-            loopList.OnTick(gameObjects.List, delta);
+            loopList.OnTick(gameObjects.List, delta, camera);
 
             //Set the new curser location
             try
@@ -458,7 +453,9 @@ namespace AdvancedWarsEngine
                 // (The app is probably killed)
             }
 
-            //Key input
+            /*
+             *  Handle key input
+             */
             if (IsKeyPressed("W"))
             {
                 camera.AddFromTop((float)0.1);
@@ -510,7 +507,6 @@ namespace AdvancedWarsEngine
 
             if (IsKeyPressed("V"))
             {
-                Debug.WriteLine("The selected unit is deselected");
 
                 // Deselect the selected Unit
                 world.CurrentPlayer.DeselectUnit();
@@ -751,9 +747,10 @@ namespace AdvancedWarsEngine
                 skipTurnCooldown -= delta;
 
                 // Check if the player is defeated
-                if (CheckVictory(world.CurrentPlayer))
+                if (CheckVictory(world.CurrentPlayer) && canSpawnVictoryScreen)
                 {
                     CreateVictoryPrompt(true);
+                    canSpawnVictoryScreen = false;
                 }
                 }
             else
@@ -964,7 +961,6 @@ namespace AdvancedWarsEngine
                     {
                         playerNeelde = playerNeelde.NextPlayer;
                         playerNeelde.DeleteGameObject(gameObject);
-
                         i--;
                     }
                     
@@ -1008,6 +1004,9 @@ namespace AdvancedWarsEngine
             //Create the default cursor to use
             selectedTileIndicator = new Prompt(16, 16, 0, 0, "Sprites/TileSelectors/TileSelectorGreen.gif");
             gameObjects.Add(selectedTileIndicator);
+
+            //Allow to spawn victory screen
+            canSpawnVictoryScreen = true;
         }
 
         private void ClearWorld()
@@ -1076,6 +1075,7 @@ namespace AdvancedWarsEngine
             // Create the prompt and cast it to a prompt
             GameObject turnGameObject = promptFactory.GetGameObject(spriteLocation, 50, 16, 0, 0);
             Prompt turnPrompt = turnGameObject as Prompt;
+            turnPrompt.OnTickBehavior = new FollowCameraBehavior();
 
             // Give the prompt a maxDuration and set isUsingDuration on true
             turnPrompt.MaxDuration = 10000;
@@ -1141,12 +1141,14 @@ namespace AdvancedWarsEngine
 
             // Create the defeat prompt
             IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
-            GameObject defeat = promptFactory.GetGameObject(spriteLocation, 200, 64, camera.GetTopOffSet() + 75, camera.GetLeftOffSet() + 70);
-            Prompt defeatPrompt = defeat as Prompt;
+            Prompt defeatPrompt = (Prompt)promptFactory.GetGameObject(spriteLocation, 200, 64, camera.GetTopOffSet() + 75, camera.GetLeftOffSet() + 70);
+            defeatPrompt.OnTickBehavior = new FollowCameraBehavior();
 
             // Give the prompt a maxDuration and set isUsingDuration on true
             defeatPrompt.MaxDuration = 100000;
             defeatPrompt.IsUsingDuration = true;
+            defeatPrompt.IsFollowingCamera = true;
+
 
             // Add the prompt to the gameObjects list
             gameObjects.Add(defeatPrompt);

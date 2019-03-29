@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,7 +11,6 @@ namespace AdvancedWarsEngine.Classes
         protected float maxDuration;
         private float currentDuration;
         protected TextBlock textBlock;
-        protected Border border;
         protected bool isUsingDuration;
         protected bool isAscending;
         protected bool isFollowingCamera;
@@ -31,6 +31,8 @@ namespace AdvancedWarsEngine.Classes
             };
             SolidColorBrush textBrush = new SolidColorBrush(Colors.Red);
 
+            Debug.WriteLine(text);
+
             // Create a textBlock and set the necessary attributes
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
@@ -42,8 +44,9 @@ namespace AdvancedWarsEngine.Classes
                     Focusable = false,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     Padding = new Thickness(2, 0, 0, 8),
-                    FontSize = 10
-                };
+                    FontSize = 10,
+                    Opacity = 1
+            };
             });
         }
 
@@ -54,7 +57,13 @@ namespace AdvancedWarsEngine.Classes
             isUsingDuration = false;
             isAscending = false;
         }
-        
+
+        // Getter for the textBox
+        public float CurrentDuration
+        {
+            get { return currentDuration; }
+        }
+
         // Getter for the textBox
         public TextBlock TextBlock
         {
@@ -89,15 +98,8 @@ namespace AdvancedWarsEngine.Classes
             // Increase the currentDuration by the given value
             currentDuration += time;
 
-            // If the currentDuration is bigger than maxDuration, make it invisible and destroy it
-            if (currentDuration >= maxDuration)
-            {
-                if (textBlock != null)
-                {
-                    textBlock.Opacity = 0;
-                }
-                destroyed = true;
-            }
+            
+
         }
 
         public bool IsFollowingCamera
