@@ -24,7 +24,7 @@ namespace AdvancedWarsEngine.Classes
         public Rectangle rectangle;
         public string assemblyName;
         
-        public bool destroyed;
+        protected  bool destroyed;
 
         //The sprite location and the CanvasBitmap are stored seperatly
         //This is so the location gets changed more times in a frame the canvasBitmap doesn't have to get loaded more then once a frame.
@@ -97,6 +97,12 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return hightOffset; }
             set { hightOffset = value; }
+        }
+
+        public bool Destroyed
+        {
+            get { return destroyed; }
+            set { destroyed = value; }
         }
 
         public IOnTickBehavior OnTickBehavior
