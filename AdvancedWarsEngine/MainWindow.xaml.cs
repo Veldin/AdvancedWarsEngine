@@ -78,7 +78,7 @@ namespace AdvancedWarsEngine
             // Create a Pathing class
             pathing = new Pathing();
 
-            bool fastmode = false;
+            fastmode = false;
 
             //check
             long stopWatchTest;
@@ -94,6 +94,8 @@ namespace AdvancedWarsEngine
                 fastmode = true;
             }
 
+            Debug.WriteLine(fastmode);
+
             RunAsync();
 
         }
@@ -108,8 +110,7 @@ namespace AdvancedWarsEngine
             {
                 if (fastmode)
                 {
-                    Logic(delta * (long)1.5); //Run the logic of the simulation.
-
+                    Logic(delta * 3); //Run the logic of the simulation.
                 }
                 else
                 {
@@ -710,8 +711,9 @@ namespace AdvancedWarsEngine
 
                                     //Display the damageValue in a prompt
                                     Application.Current.Dispatcher.Invoke(delegate
-                                    {
-                                        gameObjects.Add(promtFactory.GetGameObject(dmgValue.ToString(), 50, 20, enemyGameObject.FromTop, enemyGameObject.FromLeft));
+                                    {                                       
+                                        gameObjects.Add(promtFactory.GetGameObject("", 22, 15, enemyGameObject.FromTop - 15, enemyGameObject.FromLeft-5));
+                                        gameObjects.Add(promtFactory.GetGameObject(dmgValue.ToString(), 20, 13, enemyGameObject.FromTop - 14, enemyGameObject.FromLeft-4));
                                     });
 
                                     //End the turn for this Unit and deselect it
@@ -1046,14 +1048,15 @@ namespace AdvancedWarsEngine
             IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
 
             // Get the correct sprite location
+            //TODO: make 4 player support
             string spriteLocation;
             if (world.CurrentPlayer.IsControllable)
             {
-                spriteLocation = "Sprites/playerTurn.gif";
+                spriteLocation = "/Sprites/TurnBanners/RedPlayer.png";
             }
             else
             {
-                spriteLocation = "Sprites/computerTurn.gif";
+                spriteLocation = "/Sprites/TurnBanners/BluePlayer.png";
             }
 
             // Create the prompt and cast it to a prompt

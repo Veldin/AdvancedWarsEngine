@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Advance Wars Engine" Height="350" Width="525"
+        Title="Advance Wars Engine" Height="350" Width="525" FontFamily="/AdvancedWarsEngine;component/Fonts/#Joystix Monospace"
 
         >
     <Viewbox  KeyUp="KeyUp" MouseLeftButtonDown="MouseDown" KeyDown="KeyDown" Margin="0" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.CachingHint="Cache" >
