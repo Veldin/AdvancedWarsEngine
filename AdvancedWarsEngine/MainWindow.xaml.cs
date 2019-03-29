@@ -747,9 +747,9 @@ namespace AdvancedWarsEngine
                 CreateTurnPrompt();
 
                 // Check if the player is defeated
-                if (CheckDefeat(world.Player))
+                if (CheckVictory(world.Player))
                 {
-                    //CreateDefeatPrompt(true);
+                    CreateVictoryPrompt(true);
                 }
 
                 Player nextPlayer = world.Player.NextPlayer;
@@ -1034,7 +1034,7 @@ namespace AdvancedWarsEngine
         /// </summary>
         /// <param name="player"> The player of which the defeat is checked</param>
         /// <returns> Returns if the player is defeated</returns>
-        private bool CheckDefeat(Player player)
+        private bool CheckVictory(Player player)
         {
             // Checks if the player is already marked as defeated
             if (player.IsDefeated)
@@ -1069,10 +1069,10 @@ namespace AdvancedWarsEngine
         /// Creates victory of defeat prompts
         /// </summary>
         /// <param name="isDefeated"> If is defeated create defeat promps else create victory prompts</param>
-        private void CreateDefeatPrompt(bool isDefeated)
+        private void CreateVictoryPrompt(bool isDefeated)
         {
             string spriteLocation = "";
-            if (isDefeated)
+            if (!isDefeated)
             {
                 spriteLocation = "Sprites/defeat.gif";
             }
@@ -1083,11 +1083,11 @@ namespace AdvancedWarsEngine
 
             // Create the defeat prompt
             IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
-            GameObject defeat = promptFactory.GetGameObject(spriteLocation, 50, 16, camera.GetTopOffSet(), camera.GetLeftOffSet() + 60);
+            GameObject defeat = promptFactory.GetGameObject(spriteLocation, 200, 64, camera.GetTopOffSet() + 75, camera.GetLeftOffSet() + 70);
             Prompt defeatPrompt = defeat as Prompt;
 
             // Give the prompt a maxDuration and set isUsingDuration on true
-            defeatPrompt.MaxDuration = 4000;
+            defeatPrompt.MaxDuration = 100000;
             defeatPrompt.IsUsingDuration = true;
 
             // Add the prompt to the gameObjects list
