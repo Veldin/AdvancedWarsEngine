@@ -1006,14 +1006,15 @@ namespace AdvancedWarsEngine
             IAbstractFactory promptFactory = factoryProducer.GetFactory("PromptFactory");
 
             // Get the correct sprite location
+            //TODO: make 4 player support
             string spriteLocation;
             if (world.Player.IsControllable)
             {
-                spriteLocation = "Sprites/playerTurn.gif";
+                spriteLocation = "/Sprites/TurnBanners/RedPlayer.png";
             }
             else
             {
-                spriteLocation = "Sprites/computerTurn.gif";
+                spriteLocation = "/Sprites/TurnBanners/BluePlayer.png";
             }
 
             // Create the prompt and cast it to a prompt
