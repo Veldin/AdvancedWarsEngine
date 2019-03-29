@@ -7,12 +7,12 @@ namespace AdvancedWarsEngine.Classes
 {
     class Unit : GameObject
     {
-        protected float health = 100;                   // The health of the Unit
+        protected float health = 75;                   // The health of the Unit
         protected float movementSpeed = 100;            // The movement speed of the Unit (for animations)
-        protected int movementRange = 2;                // The amount of tiles the Unit can move
-        protected IAttackBehavior attackBehavior;       // The attackBehavior calculates the dammageValue
-        protected IDefenceBehavior defenceBehavior;     // The defenceBehavior calculates the defenceValue
-        protected ITileBehavior tileBehavior;           // The tileBehavior checks if the unit is allowed on the given tile
+        protected int movementRange;                    // The amount of tiles the Unit can move
+        protected IAttackBehaviour attackBehaviour;       // The attackBehaviour calculates the dammageValue
+        protected IDefenceBehaviour defenceBehaviour;     // The defenceBehaviour calculates the defenceValue
+        protected ITileBehaviour tileBehaviour;           // The tileBehaviour checks if the unit is allowed on the given tile
         protected EUnitType unitType;                   // The unitType specifice the type of this Unit for example infantry or vehicle
         private bool found = false;
         private Tile tempTile = null;
@@ -24,13 +24,13 @@ namespace AdvancedWarsEngine.Classes
             unitType = EUnitType.Vehicle;
         }
 
-        public Unit(float width, float height, float fromTop, float fromLeft, string sprite, int movementRange, IAttackBehavior attackBehavior, IDefenceBehavior defenceBehavior, ITileBehavior tileBehavior, EUnitType unitType)
+        public Unit(float width, float height, float fromTop, float fromLeft, string sprite, int movementRange, IAttackBehaviour attackBehaviour, IDefenceBehaviour defenceBehaviour, ITileBehaviour tileBehaviour, EUnitType unitType)
             : base(width, height, fromTop, fromLeft, sprite)
         {
             this.movementRange = movementRange;
-            this.attackBehavior = attackBehavior;
-            this.defenceBehavior = defenceBehavior;
-            this.tileBehavior = tileBehavior;
+            this.attackBehaviour = attackBehaviour;
+            this.defenceBehaviour = defenceBehaviour;
+            this.tileBehaviour = tileBehaviour;
             this.unitType = unitType;
         }
 
@@ -54,12 +54,12 @@ namespace AdvancedWarsEngine.Classes
             get { return unitType; }
         }
 
-        /**********************************************************************
-         * This function does the actual attack
-         * ARGUMENTS:
-         * gameObject:  The gameObject that gets attacked
-         * tile:        The Tile where the gameObject that gets attacked stands on.
-         * ********************************************************************/
+        /// <summary>
+        /// This function does the actual attack to a Unit or Structure
+        /// </summary>
+        /// <param name="gameObject">The gameObject that gets attacked</param>
+        /// <param name="tile">The Tile where the gameObject that gets attacked stands on</param>
+        /// <returns></returns>
         public float Attack(GameObject gameObject, Tile tile)
         {
             // If the gameObject is a prompt give some feedback and return.
@@ -76,7 +76,7 @@ namespace AdvancedWarsEngine.Classes
                 Unit unit = gameObject as Unit;
 
                 // Calculate the damageValue
-                float damageValue = attackBehavior.Attack(this, unit) - unit.Defence(tile);
+                float damageValue = attackBehaviour.Attack(this, unit) - unit.Defence(tile);
 
                 // Make sure the Unit doesn't heal
                 if (damageValue < 0)
@@ -127,10 +127,10 @@ namespace AdvancedWarsEngine.Classes
             }
             return health;
         }
-        
+
         public float Defence(Tile tile)
         {
-            return defenceBehavior.Defence(this, tile);
+            return defenceBehaviour.Defence(this, tile);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace AdvancedWarsEngine.Classes
             }
 
             // If there is a enemy Unit or enemy Structure on the tile, return true
-            if (tile.OccupiedUnit != null && !player.InGameObjects(tile.OccupiedUnit) || 
+            if (tile.OccupiedUnit != null && !player.InGameObjects(tile.OccupiedUnit) ||
                 tile.OccupiedStructure != null && !player.InGameObjects(tile.OccupiedStructure))
             {
                 return true;
@@ -168,6 +168,13 @@ namespace AdvancedWarsEngine.Classes
             return false;
         }
 
+        /// <summary>
+        /// This function generates the a move that the uncontrollable players will do when it's their turn
+        /// </summary>
+        /// <param name="world"> The world that currently active is</param>
+        /// <param name="okay">??</param>
+        /// <param name="steps">??</param>
+        /// <returns> The target where the unit is going to move to</returns>
         public Target AutoMove(World world, bool okay, int steps)
         {
             this.steps = steps;
@@ -223,7 +230,6 @@ namespace AdvancedWarsEngine.Classes
                         }
                         while (steps < movementRange)
                         {
-                            Debug.WriteLine(y - world.Map.GetTileCoords(tempTile).GetFromLeft());
                             if (y - world.Map.GetTileCoords(tempTile).GetFromLeft() < 0 && okay)
                             {
                                 //target = new Target(x, y + 1);
@@ -263,7 +269,7 @@ namespace AdvancedWarsEngine.Classes
         /// <returns> Returns if the movement to this tile is allowed</returns>
         public bool IsTileAllowed(Tile tile)
         {
-            return tileBehavior.IsAllowed(tile);
+            return tileBehaviour.IsAllowed(tile);
         }
     }
 }

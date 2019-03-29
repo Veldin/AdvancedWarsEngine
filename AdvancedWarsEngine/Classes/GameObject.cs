@@ -19,7 +19,7 @@ namespace AdvancedWarsEngine.Classes
 
         protected Target target;
 
-        protected IOnTickBehavior onTickBehavior;
+        protected IOnTickBehaviour onTickBehaviour;
 
         public Rectangle rectangle;
         public string assemblyName;
@@ -38,7 +38,7 @@ namespace AdvancedWarsEngine.Classes
             this.fromLeft = fromLeft;
             this.fromTop = fromTop;
 
-            this.hightOffset = 0;
+            hightOffset = 0;
 
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
@@ -105,10 +105,10 @@ namespace AdvancedWarsEngine.Classes
             set { destroyed = value; }
         }
 
-        public IOnTickBehavior OnTickBehavior
+        public IOnTickBehaviour OnTickBehaviour
         {
-            get { return onTickBehavior; }
-            set { onTickBehavior = value; }
+            get { return onTickBehaviour; }
+            set { onTickBehaviour = value; }
         }
 
         public float AddWidth(float width)
@@ -168,11 +168,12 @@ namespace AdvancedWarsEngine.Classes
         public bool OnTick(List<GameObject> gameObjects, float delta, Camera camera)
         {
 
-            if (onTickBehavior == null)
+            if (onTickBehaviour == null)
             {
                 return false;
             }
-            return onTickBehavior.OnTick(this, gameObjects, delta, camera);
+
+            return onTickBehaviour.OnTick(this, gameObjects, delta, camera);
             
         }
 

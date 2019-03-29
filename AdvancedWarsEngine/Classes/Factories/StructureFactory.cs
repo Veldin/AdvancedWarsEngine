@@ -14,53 +14,53 @@
 
             // Define some local variables
             IProduceBehaviour produceBehaviour;                                   // The produceBehaviour of the Structure
-            IOnTickBehavior onTickBehavior = new DefaultOnTickBehavior();       // The default onTick of the Unit
+            IOnTickBehaviour onTickBehaviour = new DefaultOnTickBehaviour();       // The default onTick of the Unit
             GameObject structure = null;                                        // The GameObject is the Structure that will be returned
 
             // Check which Structure shoud be created and returned
             switch (type)
             {
                 case "Airport":
-                    // Create the behaviors
-                    produceBehaviour = new AirportProduceBehavior();
+                    // Create the Behaviours
+                    produceBehaviour = new AirportProduceBehaviour();
 
-                    // Create the Structure with the created behaviors
+                    // Create the Structure with the created Behaviours
                     structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Airport.gif", produceBehaviour);
                     (structure as Structure).HightOffset = 8;
                     (structure as Structure).ProductionCooldownMax = 7;
                     break;
 
                 case "Barracks":
-                    // Create the behaviors
-                    produceBehaviour = new BarracksProduceBehavior();
+                    // Create the Behaviours
+                    produceBehaviour = new BarracksProduceBehaviour();
 
-                    // Create the Structure with the created behaviors
+                    // Create the Structure with the created Behaviours
                     structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Barracks.gif", produceBehaviour);
                     (structure as Structure).HightOffset = 5;
                     (structure as Structure).ProductionCooldownMax = 5;
                     break;
 
                 case "HQ":
-                    // Create the behaviors
-                    produceBehaviour = new HQProduceBehavior();
+                    // Create the Behaviours
+                    produceBehaviour = new HQProduceBehaviour();
 
-                    // Create the Structure with the created behaviors
+                    // Create the Structure with the created Behaviours
                     structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_HQ.gif", produceBehaviour);
                     break;
 
                 case "Factory":
-                    // Create the behaviors
-                    produceBehaviour = new WorkshopProduceBehavior();
+                    // Create the Behaviours
+                    produceBehaviour = new WorkshopProduceBehaviour();
 
-                    // Create the Structure with the created behaviors
+                    // Create the Structure with the created Behaviours
                     structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Workshop.gif", produceBehaviour);
                     (structure as Structure).HightOffset = 7;
                     (structure as Structure).ProductionCooldownMax = 8;
                     break;
             }
 
-            //Set the onTickBehavior
-            structure.OnTickBehavior = onTickBehavior;
+            //Set the onTickBehaviour
+            structure.OnTickBehaviour = onTickBehaviour;
 
             // Return the Unit as GameObject
             return structure;

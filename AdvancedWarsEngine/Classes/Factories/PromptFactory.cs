@@ -17,7 +17,7 @@ namespace AdvancedWarsEngine.Classes
             // Check if the value is the location of an image
             bool isImage = (type.Contains(".png") || type.Contains(".gif"));
 
-            IOnTickBehavior onTickBehavior = new DefaultOnTickBehavior();       // The default onTick of the Unit
+            IOnTickBehaviour onTickBehaviour = new DefaultOnTickBehaviour();       // The default onTick of the Unit
 
             // Create the Prompt
             switch (isImage)
@@ -32,7 +32,7 @@ namespace AdvancedWarsEngine.Classes
 
             if (prompt != null)
             {
-                prompt.OnTickBehavior = onTickBehavior;
+                prompt.OnTickBehaviour = onTickBehaviour;
             }
 
             // Return the Prompt

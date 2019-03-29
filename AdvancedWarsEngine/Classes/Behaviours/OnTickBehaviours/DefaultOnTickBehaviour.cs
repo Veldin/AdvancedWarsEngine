@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class DefaultOnTickBehavior : IOnTickBehavior
+    class DefaultOnTickBehaviour : IOnTickBehaviour
     {
         public bool OnTick(GameObject gameobject, List<GameObject> gameObjects, float delta, Camera Camera)
         {
-            /* Default Unit behavior*/
+            /* Default Unit behaviour*/
             if (gameobject is Prompt)
             {
                 Prompt prompt = gameobject as Prompt;
@@ -32,7 +32,7 @@ namespace AdvancedWarsEngine.Classes
 
             }
 
-            /* Default Unit behavior*/
+            /* Default Unit behaviour*/
             if (gameobject is Unit && gameobject.Target != null)
             {
                 Unit unit = gameobject as Unit;
