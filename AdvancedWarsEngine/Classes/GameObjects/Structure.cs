@@ -14,7 +14,7 @@
         {
             productionCooldownMax = 8;
             productionCooldown = productionCooldownMax;
-            capturePoints = 100;
+            capturePoints = 1;
             this.produceBehavior = produceBehavior;
         }
 
@@ -27,7 +27,6 @@
         {
             get { return produceBehavior; }
         }
-
 
         public string GetProduced()
         {

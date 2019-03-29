@@ -24,7 +24,7 @@ namespace AdvancedWarsEngine.Classes
         public Rectangle rectangle;
         public string assemblyName;
         
-        protected  bool destroyed;
+        protected bool destroyed;
 
         //The sprite location and the CanvasBitmap are stored seperatly
         //This is so the location gets changed more times in a frame the canvasBitmap doesn't have to get loaded more then once a frame.

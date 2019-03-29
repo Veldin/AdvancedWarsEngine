@@ -39,7 +39,7 @@ namespace AdvancedWarsEngine
         private Pathing pathing;
 
         //Due to a known issue with StopWatch it runs slower on certain cpu architecture.
-        private bool fastmode;
+        private bool fastmode;                      //If true game is sped up
 
         //Holds the factoryProducer
         FactoryProducer factoryProducer;
@@ -88,7 +88,9 @@ namespace AdvancedWarsEngine
             // Create a Pathing class
             pathing = new Pathing();
 
-            bool fastmode = false;
+
+            /* Due to stopwatch returning defferent values for other CPU values we created a fast and a slow mode */
+            fastmode = false;
 
             //check
             long stopWatchTest;
@@ -99,10 +101,9 @@ namespace AdvancedWarsEngine
 
             //slow pc gives 0
             //quick pc gives 1
-            if (change < 1)
-            {
-                fastmode = true;
-            }
+            if (change < 1){fastmode = true;}
+
+            Debug.WriteLine(fastmode);
 
             RunAsync();
 
@@ -116,10 +117,10 @@ namespace AdvancedWarsEngine
             then = now; //Remember when this frame was.
             lock (this)
             {
+                //Speed the game up on slower stopwatches  
                 if (fastmode)
                 {
-                    Logic(delta * (long)1.5); //Run the logic of the simulation.
-
+                    Logic(delta * 3); //Run the logic of the simulation.
                 }
                 else
                 {
@@ -607,7 +608,7 @@ namespace AdvancedWarsEngine
                     List<GameObject> colourOverlay = pathing.ColourOverlay;
                     foreach (GameObject gameObject in colourOverlay)
                     {
-                        gameObjects.Remove(gameObject);
+                        gameObject.Destroyed = true;
                     }
 
                     //Clear the list in the pathing class
@@ -617,7 +618,7 @@ namespace AdvancedWarsEngine
                     List<GameObject> arrowPrompts = pathing.ArrowPrompts;
                     foreach (GameObject gameObject in arrowPrompts)
                     {
-                        gameObjects.Remove(gameObject);
+                        gameObject.Destroyed = true;
                     }
 
                     pressedOnTile.Selected = true;
@@ -730,7 +731,13 @@ namespace AdvancedWarsEngine
 
                 //Reduce the turn timer
                 skipTurnCooldown -= delta;
-            }
+
+                // Check if the player is defeated
+                if (CheckVictory(world.Player))
+                {
+                    CreateVictoryPrompt(true);
+                }
+                }
             else
             {
                 //Other player has a turn.
@@ -745,12 +752,6 @@ namespace AdvancedWarsEngine
 
                 // Create the prompt to shows whos turn it is
                 CreateTurnPrompt();
-
-                // Check if the player is defeated
-                if (CheckVictory(world.Player))
-                {
-                    CreateVictoryPrompt(true);
-                }
 
                 Player nextPlayer = world.Player.NextPlayer;
                 while (true)
@@ -938,6 +939,7 @@ namespace AdvancedWarsEngine
                     {
                         playerNeelde = playerNeelde.NextPlayer;
                         world.Player.DeleteGameObject(gameObject);
+                                
                         i--;
                     }
 
@@ -1043,25 +1045,12 @@ namespace AdvancedWarsEngine
             }
 
             // Get the list of gameObjects that the player has
-            List<GameObject> playersGameObjects = world.Player.GetGameObjects();
-
-            // Check if the player still has structures
-            bool hasStructures = false;
-            foreach (GameObject gameObject in playersGameObjects)
-            {
-                if (gameObject is Structure)
-                {
-                    hasStructures = true;
-                    break;
-                }
-            }
-
-            // If the player has no structues, mark the player as defeated
-            if (!hasStructures)
+            if(world.Player.GetStructures().Count < 1)
             {
                 player.IsDefeated = true;
                 return true;
             }
+
             return false;
         }
 

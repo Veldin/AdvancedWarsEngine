@@ -92,7 +92,7 @@ namespace AdvancedWarsEngine.Classes
 
             foreach (GameObject gameObject in gameObjects)
             {
-                if (gameObject is Structure)
+                if (gameObject is Structure && !gameObject.Destroyed)
                 {
                     list.Add(gameObject as Structure);
                 }
