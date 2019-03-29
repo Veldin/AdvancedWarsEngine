@@ -4,16 +4,15 @@ namespace AdvancedWarsEngine.Classes
 {
     class Player
     {
-        private bool isControllable;                      // Checks if this player can be controlled by an actual person
+        protected bool isControllable;                      // Checks if this player can be controlled by an actual person
         private List<GameObject> gameObjects;               // All the gameObject that are owned by this player
-        private Player nextPlayer;                        // This is the who gets the turn when this players turn ends
-        private bool isDefeated;                            // Checks if the players is already defeated
+        protected Player nextPlayer;                        // This is the who gets the turn when this players turn ends
+        protected bool isDefeated;                          // Checks if the players is already defeated
 
         //Holds the selected unit.
-        private Unit selectedUnit;                        //Holds the currently selected unit
-        private Structure selectedStructure;              //Holds the currently selected structure
-
-        private string colour;
+        protected Unit selectedUnit;                        //Holds the currently selected unit
+        protected Structure selectedStructure;              //Holds the currently selected structure
+        protected string colour;
 
         public Player(bool isControllable = false, string colour = "green")
         {
@@ -27,6 +26,12 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return isControllable; }
             set { isControllable = value; }
+        }
+
+        public Player NextPlayer
+        {
+            get { return nextPlayer; }
+            set { nextPlayer = value; }
         }
 
         public bool IsDefeated
@@ -47,6 +52,12 @@ namespace AdvancedWarsEngine.Classes
             set { selectedStructure = value; }
         }
 
+        public string Colour
+        {
+            get { return colour; }
+            set { colour = value; }
+        }
+
         public void AddGameObject(GameObject gameObject)
         {
             // Adds a GameObject to the list gameObjects 
@@ -56,10 +67,6 @@ namespace AdvancedWarsEngine.Classes
         // Returns the whole list gameObjects
         public List<GameObject> GetGameObjects()
         {
-            List<GameObject> gameObjects = new List<GameObject>();
-
-
-
             return gameObjects;
         }
 
@@ -78,11 +85,10 @@ namespace AdvancedWarsEngine.Classes
                     list.Add(gameObject as Structure);
                 }
             }
-
             return list;
         }
 
-        public void AllowedAllToAct()
+        public void AllowAllToAct()
         {
             foreach (GameObject gameObject in gameObjects)
             {
@@ -90,7 +96,7 @@ namespace AdvancedWarsEngine.Classes
             }
         }
 
-        public void AllowedNoneToAct()
+        public void AllowNoneToAct()
         {
             foreach (GameObject gameObject in gameObjects)
             {
@@ -126,20 +132,6 @@ namespace AdvancedWarsEngine.Classes
         {
             // Deletes a GameObject from the list gameObjects
             gameObjects.Remove(gameObject);
-        }
-
-        public Player NextPlayer
-        {
-            get {
-                return nextPlayer;
-            }
-            set { nextPlayer = value; }
-        }
-
-        public string Colour
-        {
-            get { return colour; }
-            set { colour = value; }
         }
     }
 }

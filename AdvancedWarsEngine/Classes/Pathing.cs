@@ -101,7 +101,6 @@ namespace AdvancedWarsEngine.Classes
                     continue;
                 }
             }
-
             // Clear the allowedTiles list because it has used it purpuse and should be empty for the next time it will be used
             allowedTiles.Clear();
 
@@ -116,7 +115,7 @@ namespace AdvancedWarsEngine.Classes
         /// <param name="unit"> The Unit wherefore the arrows are created</param>
         /// <param name="promptFactory"> The factory that creates the prompts </param>
         /// <returns> Returns a list of prompts which are the arrow images</returns>
-        public List<GameObject> CreateArrows( Target start, Target end, Unit unit, IAbstractFactory promptFactory, Player player, Map map)
+        public List<GameObject> CreateArrows(Target start, Target end, Unit unit, IAbstractFactory promptFactory, Player player, Map map)
         {
             // Get the path
             List<Tile> path = GetPath(start, end, unit, map, player);
@@ -167,6 +166,44 @@ namespace AdvancedWarsEngine.Classes
             return ArrowPrompts;
         }
 
+        /// <summary>
+        /// This function calculates the shortest path of for a Unit to get from A to B.
+        /// This function is also necessary for the creation of the colorOverlay and the arrowPrompts
+        /// </summary>
+        /// <param name="start"> The Target where the Unit starts</param>
+        /// <param name="end"> The Target of the destination of the Unit</param>
+        /// <param name="unit"> The Unit wherefore the path is created</param>
+        /// <returns> Returns a list of Tiles which is the shortes way to get from A to B</returns>
+        public List<Tile> GetPath(Target start, Target end, Unit unit, Map map, Player player)
+        {
+            // Clear the previous made paths
+            paths.Clear();
+
+            // Create the pathes
+            CreatePaths(start, end, unit, map, player, null);
+
+            // Set some variables
+            int tilesDistance = -1;
+            List<Tile> finalPath = null;
+
+            // Pick the shortest path
+            foreach (List<Tile> tmp in paths)
+            {
+                // If no distance and path is set, set them
+                if (tilesDistance == -1)
+                {
+                    tilesDistance = tmp.Count;
+                    finalPath = tmp;
+                } // if the path is shorter than the currently selected replace the old one with the shorter one
+                else if (tmp.Count < tilesDistance)
+                {
+                    tilesDistance = tmp.Count;
+                    finalPath = tmp;
+                }
+            }
+            return finalPath;
+        }
+
         /***************************************************************
          * Private functions
          * ************************************************************/
@@ -196,9 +233,9 @@ namespace AdvancedWarsEngine.Classes
 
             // The meaning of the results of the comparision
             // -1 is prev left from curr 
-            //  1 is prev right from cuur
+            //  1 is prev right from curr
             // -1 is prev above curr
-            //  1 is perv under curr
+            //  1 is prev under curr
             // -1 is curr left from next 
             // -1 is curr above next
 
@@ -323,44 +360,6 @@ namespace AdvancedWarsEngine.Classes
                     CreatePaths(tileTarget, end, unit, map, player, tmpPath);
                 }
             }
-        }
-
-        /// <summary>
-        /// This function calculates the shortest path of for a Unit to get from A to B.
-        /// This function is also necessary for the creation of the colorOverlay and the arrowPrompts
-        /// </summary>
-        /// <param name="start"> The Target where the Unit starts</param>
-        /// <param name="end"> The Target of the destination of the Unit</param>
-        /// <param name="unit"> The Unit wherefore the path is created</param>
-        /// <returns> Returns a list of Tiles which is the shortes way to get from A to B</returns>
-        public List<Tile> GetPath(Target start, Target end, Unit unit, Map map, Player player)
-        {
-            // Clear the previous made paths
-            paths.Clear();
-
-            // Create the pathes
-            CreatePaths(start, end, unit, map, player, null);
-
-            // Set some variables
-            int tilesDistance = -1;
-            List<Tile> finalPath = null;
-
-            // Pick the shortest path
-            foreach (List<Tile> tmp in paths)
-            {
-                // If no distance and path is set, set them
-                if (tilesDistance == -1)
-                {
-                    tilesDistance = tmp.Count;
-                    finalPath = tmp;
-                } // if the path is shorter than the currently selected replace the old one with the shorter one
-                else if (tmp.Count < tilesDistance)
-                {
-                    tilesDistance = tmp.Count;
-                    finalPath = tmp;
-                }
-            }
-            return finalPath;
         }
     }
 }

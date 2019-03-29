@@ -47,26 +47,7 @@ namespace AdvancedWarsEngine.Classes
             isUsingDuration = false;
             isAscending = false;
         }
-
-        public void IncreaseCurrentDuration(float time)
-        {
-            // Check if the prompt uses a duration
-            if (!isUsingDuration) { return; }
-
-            // Increase the currentDuration by the given value
-            currentDuration += time;
-
-            // If the currentDuration is bigger than maxDuration, make it invisible and destroy it
-            if (currentDuration >= maxDuration)
-            {
-                if (textBlock != null)
-                {
-                    textBlock.Opacity = 0;
-                }
-                destroyed = true;
-            }
-        }
-
+        
         // Getter for the textBox
         public TextBlock TextBlock
         {
@@ -91,6 +72,25 @@ namespace AdvancedWarsEngine.Classes
         {
             get { return isAscending; }
             set { isAscending = value; }
+        }
+
+        public void IncreaseCurrentDuration(float time)
+        {
+            // Check if the prompt uses a duration
+            if (!isUsingDuration) { return; }
+
+            // Increase the currentDuration by the given value
+            currentDuration += time;
+
+            // If the currentDuration is bigger than maxDuration, make it invisible and destroy it
+            if (currentDuration >= maxDuration)
+            {
+                if (textBlock != null)
+                {
+                    textBlock.Opacity = 0;
+                }
+                destroyed = true;
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace AdvancedWarsEngine.Classes
 {
-    class WorkshopProduceBehavior : IProduceBehavior
+    class WorkshopProduceBehavior : IProduceBehaviour
     {
         public string Produce()
         {

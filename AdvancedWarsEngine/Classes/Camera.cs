@@ -5,12 +5,11 @@ namespace AdvancedWarsEngine.Classes
         private float fromTop;
         private float fromLeft;
 
-        private float currentMapHeight;
-        private float currentMapWidth;
+        private readonly float currentMapHeight;
+        private readonly float currentMapWidth;
 
-        private float bottomLine;
-        private float rightLine;
-
+        private readonly float bottomLine;
+        private readonly float rightLine;
 
         public Camera(int mapHeight, int mapWidth)
         {
@@ -34,19 +33,14 @@ namespace AdvancedWarsEngine.Classes
             return fromTop + ((float)112.5 / 2);
         }
 
-        public float GetFromTop()
+        public float FromTop
         {
-            return fromTop;
+            get { return fromTop; }
         }
 
-        public float GetFromLeft()
+        public float FromLeft
         {
-            return fromLeft;
-        }
-
-        public void SetFromLeft(float fromLeft)
-        {
-            this.fromLeft = fromLeft;
+            get { return fromLeft; }
         }
 
         public void AddFromLeft(float fromLeft)
