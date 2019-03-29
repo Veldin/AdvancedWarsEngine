@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -10,8 +11,8 @@ namespace AdvancedWarsEngine.Classes
         protected bool isDefeated;                          // Checks if the players is already defeated
 
         //Holds the selected unit.
-        protected Unit selectedUnit;                        //Holds the currently selected unit
-        protected Structure selectedStructure;              //Holds the currently selected structure
+        private List<Unit> selectedUnit;                    //Holds the currently selected unit. It's a list because its easier with deselecting
+        protected Structure selectedStructure;                //Holds the currently selected structure
         protected string colour;
 
         public Player(bool isControllable = false, string colour = "green")
@@ -20,6 +21,7 @@ namespace AdvancedWarsEngine.Classes
             isDefeated = false;
             this.colour = colour;
             gameObjects = new List<GameObject>();
+            selectedUnit = new List<Unit>();
         }
 
         public bool IsControllable
@@ -40,10 +42,34 @@ namespace AdvancedWarsEngine.Classes
             set { isDefeated = value; }
         }
 
+        /// <summary>
+        /// This is the getter and setter of the selectedUnit list. It can only hold one unit.
+        /// It's a list because it can be cleared without setting the Unit to null
+        /// </summary>
         public Unit SelectedUnit
         {
-            get { return selectedUnit; }
-            set { selectedUnit = value; }
+            get
+            {
+                if (selectedUnit.Count == 1)
+                {
+                    return selectedUnit[0];
+                }
+                else if (selectedUnit.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    selectedUnit.Clear();
+                    Debug.WriteLine("Player had multiple units selected. All units are deselected.");
+                    return null;
+                }
+            }
+            set
+            {
+                selectedUnit.Clear();
+                selectedUnit.Add(value);
+            }
         }
 
         public Structure SelectedStructure
@@ -132,6 +158,14 @@ namespace AdvancedWarsEngine.Classes
         {
             // Deletes a GameObject from the list gameObjects
             gameObjects.Remove(gameObject);
+        }
+
+        /// <summary>
+        /// Deselect the selectedUnit by clearing the list
+        /// </summary>
+        public void DeselectUnit()
+        {
+            selectedUnit.Clear();
         }
     }
 }

@@ -98,9 +98,7 @@
     <Compile Include="Classes\Behaviors\ITileBehavior.cs" />
     <Compile Include="Classes\Behaviors\OnTickBehaviors\DefaultOnTickBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\HQProduceBehavior.cs" />
-    <Compile Include="Classes\Behaviors\RangeBehaviors\LowRangeBehavior.cs" />
     <Compile Include="Classes\Behaviors\IProduceBehaviour.cs" />
-    <Compile Include="Classes\Behaviors\IRangeBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\AirportProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\BarracksProduceBehavior.cs" />
     <Compile Include="Classes\Behaviors\ProduceBehaviors\WorkshopProduceBehavior.cs" />
@@ -160,6 +158,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -211,9 +210,7 @@
     <Resource Include="Sprites\Cursors\defaultCursor.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Sprites\computerTurn.gif" />
     <Resource Include="Sprites\defeat.gif" />
-    <Resource Include="Sprites\playerTurn.gif" />
     <Resource Include="Sprites\victory.gif" />
   </ItemGroup>
   <ItemGroup>
@@ -348,6 +345,13 @@
     <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AA_Vehicle.gif" />
     <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AI_Vehicle.gif" />
     <Resource Include="Sprites\Units\Icons\Vehicle\Yellow_AV_Vehicle.gif" />
+    <Resource Include="Sprites\unitDisabled.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\TurnBanners\BluePlayer.png" />
+    <Resource Include="Sprites\TurnBanners\GreenPlayer.png" />
+    <Resource Include="Sprites\TurnBanners\RedPlayer.png" />
+    <Resource Include="Sprites\TurnBanners\YellowPlayer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

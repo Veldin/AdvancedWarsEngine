@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -22,6 +23,11 @@ namespace AdvancedWarsEngine.Classes
 
                 float moveTopDistance = unit.MovementSpeed * (differenceTopPercent / 100);
                 float moveLeftDistance = unit.MovementSpeed * (differenceLeftPercent / 100);
+
+                if (totalDifferenceAbs < 2)
+                {
+                    return true;
+                }
 
                 if (gameobject.Target.GetFromLeft() > gameobject.FromLeft)
                 {

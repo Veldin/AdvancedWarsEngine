@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace AdvancedWarsEngine.Classes
 {
@@ -32,6 +33,7 @@ namespace AdvancedWarsEngine.Classes
         public void EmptyColorOverlay()
         {
             ColourOverlay.Clear();
+            allowedTiles.Clear();
         }
 
         /// <summary>
@@ -79,6 +81,22 @@ namespace AdvancedWarsEngine.Classes
                     }
                 } // The tile contains only a Unit
                 else if (tile.OccupiedUnit != null && tile.OccupiedStructure == null)
+                {
+                    // Check if the Unit is allied
+                    if (player.InGameObjects(tile.OccupiedUnit))
+                    {
+                        //Create allied prompt
+                        ColourOverlay.Add(factory.GetGameObject("Sprites/RangeIndicators/rangeIndicatorBlue.png", 16, 16, fromTop, fromLeft));
+                        continue;
+                    }
+                    else
+                    {
+                        //Create attack prompt
+                        ColourOverlay.Add(factory.GetGameObject("Sprites/RangeIndicators/rangeIndicatorRed.png", 16, 16, fromTop, fromLeft));
+                        continue;
+                    }
+                }
+                else if (tile.OccupiedUnit != null && tile.OccupiedStructure != null)
                 {
                     // Check if the Unit is allied
                     if (player.InGameObjects(tile.OccupiedUnit))
@@ -259,11 +277,14 @@ namespace AdvancedWarsEngine.Classes
             {
                 if (prevHor == 0 && nextHor == 0) { return "Sprites/Arrows/ArrowTopToBottom.gif"; }
                 if (prevVer == 0 && nextVer == 0) { return "Sprites/Arrows/ArrowLeftToRight.gif"; }
-                if (prevHor < 0 && nextVer < 0 || prevVer < 0 && nextHor > 0) { return "Sprites/Arrows/ArrowBottomToLeft.gif"; }
-                if (prevHor > 0 && nextVer < 0 || prevVer < 0 && nextHor > 0) { return "Sprites/Arrows/ArrowBottomToRight.gif"; }
+                if (prevHor < 0 && nextVer < 0 || prevVer > 0 && nextHor > 0) { return "Sprites/Arrows/ArrowBottomToLeft.gif"; }
+                if (prevHor > 0 && nextVer < 0 || prevVer > 0 && nextHor < 0) { return "Sprites/Arrows/ArrowBottomToRight.gif"; }
                 if (prevHor < 0 && nextVer > 0 || prevVer < 0 && nextHor > 0) { return "Sprites/Arrows/ArrowLeftToTop.gif"; }
                 if (prevHor > 0 && nextVer > 0 || prevVer < 0 && nextHor < 0) { return "Sprites/Arrows/ArrowTopToRight.gif"; }
             }
+
+            // Pls leave this for debug purpeses Rick
+            //Debug.WriteLine(prevHor + "  " + prevVer + " " + nextHor + " " + nextVer);
 
             // If the right image location is not found return this one
             return "Sprites/Arrows/ArrowHeadBottomToLeft.gif";
@@ -297,7 +318,7 @@ namespace AdvancedWarsEngine.Classes
                 // Check if there can be moved to this tile
                 if (!unit.IsTileAllowed(tile))
                 {
-                    if (tile.OccupiedUnit != null)
+                    if (tile.OccupiedUnit != null || tile.OccupiedStructure != null)
                     {
                         // The tile is allowed so try to add it to the list
                         if (!allowedTiles.Contains(tile))
