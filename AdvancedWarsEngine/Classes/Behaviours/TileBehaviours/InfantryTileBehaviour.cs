@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class VehicleTileBehavior : ITileBehavior
+    class InfantryTileBehaviour : ITileBehaviour
     {
         public bool IsAllowed(Tile targetTile)
         {
@@ -14,7 +14,7 @@ namespace AdvancedWarsEngine.Classes
             switch (targetTile.GetType().Name)
             {
                 case "Mountain":
-                    return false;
+                    break;
                 case "Plain":
                     break;
                 case "Forest":

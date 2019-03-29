@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    interface ITileBehavior
+    interface ITileBehaviour
     {
         /****************************************************
          * This function checks if the Unit is allowed on the

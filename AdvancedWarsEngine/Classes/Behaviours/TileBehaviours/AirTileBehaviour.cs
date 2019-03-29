@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class InfantryTileBehavior : ITileBehavior
+    class AirTileBehaviour : ITileBehaviour
     {
         public bool IsAllowed(Tile targetTile)
         {
@@ -20,7 +20,7 @@ namespace AdvancedWarsEngine.Classes
                 case "Forest":
                     break;
                 case "Water":
-                    return false;
+                    break;
                 case "Urban":
                     break;
                 case "Road":
