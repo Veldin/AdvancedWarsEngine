@@ -645,6 +645,7 @@ namespace AdvancedWarsEngine
                         world.CurrentPlayer.SelectedUnit = pressedOnTile.OccupiedUnit;
 
                         /*************************************** AUTOMOVE ***************************************/
+                        /*
                         int stepsRemaining = 0;
                         bool okay = true;
                         while (!Move(world.CurrentPlayer.SelectedUnit.AutoMove(world, okay, stepsRemaining)))
@@ -658,7 +659,7 @@ namespace AdvancedWarsEngine
                             {
                                 stepsRemaining++;
                             }
-                        }
+                        }*/
                         /****************************************************************************************/
 
                         /*************************************** OLD MOVE ***************************************/
@@ -962,20 +963,23 @@ namespace AdvancedWarsEngine
                     while (playerNeelde.NextPlayer != null && i > 0)
                     {
                         playerNeelde = playerNeelde.NextPlayer;
-
-                        world.CurrentPlayer.DeleteGameObject(gameObject);
+                        playerNeelde.DeleteGameObject(gameObject);
 
                         i--;
                     }
-
+                    
                     //If a gameObject is marked to be destroyed remove it from the list and remove them from the canvas
                     gameObjects.Remove(gameObject);
                     Application.Current.Dispatcher.Invoke(delegate
                     {
                         TestCanvas.Children.Remove(gameObject.rectangle);
                     });
+
+
                 }
             }
+
+
             //Unpres the left mouse button (As there is no event that fires the mouse up)
             pressedKeys.Remove("LeftMouseButton");
         }

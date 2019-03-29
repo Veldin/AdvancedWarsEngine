@@ -123,8 +123,12 @@ namespace AdvancedWarsEngine.Classes
                     break;
             }
 
-            //Set the onTickBehavior
-            unit.OnTickBehavior = onTickBehavior;
+            // If unit is not set dont try to set the onTickBehavior
+            if (unit != null)
+            {
+                // Set the onTickBehavior
+                unit.OnTickBehavior = onTickBehavior;
+            }
 
             // Return the Unit as GameObject
             return unit;
