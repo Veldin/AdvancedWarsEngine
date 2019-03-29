@@ -88,7 +88,7 @@ namespace AdvancedWarsEngine
             // Create a Pathing class
             pathing = new Pathing();
 
-            bool fastmode = false;
+            fastmode = false;
 
             //check
             long stopWatchTest;
@@ -104,6 +104,8 @@ namespace AdvancedWarsEngine
                 fastmode = true;
             }
 
+            Debug.WriteLine(fastmode);
+
             RunAsync();
 
         }
@@ -118,8 +120,7 @@ namespace AdvancedWarsEngine
             {
                 if (fastmode)
                 {
-                    Logic(delta * (long)1.5); //Run the logic of the simulation.
-
+                    Logic(delta * 3); //Run the logic of the simulation.
                 }
                 else
                 {
