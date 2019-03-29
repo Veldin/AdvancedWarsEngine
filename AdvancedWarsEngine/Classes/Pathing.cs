@@ -119,7 +119,6 @@ namespace AdvancedWarsEngine.Classes
                     continue;
                 }
             }
-
             // Clear the allowedTiles list because it has used it purpuse and should be empty for the next time it will be used
             allowedTiles.Clear();
 
@@ -134,7 +133,7 @@ namespace AdvancedWarsEngine.Classes
         /// <param name="unit"> The Unit wherefore the arrows are created</param>
         /// <param name="promptFactory"> The factory that creates the prompts </param>
         /// <returns> Returns a list of prompts which are the arrow images</returns>
-        public List<GameObject> CreateArrows( Target start, Target end, Unit unit, IAbstractFactory promptFactory, Player player, Map map)
+        public List<GameObject> CreateArrows(Target start, Target end, Unit unit, IAbstractFactory promptFactory, Player player, Map map)
         {
             // Get the path
             List<Tile> path = GetPath(start, end, unit, map, player);
@@ -252,9 +251,9 @@ namespace AdvancedWarsEngine.Classes
 
             // The meaning of the results of the comparision
             // -1 is prev left from curr 
-            //  1 is prev right from cuur
+            //  1 is prev right from curr
             // -1 is prev above curr
-            //  1 is perv under curr
+            //  1 is prev under curr
             // -1 is curr left from next 
             // -1 is curr above next
 
@@ -383,7 +382,5 @@ namespace AdvancedWarsEngine.Classes
                 }
             }
         }
-
-
     }
 }

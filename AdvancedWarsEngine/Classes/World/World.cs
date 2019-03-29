@@ -5,26 +5,14 @@ namespace AdvancedWarsEngine.Classes
     class World
     {
         protected Map map;
-        protected Player player;
+        protected Player currentPlayer;
 
-        Player firstPlayer; //red
-        Player secondPlayer; //blue
-        Player thirdPlayer; //green
-        Player fourthPlayer; //yellow
+        private Player firstPlayer; //red
+        private Player secondPlayer; //blue
+        private Player thirdPlayer; //green
+        private Player fourthPlayer; //yellow
 
-        IAbstractFactory factory;
-
-        public Map Map
-        {
-            get { return map; }
-            set { map = value; }
-        }
-
-        public Player Player
-        {
-            get { return player; }
-            set { player = value; }
-        }
+        private readonly IAbstractFactory factory;
 
         public World(FactoryProducer factoryProducer, string level = "plainlevel")
         {
@@ -75,8 +63,8 @@ namespace AdvancedWarsEngine.Classes
                     SpawnStructure(secondPlayer, factory, "Barracks", 16, 16, 16, 8, secondPlayer.Colour);
                     SpawnStructure(secondPlayer, factory, "Factory", 16, 16, 17, 5, secondPlayer.Colour);
                     SpawnStructure(secondPlayer, factory, "Airport", 16, 16, 17, 6, secondPlayer.Colour);
-                    
-                    //SpawnStructure(thirdPlayer, factory, "HQ", 16, 16, 10, 24, thirdPlayer.Colour);
+
+                    SpawnStructure(thirdPlayer, factory, "HQ", 16, 16, 10, 24, thirdPlayer.Colour);
                     SpawnStructure(thirdPlayer, factory, "Barracks", 16, 16, 6, 22, thirdPlayer.Colour);
                     SpawnStructure(thirdPlayer, factory, "Factory", 16, 16, 6, 23, thirdPlayer.Colour);
                     SpawnStructure(thirdPlayer, factory, "Barracks", 16, 16, 6, 25, thirdPlayer.Colour);
@@ -93,7 +81,7 @@ namespace AdvancedWarsEngine.Classes
                     thirdPlayer.NextPlayer = firstPlayer;
 
                     //Set the reference to the first player
-                    player = firstPlayer;
+                    currentPlayer = firstPlayer;
                     break;
                 case "lavalevel":
                     firstPlayer = new Player(true, "Red");           //First player is controlable
@@ -142,7 +130,7 @@ namespace AdvancedWarsEngine.Classes
                     fourthPlayer.NextPlayer = firstPlayer;
 
                     //Set the reference to the first player
-                    player = firstPlayer;
+                    currentPlayer = firstPlayer;
                     break;
                 default: //plainlevel
                     //This map has two players
@@ -150,18 +138,18 @@ namespace AdvancedWarsEngine.Classes
                     secondPlayer = new Player(true, "Blue");         //Second player is not controllable
 
                     factory = factoryProducer.GetFactory("UnitFactory");
-                    
+
                     //Adding the units to the first player
                     Unit testUnit = (Unit)factory.GetGameObject("AA_Infantry", 16, 16, 0, 0, firstPlayer.Colour);
-                    testUnit.Target = new Target(6 * 16, 12 * 16);
-                    map.GetTile(6, 12).OccupiedUnit = testUnit;
+                    testUnit.Target = new Target(6 * 16, 15 * 16);
+                    map.GetTile(6, 15).OccupiedUnit = testUnit;
                     firstPlayer.AddGameObject(testUnit);
 
                     //Adding the units to the second player
                     Unit testUnit2 = (Unit)factory.GetGameObject("AI_Vehicle", 16, 16, 32, 32, secondPlayer.Colour);
                     testUnit2.Target = new Target(7 * 16, 9 * 16);
                     map.GetTile(7, 9).OccupiedUnit = testUnit2;
-                    secondPlayer.AddGameObject(testUnit2); 
+                    secondPlayer.AddGameObject(testUnit2);
 
                     //Change factory to produce structures
                     factory = factoryProducer.GetFactory("StructureFactory");
@@ -183,9 +171,21 @@ namespace AdvancedWarsEngine.Classes
                     secondPlayer.NextPlayer = firstPlayer;
 
                     //Set the reference to the first player
-                    player = firstPlayer;
-                break;   
+                    currentPlayer = firstPlayer;
+                    break;
             }
+        }
+
+        public Map Map
+        {
+            get { return map; }
+            set { map = value; }
+        }
+
+        public Player CurrentPlayer
+        {
+            get { return currentPlayer; }
+            set { currentPlayer = value; }
         }
 
         public void SpawnStructure(Player player, IAbstractFactory factory, string type, int width, int  height, int fromTop, int fromLeft, string colour)
@@ -222,7 +222,6 @@ namespace AdvancedWarsEngine.Classes
 
                 }
             }
-
             return gameObjects;
         }
     }

@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace AdvancedWarsEngine.Classes
+﻿namespace AdvancedWarsEngine.Classes
 {
     class StructureFactory : IAbstractFactory
     {
@@ -15,42 +13,46 @@ namespace AdvancedWarsEngine.Classes
             }
 
             // Define some local variables
-            IProduceBehavior produceBehavior;                                   // The produceBehavior of the Structure
+            IProduceBehaviour produceBehaviour;                                   // The produceBehaviour of the Structure
             IOnTickBehavior onTickBehavior = new DefaultOnTickBehavior();       // The default onTick of the Unit
             GameObject structure = null;                                        // The GameObject is the Structure that will be returned
-
-            Debug.WriteLine(type);
 
             // Check which Structure shoud be created and returned
             switch (type)
             {
                 case "Airport":
                     // Create the behaviors
-                    produceBehavior = new AirportProduceBehavior();
+                    produceBehaviour = new AirportProduceBehavior();
 
                     // Create the Structure with the created behaviors
-                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Airport.gif", produceBehavior);
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Airport.gif", produceBehaviour);
                     (structure as Structure).ProductionCooldownMax = 8;
                     break;
 
                 case "Barracks":
                     // Create the behaviors
-                    produceBehavior = new BarracksProduceBehavior();
+                    produceBehaviour = new BarracksProduceBehavior();
 
                     // Create the Structure with the created behaviors
-                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Barracks.gif", produceBehavior);
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Barracks.gif", produceBehaviour);
                     (structure as Structure).ProductionCooldownMax = 5;
-                    structure.HightOffset = 16 / 2;
+                    break;
+
+                case "HQ":
+                    // Create the behaviors
+                    produceBehaviour = new HQProduceBehavior();
+
+                    // Create the Structure with the created behaviors
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_HQ.gif", produceBehaviour);
                     break;
 
                 case "Factory":
                     // Create the behaviors
-                    produceBehavior = new WorkshopProduceBehavior();
+                    produceBehaviour = new WorkshopProduceBehavior();
 
                     // Create the Structure with the created behaviors
-                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Workshop.gif", produceBehavior);
+                    structure = new Structure(width, height, fromTop, fromLeft, "Sprites/Structures/" + colour + "_Workshop.gif", produceBehaviour);
                     (structure as Structure).ProductionCooldownMax = 7;
-                    structure.HightOffset = 16 / 2;
                     break;
             }
 
