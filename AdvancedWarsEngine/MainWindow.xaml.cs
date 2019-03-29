@@ -488,7 +488,7 @@ namespace AdvancedWarsEngine
                 List<GameObject> colourOverlay = pathing.ColourOverlay;
                 foreach (GameObject gameObject in colourOverlay)
                 {
-                    gameObjects.Remove(gameObject);
+                    gameObject.Destroyed = true;
                 }
 
                 //Clear the list in the pathing class
@@ -498,7 +498,7 @@ namespace AdvancedWarsEngine
                 List<GameObject> arrowPrompts = pathing.ArrowPrompts;
                 foreach (GameObject gameObject in arrowPrompts)
                 {
-                    gameObjects.Remove(gameObject);
+                    gameObject.Destroyed = true;
                 }
             }
 
@@ -849,7 +849,7 @@ namespace AdvancedWarsEngine
                 for (int fromTop = 0; fromTop < world.Map.Tiles.GetLength(1); fromTop += 1)
                 {
                     if (world.Map.GetTile(fromLeft, fromTop).OccupiedUnit != null &&
-                        world.Map.GetTile(fromLeft, fromTop).OccupiedUnit.destroyed)
+                        world.Map.GetTile(fromLeft, fromTop).OccupiedUnit.Destroyed)
                     {
                         world.Map.GetTile(fromLeft, fromTop).OccupiedUnit = null;
                     }
@@ -864,7 +864,7 @@ namespace AdvancedWarsEngine
                     Unit unit = gameObject as Unit;
                     if (unit.Health < 0)
                     {
-                        gameObject.destroyed = true;
+                        gameObject.Destroyed = true;
                     }
                 }
             }
@@ -872,7 +872,7 @@ namespace AdvancedWarsEngine
             //Destroy destroyed gameobjects.
             foreach (GameObject gameObject in loopList.List)
             {
-                if (gameObject.destroyed)
+                if (gameObject.Destroyed)
                 {
                     //Remove the gameobject from the tile.
                     for (int fromLeft = 0; fromLeft < world.Map.Tiles.GetLength(0); fromLeft += 1)
@@ -897,8 +897,10 @@ namespace AdvancedWarsEngine
                     gameObjects.Remove(gameObject);
 
                     int i = 50;
-                    while (world.Player.NextPlayer != null && i > 0)
+                    Player playerNeelde = world.Player;
+                    while (playerNeelde.NextPlayer != null && i > 0)
                     {
+                        playerNeelde = playerNeelde.NextPlayer;
                         world.Player.DeleteGameObject(gameObject);
                         i--;
                     }
