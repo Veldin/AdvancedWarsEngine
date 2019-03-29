@@ -10,13 +10,30 @@ namespace AdvancedWarsEngine.Classes
         {
             if (gameobject is Prompt)
             {
-                Prompt gameObjectPrompt = gameobject as Prompt;
-                if (gameObjectPrompt.IsFollowingCamera)
+                Prompt prompt = gameobject as Prompt;
+                if (prompt.IsFollowingCamera)
                 {
-                    gameobject.FromLeft = (Camera.FromLeft + 50);
-                    gameobject.FromTop = (Camera.FromTop + 50);
+                    gameobject.FromLeft = (Camera.FromLeft * -1);
+                    gameobject.FromTop = (Camera.FromTop * -1);
 
                 }
+
+                if (prompt.IsUsingDuration)
+                {
+                    prompt.IncreaseCurrentDuration(delta);
+                }
+
+                if (prompt.CurrentDuration > prompt.MaxDuration && prompt.IsUsingDuration)
+                {
+                    prompt.Destroyed = true;
+                }
+
+                if (prompt.IsAscending)
+                {
+                    prompt.AddFromTop(-0.002f * delta);
+                }
+
+                
             }
             return true;
         }

@@ -1063,7 +1063,6 @@ namespace AdvancedWarsEngine
 
             spriteLocation = "/Sprites/TurnBanners/"+ world.CurrentPlayer.Colour + "Player.png";
 
-
             // Create the prompt and cast it to a prompt
             GameObject turnGameObject = promptFactory.GetGameObject(spriteLocation, 50, 16, 0, 0);
             Prompt turnPrompt = turnGameObject as Prompt;

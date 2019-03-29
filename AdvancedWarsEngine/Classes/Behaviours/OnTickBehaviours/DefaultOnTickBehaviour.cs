@@ -18,7 +18,6 @@ namespace AdvancedWarsEngine.Classes
                     prompt.IncreaseCurrentDuration(delta);
                 }
 
-
                 if (prompt.CurrentDuration > prompt.MaxDuration && prompt.IsUsingDuration)
                 {
                     prompt.Destroyed = true;
@@ -28,7 +27,6 @@ namespace AdvancedWarsEngine.Classes
                 {
                     prompt.AddFromTop(-0.002f * delta);
                 }
-
 
             }
 
