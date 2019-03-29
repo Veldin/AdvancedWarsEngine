@@ -2,7 +2,7 @@
 {
     class Structure : GameObject
     {
-        protected float capturePoints;
+        protected float capturePoints;                          // Health of the structure
         protected IProduceBehaviour produceBehaviour;
         private int productionCooldownMax;
         private int productionCooldown;
@@ -15,7 +15,7 @@
             productionCooldownMax = 8;
 
             productionCooldown = productionCooldownMax;
-            capturePoints = 1;
+            capturePoints = 30;
             this.produceBehaviour = produceBehaviour;
         }
 
