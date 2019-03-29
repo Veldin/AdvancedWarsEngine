@@ -1,6 +1,6 @@
 ﻿namespace AdvancedWarsEngine.Classes
 {
-    class InfantryDefenceBehavior : IDefenceBehavior
+    class InfantryDefenceBehaviour : IDefenceBehaviour
     {
         public float Defence(GameObject unit, Tile tile)
         {

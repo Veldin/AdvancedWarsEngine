@@ -24,7 +24,6 @@ namespace AdvancedWarsEngine.Classes
                     prompt = new Prompt(width, height, fromTop, fromLeft, type);
                     break;
                 case false:
-                    Debug.WriteLine("timeoutString: " + timeoutString);
                     prompt = new Prompt(width, height, fromTop, fromLeft, type, float.Parse(timeoutString));
                     break;
             }

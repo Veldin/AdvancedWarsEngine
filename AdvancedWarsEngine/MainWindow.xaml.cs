@@ -52,8 +52,8 @@ namespace AdvancedWarsEngine
 
             InitializeComponent();
 
-            //WindowState = WindowState.Maximized;
-            //WindowStyle = WindowStyle.None;
+            WindowState = WindowState.Maximized;
+            WindowStyle = WindowStyle.None;
 
             //Bind the keyup/down to the window's keyup/down
             GetWindow(this).KeyUp += KeyUp;
@@ -65,8 +65,6 @@ namespace AdvancedWarsEngine
             gameObjects = new GameObjectList();
 
             LoadWorld("plainlevel");
-
-            camera = new Camera(world.Map.Tiles.GetLength(0), world.Map.Tiles.GetLength(1));
 
             Cursor = Cursors.None; //Hide the default Cursor
 
@@ -92,12 +90,7 @@ namespace AdvancedWarsEngine
             //quick pc gives 1
             if (change < 1){fastmode = true;}
 
-            Debug.WriteLine(fastmode);
-
-            Debug.WriteLine(fastmode);
-
             RunAsync();
-
         }
 
         public void RunAsync()
@@ -472,12 +465,12 @@ namespace AdvancedWarsEngine
             else if (IsKeyPressed("M") && IsKeyPressed("D2"))
             {
                 ClearWorld();
-                LoadWorld("lavalevel");
+                LoadWorld("desertlevel");
             }
             else if (IsKeyPressed("M") && IsKeyPressed("D3"))
             {
                 ClearWorld();
-                LoadWorld("desertlevel");
+                LoadWorld("lavalevel");
             }
 
             if (IsKeyPressed("S"))
@@ -510,8 +503,6 @@ namespace AdvancedWarsEngine
 
             if (IsKeyPressed("V"))
             {
-                Debug.WriteLine("The selected unit is deselected");
-
                 // Deselect the selected Unit
                 world.CurrentPlayer.DeselectUnit();
 
@@ -645,7 +636,7 @@ namespace AdvancedWarsEngine
                         world.CurrentPlayer.SelectedUnit = pressedOnTile.OccupiedUnit;
 
                         /*************************************** AUTOMOVE ***************************************/
-                        int stepsRemaining = 0;
+                        /*int stepsRemaining = 0;
                         bool okay = true;
                         while (!Move(world.CurrentPlayer.SelectedUnit.AutoMove(world, okay, stepsRemaining)))
                         {
@@ -658,7 +649,7 @@ namespace AdvancedWarsEngine
                             {
                                 stepsRemaining++;
                             }
-                        }
+                        }*/
                         /****************************************************************************************/
 
                         /*************************************** OLD MOVE ***************************************/
@@ -790,7 +781,6 @@ namespace AdvancedWarsEngine
                     {
                         break;
                     }
-
                     nextPlayer = nextPlayer.NextPlayer;
                 }
 
@@ -1004,6 +994,8 @@ namespace AdvancedWarsEngine
             //Create the default cursor to use
             selectedTileIndicator = new Prompt(16, 16, 0, 0, "Sprites/TileSelectors/TileSelectorGreen.gif");
             gameObjects.Add(selectedTileIndicator);
+
+            camera = new Camera(world.Map.Tiles.GetLength(0), world.Map.Tiles.GetLength(1));
         }
 
         private void ClearWorld()

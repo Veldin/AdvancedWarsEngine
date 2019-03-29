@@ -1,6 +1,6 @@
 ﻿namespace AdvancedWarsEngine.Classes
 {
-    interface IAttackBehavior
+    interface IAttackBehaviour
     {
         /****************************************************
          * Unit         = The unit that attacks

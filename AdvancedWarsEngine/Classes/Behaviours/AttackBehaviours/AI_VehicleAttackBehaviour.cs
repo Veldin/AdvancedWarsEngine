@@ -2,7 +2,7 @@
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AI_VehicleAttackBehavior : IAttackBehavior
+    class AI_VehicleAttackBehaviour : IAttackBehaviour
     {
         public float Attack(Unit unit, GameObject gameObject)
         {

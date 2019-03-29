@@ -22,109 +22,108 @@ namespace AdvancedWarsEngine.Classes
             }
 
             // Define some local variables
-            IAttackBehavior attackBehavior;                                     // The attackBehavior of the Unit
-            IDefenceBehavior defenceBehavior;                                   // The defenceBehavior of the Unit
-            ITileBehavior tileBehavior;                                         // The tileBehavior of the Unit
-            IOnTickBehavior onTickBehavior = new DefaultOnTickBehavior();       // The default onTick of the Unit
+            IAttackBehaviour attackBehaviour;                                     // The attackBehaviour of the Unit
+            IDefenceBehaviour defenceBehaviour;                                   // The defenceBehaviour of the Unit
+            ITileBehaviour tileBehaviour;                                         // The tileBehaviour of the Unit
+            IOnTickBehaviour onTickBehaviour = new DefaultOnTickBehaviour();       // The default onTick of the Unit
             Unit unit = null;                                                   // The GameObject is the Unit that will be returned
 
             // Check which Unit should be created and create it
-            Debug.WriteLine(type);
             switch (type)
             {
                 case "AA_Infantry":     // Anti-Air Infantry
-                    // Create the behaviors for this unit
-                    attackBehavior = new AA_InfantryAttackBehavior();
-                    defenceBehavior = new InfantryDefenceBehavior();
-                    tileBehavior = new InfantryTileBehavior();
+                    // Create the behaviours for this unit
+                    attackBehaviour = new AA_InfantryAttackBehaviour();
+                    defenceBehaviour = new InfantryDefenceBehaviour();
+                    tileBehaviour = new InfantryTileBehaviour();
 
-                    // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AA_Infantry.gif", 2, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Infantry);
+                    // Create the Unit with the created behaviours
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AA_Infantry.gif", 2, attackBehaviour, defenceBehaviour, tileBehaviour, EUnitType.Infantry);
                     break;
 
                 case "AV_Infantry":     // Anti-Vehicle Infantry
-                    // Create the behaviors for this unit
-                    attackBehavior = new AV_InfantryAttackBehavior();
-                    defenceBehavior = new InfantryDefenceBehavior();
-                    tileBehavior = new InfantryTileBehavior();
+                    // Create the behaviours for this unit
+                    attackBehaviour = new AV_InfantryAttackBehaviour();
+                    defenceBehaviour = new InfantryDefenceBehaviour();
+                    tileBehaviour = new InfantryTileBehaviour();
 
-                    // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AV_Infantry.gif", 2, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Infantry);
+                    // Create the Unit with the created behaviours
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AV_Infantry.gif", 2, attackBehaviour, defenceBehaviour, tileBehaviour, EUnitType.Infantry);
                     break;
 
                 case "AI_Infantry":     // Anti-Infantry Infantry
-                    // Create the behaviors for this unit
-                    attackBehavior = new AI_InfantryAttackBehavior();
-                    defenceBehavior = new InfantryDefenceBehavior();
-                    tileBehavior = new InfantryTileBehavior();
+                    // Create the behaviours for this unit
+                    attackBehaviour = new AI_InfantryAttackBehaviour();
+                    defenceBehaviour = new InfantryDefenceBehaviour();
+                    tileBehaviour = new InfantryTileBehaviour();
 
-                    // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AI_Infantry.gif", 2, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Infantry);
+                    // Create the Unit with the created behaviours
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Infantry/" + colour + "_AI_Infantry.gif", 2, attackBehaviour, defenceBehaviour, tileBehaviour, EUnitType.Infantry);
                     break;
 
                 case "AI_Vehicle":          // Anti_Infantry Vehicle
-                    // Create the behaviors for this unit
-                    attackBehavior = new AI_VehicleAttackBehavior();
-                    defenceBehavior = new VehicleDefenceBehavior();
-                    tileBehavior = new VehicleTileBehavior();
+                    // Create the behaviours for this unit
+                    attackBehaviour = new AI_VehicleAttackBehaviour();
+                    defenceBehaviour = new VehicleDefenceBehaviour();
+                    tileBehaviour = new VehicleTileBehaviour();
 
-                    // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AI_Vehicle.gif", 3, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Vehicle);
+                    // Create the Unit with the created behaviours
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AI_Vehicle.gif", 3, attackBehaviour, defenceBehaviour, tileBehaviour, EUnitType.Vehicle);
                     break;
 
                 case "AV_Vehicle":          // Anti-Vehicle Vehicle
-                    // Create the behaviors for this unit
-                    attackBehavior = new AV_VehicleAttackBehavior();
-                    defenceBehavior = new VehicleDefenceBehavior();
-                    tileBehavior = new VehicleTileBehavior();
+                    // Create the behaviours for this unit
+                    attackBehaviour = new AV_VehicleAttackBehaviour();
+                    defenceBehaviour = new VehicleDefenceBehaviour();
+                    tileBehaviour = new VehicleTileBehaviour();
 
-                    // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AV_Vehicle.gif", 3, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Vehicle);
+                    // Create the Unit with the created behaviours
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AV_Vehicle.gif", 3, attackBehaviour, defenceBehaviour, tileBehaviour, EUnitType.Vehicle);
                     break;
 
                 case "AA_Vehicle":          // Anti-Air Vehicle
-                    // Create the behaviors for this unit
-                    attackBehavior = new AA_VehicleAttackBehavior();
-                    defenceBehavior = new VehicleDefenceBehavior();
-                    tileBehavior = new VehicleTileBehavior();
+                    // Create the behaviours for this unit
+                    attackBehaviour = new AA_VehicleAttackBehaviour();
+                    defenceBehaviour = new VehicleDefenceBehaviour();
+                    tileBehaviour = new VehicleTileBehaviour();
 
-                    // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AA_Vehicle.gif", 3, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Vehicle);
+                    // Create the Unit with the created behaviours
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Vehicle/" + colour + "_AA_Vehicle.gif", 3, attackBehaviour, defenceBehaviour, tileBehaviour, EUnitType.Vehicle);
                     break;
 
                 case "AI_Air":              // Anti_Infantry Air
-                    // Create the behaviors for this unit
-                    attackBehavior = new AI_AirAttackBehavior();
-                    defenceBehavior = new AirDefenceBehavior();
-                    tileBehavior = new AirTileBehavior();
+                    // Create the behaviours for this unit
+                    attackBehaviour = new AI_AirAttackBehaviour();
+                    defenceBehaviour = new AirDefenceBehaviour();
+                    tileBehaviour = new AirTileBehaviour();
 
-                    // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AI_Air.gif", 5, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Air);
+                    // Create the Unit with the created behaviours
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AI_Air.gif", 5, attackBehaviour, defenceBehaviour, tileBehaviour, EUnitType.Air);
                     break;
 
                 case "AV_Air":              // Anti-Vehicle Air
-                    // Create the behaviors for this unit
-                    attackBehavior = new AV_AirAttackBehavior();
-                    defenceBehavior = new AirDefenceBehavior();
-                    tileBehavior = new AirTileBehavior();
+                    // Create the behaviours for this unit
+                    attackBehaviour = new AV_AirAttackBehaviour();
+                    defenceBehaviour = new AirDefenceBehaviour();
+                    tileBehaviour = new AirTileBehaviour();
 
-                    // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AV_Air.gif", 5, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Air);
+                    // Create the Unit with the created behaviours
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AV_Air.gif", 5, attackBehaviour, defenceBehaviour, tileBehaviour, EUnitType.Air);
                     break;
 
                 case "AA_Air":              // Anti-Air Air
-                    // Create the behaviors for this unit
-                    attackBehavior = new AA_AirAttackBehavior();
-                    defenceBehavior = new AirDefenceBehavior();
-                    tileBehavior = new AirTileBehavior();
+                    // Create the behaviours for this unit
+                    attackBehaviour = new AA_AirAttackBehaviour();
+                    defenceBehaviour = new AirDefenceBehaviour();
+                    tileBehaviour = new AirTileBehaviour();
 
-                    // Create the Unit with the created behaviors
-                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AA_Air.gif", 5, attackBehavior, defenceBehavior, tileBehavior, EUnitType.Air);
+                    // Create the Unit with the created behaviours
+                    unit = new Unit(width, height, fromTop, fromLeft, "Sprites/Units/Icons/Air/" + colour + "_AA_Air.gif", 5, attackBehaviour, defenceBehaviour, tileBehaviour, EUnitType.Air);
                     break;
             }
 
-            //Set the onTickBehavior
-            unit.OnTickBehavior = onTickBehavior;
+            //Set the onTickBehaviour
+            unit.OnTickBehaviour = onTickBehaviour;
 
             // Return the Unit as GameObject
             return unit;

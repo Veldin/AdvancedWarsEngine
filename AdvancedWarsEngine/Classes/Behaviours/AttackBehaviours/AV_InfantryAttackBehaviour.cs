@@ -2,7 +2,7 @@
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AI_InfantryAttackBehavior : IAttackBehavior
+    class AV_InfantryAttackBehaviour : IAttackBehaviour
     {
         public float Attack(Unit unit, GameObject gameObject)
         {
@@ -16,8 +16,8 @@ namespace AdvancedWarsEngine.Classes
                 // Set the gameObject as Unit
                 Unit enemyUnit = gameObject as Unit;
 
-                // Check if the unitType is Infantry. If so increase attackValue by 50%
-                if (enemyUnit.UnitType == EUnitType.Infantry)
+                // Check if the unitType is Vehicle. If so increase attackValue by 50%
+                if (enemyUnit.UnitType == EUnitType.Vehicle)
                 {
                     attackValue += baseValue * 0.5f;
                 }

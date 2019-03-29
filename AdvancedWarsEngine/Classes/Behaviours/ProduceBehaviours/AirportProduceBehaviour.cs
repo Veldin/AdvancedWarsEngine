@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AirportProduceBehavior : IProduceBehaviour
+    class AirportProduceBehaviour : IProduceBehaviour
     {
         public string Produce()
         {

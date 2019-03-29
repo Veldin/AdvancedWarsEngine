@@ -2,12 +2,12 @@
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AA_AirAttackBehavior : IAttackBehavior
+    class AA_VehicleAttackBehaviour : IAttackBehaviour
     {
         public float Attack(Unit unit, GameObject gameObject)
         {
             // Setting some local variables
-            float baseValue = 40;                       // The baseValue
+            float baseValue = 30;                       // The baseValue
             float attackValue = baseValue;                // The total attack value which will be returned
 
             // Check if the attacked gameObject is a Unit
