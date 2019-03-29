@@ -12,7 +12,7 @@
             switch (tile.GetType().Name)        //Todo make enums or something for this
             {
                 case "Mountain":
-                    defenceValue += baseValue * 0.2f;
+                    defenceValue += baseValue * 2;
                     break;
                 case "Forest":
                     break;

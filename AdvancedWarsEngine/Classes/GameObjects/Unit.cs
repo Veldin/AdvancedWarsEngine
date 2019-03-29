@@ -7,7 +7,7 @@ namespace AdvancedWarsEngine.Classes
 {
     class Unit : GameObject
     {
-        protected float health = 100;                   // The health of the Unit
+        protected float health = 75;                   // The health of the Unit
         protected float movementSpeed = 100;            // The movement speed of the Unit (for animations)
         protected int movementRange;                    // The amount of tiles the Unit can move
         protected IAttackBehaviour attackBehaviour;       // The attackBehaviour calculates the dammageValue
