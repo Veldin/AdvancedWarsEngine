@@ -10,6 +10,7 @@ namespace AdvancedWarsEngine.Classes
         protected float maxDuration;
         private float currentDuration;
         protected TextBlock textBlock;
+        protected Border border;
         protected bool isUsingDuration;
         protected bool isAscending;
         protected bool isFollowingCamera;
@@ -24,7 +25,10 @@ namespace AdvancedWarsEngine.Classes
             isAscending = true;
 
             // Create the brushes for the text and background
-            SolidColorBrush backgroundBrush = new SolidColorBrush(Colors.Transparent);
+            SolidColorBrush backgroundBrush = new SolidColorBrush(Colors.Black)
+            {
+                Opacity = 0.6
+            };
             SolidColorBrush textBrush = new SolidColorBrush(Colors.Red);
 
             // Create a textBlock and set the necessary attributes
@@ -36,7 +40,9 @@ namespace AdvancedWarsEngine.Classes
                     Background = backgroundBrush,
                     Foreground = textBrush,
                     Focusable = false,
-                    HorizontalAlignment = HorizontalAlignment.Center
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Padding = new Thickness(2, 0, 0, 8),
+                    FontSize = 10
                 };
             });
         }

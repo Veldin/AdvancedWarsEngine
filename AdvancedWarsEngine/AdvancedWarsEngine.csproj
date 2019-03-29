@@ -163,6 +163,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Fonts\Joystix.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -287,9 +288,7 @@
     <Resource Include="Sprites\Units\Icons\Infantry\Yellow_AV_Infantry.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Sprites\computerTurn.gif" />
     <Resource Include="Sprites\defeat.gif" />
-    <Resource Include="Sprites\playerTurn.gif" />
     <Resource Include="Sprites\victory.gif" />
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +342,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Sprites\unitDisabled.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Sprites\TurnBanners\BluePlayer.png" />
+    <Resource Include="Sprites\TurnBanners\GreenPlayer.png" />
+    <Resource Include="Sprites\TurnBanners\RedPlayer.png" />
+    <Resource Include="Sprites\TurnBanners\YellowPlayer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
