@@ -2,7 +2,7 @@
 
 namespace AdvancedWarsEngine.Classes
 {
-    class AV_AirAttackBehavior : IAttackBehavior
+    class AV_AirAttackBehaviour : IAttackBehaviour
     {
         public float Attack(Unit unit, GameObject gameObject)
         {

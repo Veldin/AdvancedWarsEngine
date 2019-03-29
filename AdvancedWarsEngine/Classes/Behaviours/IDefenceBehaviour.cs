@@ -1,6 +1,6 @@
 ﻿namespace AdvancedWarsEngine.Classes
 {
-    interface IDefenceBehavior
+    interface IDefenceBehaviour
     {
         /****************************************************
          * Unit     = The Unit that defends
