@@ -54,8 +54,8 @@ namespace AdvancedWarsEngine
 
             InitializeComponent();
 
-            WindowState = WindowState.Maximized;
-            WindowStyle = WindowStyle.None;
+            //WindowState = WindowState.Maximized;
+            //WindowStyle = WindowStyle.None;
 
             //Bind the keyup/down to the window's keyup/down
             GetWindow(this).KeyUp += KeyUp;

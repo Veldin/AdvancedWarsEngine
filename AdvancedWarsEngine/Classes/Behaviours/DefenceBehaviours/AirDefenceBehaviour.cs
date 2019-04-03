@@ -12,7 +12,7 @@
             switch (tile.GetType().Name)                    //Todo make enums or something for this
             {
                 case "Mountain":
-                    defenceValue += baseValue * 2;
+                    defenceValue += baseValue * tile.GetDefenceValue("air");
                     break;
                 case "Forest":
                     break;

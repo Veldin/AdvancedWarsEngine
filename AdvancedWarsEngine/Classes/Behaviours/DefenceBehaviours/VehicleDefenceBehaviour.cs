@@ -13,12 +13,12 @@
             {
                 case "Mountain":                            // Vehicles cannot stand on Mountain
                 case "Forest":
-                    defenceValue += baseValue * 2;
+                    defenceValue += baseValue * tile.GetDefenceValue("vehicle");
                     break;
                 case "Plain":
                     break;
                 case "Urban":
-                    defenceValue += baseValue * 2;
+                    defenceValue += baseValue * tile.GetDefenceValue("vehicle");
                     break;
                 case "Water":                               // Vehicles cannot stand on Water
                 case "Road":
